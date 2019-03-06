@@ -71,13 +71,3 @@ class ResourceTracker {
     }
 
 }
-
-$(document).ready(initApp);
-
-var test, testDom;
-
-function initApp() {
-    test = new ResourceTracker('money');
-    testDom = test.render();
-    $('body').append(testDom);
-}
