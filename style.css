@@ -1,0 +1,29 @@
+.flex-container{
+  display: flex;
+  background-color: navy;
+  height: 70vh;
+  width: 70vw;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.row {
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+}
+
+.tile {
+  background-color: gold;
+  /* height: 10vh;
+  width: 10vh; */
+  height: 40px;
+  width: 40px;
+  border: 1px solid black;
+  box-sizing: border-box;
+}
+
+.ocean {
+  background-color: skyblue;
+}
