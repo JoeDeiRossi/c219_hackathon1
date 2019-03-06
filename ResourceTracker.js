@@ -17,6 +17,7 @@ class ResourceTracker {
     /* change amount - use for both positive and negative changes */
     changeAmount(change) {
         this.amount += change;
+        this.updateValues();
         return this.amount;
     }
 
@@ -29,6 +30,7 @@ class ResourceTracker {
             this.production = -5;
         }
 
+        this.updateValues();
         return this.production;
     }
 
@@ -46,14 +48,14 @@ class ResourceTracker {
     render() {
         this.domElement = $('<div>', {'class': 'trackerContainer'}).append(
             $('<div>', {'class': 'trackerInner'}).append(
-                $(`<div>${this.type}</div>`, {'class': 'trackerType'}),
+                $('<div>', {'class': 'trackerType'}).text(this.type),
                 $('<div>', {'class': 'trackerAmount'}).append(
-                    $('<div>Amount</div>', {'class': 'trackerLabel'}),
-                    $('<div>0</div>', {'class': 'trackerValue'})
+                    $('<div>', {'class': 'trackerLabel'}).text('Amount'),
+                    $('<div>', {'class': 'trackerValue'}).text(0)
                 ),
                 $('<div>', {'class': 'trackerProduction'}).append(
-                    $('<div>Production</div>', {'class': 'trackerLabel'}),
-                    $('<div>1</div>', {'class': 'trackerValue'})
+                    $('<div>', {'class': 'trackerLabel'}).text('Production'),
+                    $('<div>', {'class': 'trackerValue'}).text(1)
                 )
             )
         )
@@ -62,17 +64,20 @@ class ResourceTracker {
     }
 
     updateValues() {
-        // if (this.domElement) {
-        //     $(this.domElement)
-        // }
+        if (this.domElement) {
+            $(this.domElement).find('.trackerAmount').find('.trackerValue').text(this.amount);
+            $(this.domElement).find('.trackerProduction').find('.trackerValue').text(this.production);
+        }
     }
 
 }
 
 $(document).ready(initApp);
 
+var test, testDom;
+
 function initApp() {
-    var test = new ResourceTracker('money');
-    var testDom = test.render();
+    test = new ResourceTracker('money');
+    testDom = test.render();
     $('body').append(testDom);
 }
