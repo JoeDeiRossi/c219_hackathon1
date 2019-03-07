@@ -8,6 +8,7 @@ class Player {
         this.dealCardCallBack = requestDealCard;
 
         this.hand = [];
+
         this.playedCards = [];
         this.actions = 2;
 
@@ -57,7 +58,18 @@ class Player {
         $("#convertHeat").on('click', this.convertHeat);
     }
 
+    updateHand() {
+        /* clear hand */
+        $('.hand').empty();
+
+        for(var cardIndex in this.hand) {
+            var newCardDom = this.hand[cardIndex].render();
+            $('.hand').append(newCardDom);
+        }
+    }
+
     playCard(cardObj) {
+
         /* takes in card object from hand? or index of card in hand array 
            remove from hand array and move to used cards
            then execute the card's functions */
@@ -116,34 +128,70 @@ class Player {
         }
     }
 
+    checkStandardProjects() {
+        //runs when 'Standard Projects' button is clicked
+        //project buttons are greyed out by default, aka .disabled=true
+        if (this.hand.length > 0 && actions) {
+            $('.sellCardsButton').disabled = false;
+        }
+        if (this.inventory.resourceTrackers[0].getAmount() > 11 && actions) {
+            $('.powerPlantButton').disabled = false;
+        }
+        if (this.inventory.resourceTrackers[0].getAmount() > 14 && actions) {//also needs to check temp
+            $('.asteroidButton').disabled = false;
+        }
+        if (this.inventory.resourceTrackers[0].getAmount() > 18 && actions) {//also needs to check # of oceans
+            $('.aquiferButton').disabled = false;
+        }
+        if (this.inventory.resourceTrackers[0].getAmount() > 23 && actions) {//also needs to check oxygen
+            $('.greeneryButton').disabled = false;
+        }
+        if (this.inventory.resourceTrackers[0].getAmount() > 25 && actions) {
+            $('.cityButton').disabled = false;
+        }
+    }
+
     standardProjectSellCards() {
-        //check if length of this.hand > 0, if 0 css display grey button and return
-        //open up play card modal
-        //check position of card in player,
-        //check
+        //runs when .sellCardsButton is clicked
+        //open hand modal
+        //if player then clicks a card, remove it from their hand and increase their money by 1
+        //once they close the modal, actions-- (but not if they didn't sell any cards)
     }
 
     standardProjectPowerPlant() {
+        //runs when .powerPlantButton is clicked
+        this.inventory.resourceTrackers[0].changeAmount(-11);
+        this.inventory.resourceTrackers[4].changeProduction(1);
+        actions--;
     }
 
     standardProjectAsteroid() {
-
+        this.inventory.resourceTrackers[0].changeAmount(-14);
+        //needs to increase temp by 1 step and increase TR
+        actions--;
     }
 
     standardProjectAquifer() {
-
+        this.inventory.resourceTrackers[0].changeAmount(-18);
+        //needs to give player an ocean tile to place, which will also increase their TR
+        actions--;
     }
 
     standardProjectGreenery() {
-
+        this.inventory.resourceTrackers[0].changeAmount(-23);
+        //needs to give player a greenery tile to place, which will increase oxygen and their TR
+        actions--;
     }
 
     standardProjectCity() {
-
+        this.inventory.resourceTrackers[0].changeAmount(-25);
+        this.inventory.resourceTrackers[0].changeProduction(1);
+        //needs to give player a city tile to place
+        actions--;
     }
 
     convertResources() {
-        //runs when 'Conversions' button (person object) is clicked
+        //runs when 'Conversions' button is clicked
         //convert buttons are greyed out by default, aka .disabled=true
         if (this.inventory.getAmount(1) >= 1 && actions) {
             $('#sellSteel').disabled = false;
@@ -156,15 +204,14 @@ class Player {
         }
         if (this.inventory.getAmount(5) >= 8 && actions) {
             $('#convertHeat').disabled = false;
-        }
     }
 
     sellSteel() {
         //runs when .sellSteelButton is clicked
         var numberToSell; //get number to sell from user input
-        if (numberToSell <= this.inventory.getAmount(1)) {
-            this.inventory.resourceTrackers[1].amount -= numberToSell;
-            this.inventory.resourceTrackers[0].amount += 2*numberToSell;
+        if (numberToSell <= this.inventory.resourceTrackers[1].getAmount()) {
+            this.inventory.resourceTrackers[1].changeAmount(-numberToSell);
+            this.inventory.resourceTrackers[0].changeAmount(2 * numberToSell);
             this.actions--;
         }
     }
@@ -172,27 +219,24 @@ class Player {
     sellTitanium() {
         //runs when .sellTitaniumButton is clicked
         var numberToSell; //get number to sell from user input
-        if (numberToSell <= getAmount(2)) {
-            this.resourceTrackers[2].amount -= numberToSell;
-            this.resourceTrackers[0].amount += 3*numberToSell;
-            actions--;
+        if (numberToSell <= this.inventory.resourceTrackers[2].getAmount()) {
+            this.inventory.resourceTrackers[2].changeAmount(-numberToSell);
+            this.inventory.resourceTrackers[0].changeAmount(3 * numberToSell);
+            this.actions--;
         }
     }
 
     convertPlants() {
         //runs when .convertPlantsButton is clicked
-        this.resourceTrackers[3].amount -= 8;
-        this.TR++;
+        this.inventory.resourceTrackers[3].changeAmount(-8);
         actions--;
-        //also needs to give player a greenery tile and allow them to place it on any open space
-        //also needs to increase oxygen by one step
+        //needs to give player a greenery tile to place, which will increase oxygen and their TR
     }
 
     convertHeat() {
         //runs when .convertHeatButton is clicked
-        this.resourceTrackers[5].amount -= 8;
-        this.TR++;
+        this.inventory.resourceTrackers[5].changeAmount(-8);
         actions--;
-        //also needs to increase temp by one step
+        //also needs to increase temp by one step, and therefore increase TR by 1
     }
 }
