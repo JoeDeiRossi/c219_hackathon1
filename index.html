@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <title>Terraforming Mars</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="map-tiles.js"> </script>
   </head>
   <body>
     <div class="top-portion">
@@ -32,87 +34,87 @@
       </div>
 
     </div>
-    <!-- <div class="flex-container">
+    <div class="flex-container">
       <div class="row">
-        <div class="tile"></div>
-        <div class="tile ocean"></div>
-        <div class="tile"></div>
-        <div class="tile ocean"></div>
-        <div class="tile ocean"></div>
+        <div id="tile-1"class="tile double-steel"></div>
+        <div id="tile-2"class="tile ocean double-steel"></div>
+        <div id="tile-3"class="tile"></div>
+        <div id="tile-4"class="tile ocean card"></div>
+        <div id="tile-5"class="tile ocean"></div>
       </div>
       <div class="row">
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile ocean"></div>
+        <div id="tile-6"class="tile"></div>
+        <div id="tile-7"class="tile steel"></div>
+        <div id="tile-8"class="tile"></div>
+        <div id="tile-9"class="tile"></div>
+        <div id="tile-10"class="tile"></div>
+        <div id="tile-11"class="tile ocean two-cards"></div>
       </div>
       <div class="row">
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
+        <div id="tile-12"class="tile card"></div>
+        <div id="tile-13"class="tile"></div>
+        <div id="tile-14"class="tile"></div>
+        <div id="tile-15"class="tile"></div>
+        <div id="tile-16"class="tile"></div>
+        <div id="tile-17"class="tile"></div>
+        <div id="tile-18"class="tile steel"></div>
       </div>
       <div class="row">
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile ocean"></div>
+        <div id="tile-19"class="tile greenery titanium"></div>
+        <div id="tile-20"class="tile greenery"></div>
+        <div id="tile-21"class="tile greenery"></div>
+        <div id="tile-22"class="tile greenery"></div>
+        <div id="tile-23"class="tile double-greenery"></div>
+        <div id="tile-24"class="tile greenery"></div>
+        <div id="tile-25"class="tile greenery"></div>
+        <div id="tile-26"class="tile double-greenery ocean"></div>
       </div>
       <div class="row">
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile ocean"></div>
-        <div class="tile ocean"></div>
-        <div class="tile ocean"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
+        <div id="tile-27"class="tile double-greenery"></div>
+        <div id="tile-28"class="tile double-greenery"></div>
+        <div id="tile-29"class="tile double-greenery"></div>
+        <div id="tile-30"class="tile double-greenery ocean"></div>
+        <div id="tile-31"class="tile double-greenery ocean"></div>
+        <div id="tile-32"class="tile double-greenery ocean"></div>
+        <div id="tile-33"class="tile double-greenery"></div>
+        <div id="tile-34"class="tile double-greenery"></div>
+        <div id="tile-35"class="tile double-greenery"></div>
       </div>
       <div class="row">
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile ocean"></div>
-        <div class="tile ocean"></div>
-        <div class="tile ocean"></div>
+        <div id="tile-36"class="tile greenery"></div>
+        <div id="tile-37"class="tile double-greenery"></div>
+        <div id="tile-38"class="tile greenery"></div>
+        <div id="tile-39"class="tile greenery"></div>
+        <div id="tile-40"class="tile greenery"></div>
+        <div id="tile-41"class="tile greenery ocean"></div>
+        <div id="tile-42"class="tile greenery ocean"></div>
+        <div id="tile-43"class="tile greenery ocean"></div>
       </div>
       <div class="row">
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
+        <div id="tile-44"class="tile"></div>
+        <div id="tile-45"class="tile"></div>
+        <div id="tile-46"class="tile"></div>
+        <div id="tile-47"class="tile"></div>
+        <div id="tile-48"class="tile"></div>
+        <div id="tile-49"class="tile greenery"></div>
+        <div id="tile-50"class="tile"></div>
       </div>
       <div class="row">
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
+        <div id="tile-51"class="tile double-steel"></div>
+        <div id="tile-52"class="tile"></div>
+        <div id="tile-53"class="tile card"></div>
+        <div id="tile-54"class="tile card"></div>
+        <div id="tile-55"class="tile"></div>
+        <div id="tile-56"class="tile titanium"></div>
       </div>
       <div class="row">
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile ocean"></div>
+        <div id="tile-57"class="tile steel"></div>
+        <div id="tile-58"class="tile double-steel"></div>
+        <div id="tile-59"class="tile"></div>
+        <div id="tile-60"class="tile"></div>
+        <div id="tile-61"class="tile ocean double-titanium"></div>
       </div>
-    </div> -->
+    </div>
 
   </body>
 </html>

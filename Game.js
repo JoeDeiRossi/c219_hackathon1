@@ -2,8 +2,8 @@ $(document).ready(testFunction);
 
 class Game {
     constructor(players, cardArray, mapTileInfoArray) {
-
-        this.board = new Board(titleInfoArray, this.actionPhase);
+        this.rewardCallback = this.rewardCallback.bind(this)
+        this.board = new Board(titleInfoArray, this.actionPhase, this.rewardCallback);
         this.deck = new Deck(cardArray, this.dealCards);
         this.players = [];
 
@@ -39,14 +39,19 @@ class Game {
         console.log('test');
     }
 
-    actionPhase(currentPlayer) {
+    actionPhase(currentTile) {
+        console.log('test');
+        console.log(currentTile);
+    }
+
+
+    rewardCallback(reward) {
         console.log('test');
     }
 
     productionPhase() {
 
     }
-
 
 
 }
@@ -168,6 +173,6 @@ function testFunction() {
     function tester() {
         console.log('test');
     }
-    
+
     var test = new Game(2, cardArray, titleInfoArray);
 }
