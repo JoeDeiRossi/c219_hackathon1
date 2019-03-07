@@ -51,6 +51,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+
 }
 
 .status-div, .maptiles {
@@ -93,7 +94,7 @@ body {
   justify-content: center;
 } */
 
-.row {
+ .row {
   flex-direction: row;
   display: flex;
   justify-content: center;
@@ -101,8 +102,6 @@ body {
 
 .tile {
   background-color: gold;
-  /* height: 10vh;
-  width: 10vh; */
   height: 20px;
   width: 20px;
   border: 1px solid black;

@@ -2,10 +2,10 @@ $(document).ready(testFunction);
 
 class Game {
     constructor(players, cardArray, mapTileInfoArray) {
-
+      
         this.playCard = this.playCard.bind(this);
-
-        this.board = new Board(titleInfoArray, this.mapTileCallback);
+        this.rewardCallback = this.rewardCallback.bind(this);
+        this.board = new Board(titleInfoArray, this.actionPhase, this.rewardCallback);
         this.deck = new Deck(this.playCard);
         this.players = [];
 
@@ -79,6 +79,8 @@ class Game {
         /* show buttons or hand? give the player their options */
         /* then change players - call changePlayers at the end of each action */
 
+    rewardCallback(reward) {
+        console.log('test');
     }
 
     /* connects Card click handler and Player class */
@@ -211,7 +213,6 @@ function testFunction() {
     function tester() {
         console.log('test');
     }
-    
-    test = new Game(2, cardArray, titleInfoArray);
-    test.startGame();
+  
+    var test = new Game(2, cardArray, titleInfoArray);
 }

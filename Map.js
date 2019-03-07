@@ -1,8 +1,9 @@
 class Map {
-    constructor(tileInfoArray, mapTileClickHandler) {
+    constructor(tileInfoArray, mapTileClickHandler, rewardCallback) {
+
         this.data = tileInfoArray;
         this.mapTileCallback = mapTileClickHandler;
-
+        this.rewardCallback = rewardCallback;
         /* Map object has an array of MapTile objects */
         this.mapTiles = [];
         this.mapRowLengths = [5, 6, 7, 8, 9, 8, 7, 6, 5];
@@ -27,8 +28,8 @@ class Map {
 
                 /* make a new MapTile and add it to this Map's tile storage array */
                 var newMapTile = new MapTile(
-                    tileNumber, 
-                    this.data[tileNumber].rewards, 
+                    tileNumber,
+                    this.data[tileNumber].rewards,
                     this.data[tileNumber].canBeOcean,
                     this.mapTileCallback
                     );
@@ -47,9 +48,9 @@ class Map {
         return this.domElement;
     }
 }
-  
+
 class MapTile {
-    constructor(number, rewards, canBeOcean, callback) {
+    constructor(number, rewards, canBeOcean, callback, rewardCallback) {
 
         /* store the dom element associated with this MapTile*/
         this.domElement = null;
@@ -71,6 +72,7 @@ class MapTile {
         /* an object with this MapTile's rewards */
         this.rewards = rewards;
 
+        this.rewardCallback = rewardCallback;
         this.clickHandler = this.clickHandler.bind(this);
 
         /* array of MapTile objects that are neighbors */
@@ -79,13 +81,40 @@ class MapTile {
 
     clickHandler() {
         /* handle click by calling the function we got as a param and pass in THIS MapTile */
-      this.callback(this);
+      // this.callback(this);
+      // this.testForOcean();
+      // this.testForAvailability();
+      this.rewardCallback(this.rewards);
 
     }
+
+    testForOcean() {
+      if(this.canBeOcean === true && $('.statusOceanTiles .statusValue').text() > 0) {
+        this.domElement.css('background-color', 'blue');
+        var newValue = parseInt($('.statusOceanTiles .statusValue').text() - 1);
+        $('.statusOceanTiles .statusValue').text(newValue)
+        console.log('ocean was clicked');
+      }
+      this.canBeOcean = false;
+    }
+
+    testForAvailability() {
+      if(this.available === true) {
+        console.log('your tile was placed');
+        
+      } else {
+        console.log('choose another tile')
+      }
+      this.available = false;
+    }
+
 
     render() {
         /* make a div for this MapTile and store it */
         this.domElement = $('<div>', {'class': 'tile'});
+        if(this.canBeOcean === true) {
+          this.domElement.css('background-color', 'dodgerblue');
+        }
 
         /* add a click handler to the div */
         this.domElement.click(this.clickHandler);
