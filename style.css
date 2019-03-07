@@ -2,27 +2,37 @@ body {
   margin: 0;
 }
 
-.top-portion {
+.board {
   height: 70vh;
   background-color: purple;
   font-size: 0;
+  width: 75%;
 }
 
-.bottom-portion {
-  height: 30vh;
-  background-color: lightgreen;
-}
-
-.board-div, .players-div {
+.board, .playerInfoArea {
   display: inline-block;
   font-size: 1rem;
   height: 100%;
+}
+
+.statusInner {
+  font-size: 1rem;
+}
+
+.statusInner, .flex-container {
+  display: inline-block;
+}
+
+.buttonAndHandArea {
+  height: 30vh;
+  background-color: lightgreen;
 }
 
 .board-div {
   width: 75%;
   background-color: brown;
 }
+
 .status-div, .maptiles {
   width: 95%;
   border: 2px solid black;
@@ -103,8 +113,14 @@ body {
   background-color: skyblue;
 }
 
+/* ------------------------------------------------------------------------ */
+
 .actionCardContainer {
   border: 1px solid black;
   border-radius: 5px;
+  display: inline-block;
+}
+
+.playerInfo {
   display: inline-block;
 }

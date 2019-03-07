@@ -5,7 +5,7 @@ class Game {
 
         this.playCard = this.playCard.bind(this);
 
-        this.board = new Board(titleInfoArray, this.action);
+        this.board = new Board(titleInfoArray, this.mapTileCallback);
         this.deck = new Deck(this.playCard);
         this.players = [];
 
@@ -81,19 +81,13 @@ class Game {
 
     }
 
+    /* connects Card click handler and Player class */
     playCard(card) {
-        console.log('P' + this.currentPlayer.number + ' played ' + card.name);
+        this.currentPlayer.playCard(card);
     }
 
-    action(target) {
-        // if($(target).hasClass('card')){
-        //     console.log('test');
-        // } else {
-        //     console.log('end turn');
-        // }
-
-        // this.dealCards(this.currentPlayer, 1);
-        // this.currentPlayer.updateHand();
+    mapTileCallback(reward) {
+        /* add rewards to current player */
     }
 
 }
