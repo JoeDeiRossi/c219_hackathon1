@@ -193,29 +193,17 @@ class Player {
     convertResources() {
         //runs when 'Conversions' button is clicked
         //convert buttons are greyed out by default, aka .disabled=true
-        // if (this.inventory.getAmount(1) >= 1 && actions) {
-        //     $('#sellSteel').disabled = false;
-        // }
-        // if (this.inventory.getAmount(2) >= 1 && actions) {
-        //     $('#sellTitanium').disabled = false;
-        // }
-        // if (this.inventory.getAmount(3) >= 8 && actions) {
-        //     $('#convertPlants').disabled = false;
-        // }
-        // if (this.inventory.getAmount(5) >= 8 && actions) {
-        //     $('#convertHeat').disabled = false;
-        if (this.inventory.resourceTrackers[1].getAmount() >= 1 && actions) {
-            $('.sellSteelButton').disabled = false;
+        if (this.inventory.getAmount(1) >= 1 && actions) {
+            $('#sellSteel').disabled = false;
         }
-        if (this.inventory.resourceTrackers[2].getAmount() >= 1 && actions) {
-            $('.sellTitaniumButton').disabled = false;
+        if (this.inventory.getAmount(2) >= 1 && actions) {
+            $('#sellTitanium').disabled = false;
         }
-        if (this.inventory.resourceTrackers[3].getAmount() >= 8 && actions) {//also needs to check oxygen
-            $('.convertPlantsButton').disabled = false;
+        if (this.inventory.getAmount(3) >= 8 && actions) {
+            $('#convertPlants').disabled = false;
         }
-        if (this.inventory.resourceTrackers[5].getAmount() >= 8 && actions) {//also needs to check temp
-            $('.convertHeatButton').disabled = false;
-        }
+        if (this.inventory.getAmount(5) >= 8 && actions) {
+            $('#convertHeat').disabled = false;
     }
 
     sellSteel() {
