@@ -3,12 +3,15 @@ $(document).ready(testFunction);
 class Game {
     constructor(players, cardArray, mapTileInfoArray) {
 
-        this.board = new Board(titleInfoArray, this.actionPhase);
-        this.deck = new Deck(cardArray, this.dealCards);
+        this.playCard = this.playCard.bind(this);
+
+        this.board = new Board(titleInfoArray, this.action);
+        this.deck = new Deck(this.playCard);
         this.players = [];
 
         this.currentPlayer = null;
         this.firstTurn = true;
+        this.roundEnd = false;
         this.gameOver = false;
 
         for (var index = 0; index < players; index++) {
@@ -19,35 +22,79 @@ class Game {
 
         }
 
-        this.currentPlayer = this.players[0];
+        this.turnCount = 0;
+        this.currentPlayerIndex = 0;
+        this.currentPlayer = this.players[this.currentPlayerIndex];
+
+        this.startGame();
     }
 
     startGame() {
+        /* starting hand */
+        console.log('starting game')
 
+        for (var index in this.players) {
+            this.dealCards(this.players[index], 2);
+        }
 
-        this.gameLoop();
+        // this.startRound();
     }
 
-    gameLoop() {
+    startRound() {
+        /* all players get two cards per turn */
         for (var index in this.players) {
-            this.players[index].hand.push(this.deck.drawCards(2));
+            this.dealCards(this.players[index], 2);
         }
-        this.actionPhase(this.currentPlayer);
+
+        /* buy phase? */
     }
 
     dealCards(player, number) {
+        var newCards = this.deck.drawCards(number);
+        for(var cardIndex in newCards) {
+            player.hand.push(newCards[cardIndex])
+        }
+        player.updateHand();
+    }
+
+    changePlayers() {
+        /* change the current player to the next in players array */
+        this.currentPlayerIndex++;
+        if (this.currentPlayerIndex >= this.players.length) {
+            this.currentPlayerIndex = 0;
+        }
+        this.currentPlayer = this.players[currentPlayerIndex];
+
+        /* increment the turn counter by 1 - if everyone has had a turn, end the round */
+        this.turnCount++;
+        if(this.turnCount >= this.players.length) {
+            this.turnCount = 0;
+            this.roundEnd();
+        }
+    }
+
+    actionPhase() {
         console.log('test');
-    }
 
-    actionPhase(currentPlayer) {
-        console.log('test');
-    }
-
-    productionPhase() {
+        /* show buttons or hand? give the player their options */
+        /* then change players - call changePlayers at the end of each action */
 
     }
 
+    playCard(card) {
+        console.log('P' + this.currentPlayer.number + ' played ' + card.name);
+    }
 
+    action(target) {
+        // if($(target).hasClass('card')){
+        //     console.log('test');
+        // } else {
+        //     console.log('end turn');
+        // }
+
+        // this.dealCards(this.currentPlayer, 1);
+        // this.currentPlayer.updateHand();
+    }
 
 }
 
@@ -164,10 +211,13 @@ var titleInfoArray = [
     {'name': 'Nuclear Zone', 'cost': 10, 'action': {'status': {'temperature': 2}, 'tile': {'any': 1}}}, //tr: -2 at the end of game
 ];
 
+var test;
+
 function testFunction() {
     function tester() {
         console.log('test');
     }
     
-    var test = new Game(2, cardArray, titleInfoArray);
+    test = new Game(2, cardArray, titleInfoArray);
+    test.startGame();
 }

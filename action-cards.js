@@ -66,7 +66,7 @@ class Card {
         this.handleClick = this.handleClick.bind(this);
     }
     handleClick() {
-        this.callBack(this)
+        this.callBack(this);
     }
     render() {
         var container = $("<div>", {'class': 'actionCardContainer'});

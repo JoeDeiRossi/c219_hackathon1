@@ -5,6 +5,7 @@ class Player {
         this.inventory = new Inventory;
 
         this.hand = [];
+
         this.playedCards = [];
         this.actions = 2;
     }
@@ -16,6 +17,16 @@ class Player {
         )
 
         return this.domElement;
+    }
+
+    updateHand() {
+        /* clear hand */
+        $('.hand').empty();
+
+        for(var cardIndex in this.hand) {
+            var newCardDom = this.hand[cardIndex].render();
+            $('.hand').append(newCardDom);
+        }
     }
 
     playCard() {
