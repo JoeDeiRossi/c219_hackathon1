@@ -83,7 +83,10 @@ class MapTile {
     //   this.callback(this);
       this.testForOcean();
       this.testForAvailability();
+<<<<<<< HEAD
       this.removeRewardsFromMap();
+=======
+>>>>>>> da50261f8b85829c9101a6181f64c6f70b847be8
       this.rewardCallback(this.rewards);
 
     }

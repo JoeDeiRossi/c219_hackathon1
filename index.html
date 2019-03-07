@@ -1,122 +1,84 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Terraforming Mars</title>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    <script src="ResourceTracker.js"></script>
+    <script src="Inventory.js"></script>
+    <script src="Player.js"></script>
+    <script src="Map.js"></script>
+    <script src="Board.js"></script>
+    <script src="action-cards.js"></script>
+    <script src="Game.js"></script>
     <link rel="stylesheet" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="map-tiles.js"> </script>
-    <script src='ResourceTracker.js'></script>
-    <script src='inventory.js'></script>
-  </head>
-  <body>
-    <div class="top-portion">
-      <div class="board-div">
-        <div class="status-div">
-
+</head>
+<body>
+    <div class="board">
+        <div class="statusInner">
+            <div class="statusTurnNumber">
+                <div class="statusLabel">Turn</div>
+                <div class="statusValue">1</div>
+            </div>
+            <div class="statusOxygen">
+                <div class="statusLabel">Oxygen</div>
+                <div class="statusValue">0</div>
+            </div>
+            <div class="statusTemp">
+                <div class="statusLabel">Tempurature</div>
+                <div class="statusValue">-30C</div>
+            </div>
+            <div class="statusOceanTiles">
+                <div class="statusLabel">Ocean Tiles</div>
+                <div class="statusValue">9</div>
+            </div>
         </div>
-        <div class="flex-container maptiles">
-
-
-        </div>
-
-      </div>
-      <div class="players-div">
-        <div class="players-display">
-
-        </div>
-      </div>
-
     </div>
-    <div class="bottom-portion">
-      <div class="action-cards-div">
-        <div class="cards-display">
-
+    <div class="playerInfoArea"></div>
+    <div class="buttonAndHandArea">
+        <div class="actionArea">
+            <button id="playCard">Play a Card</button>
+            <button id="standardProject">Do a Standard Project</button>
+            <button id="convertResources">Convert your Resources</button>
         </div>
-      </div>
-
+        <div id="playActionCardModal">
+            <div id="playActionCardModalContent">
+                <span class="close">&times;</span> <!--float: right, onclick = close parentDiv-->
+                <h3>Play Action Card</h3>
+                <!--populate action cards from - player.hand-->
+                <div class='hand'></div>
+            </div>
+        </div>
+        <div id="standardProjectsModal">
+            <span class="close">&times;</span> <!--float: right, onclick = close parentDiv-->
+            <h3>Standard Projects</h3>
+            <button id="sellCards">Sell Cards</button>
+            <span>bank: money: 1</span><br> <!--make it so that you can only sell one card, will move to used cards inventory? or be discarded-->
+            <button id="powerPlant">Power Plant</button>
+            <span>bank: money: -11</span><br>
+            <button id="increaseTemperature">Increase Temperature</button>
+            <span>bank: money: -14</span><br>
+            <button id="buildOcean">Build Ocean</button>
+            <span>bank: money: -18</span><br>
+            <button id="buildGreenery">Build Greenery</button>
+            <span>bank: money: -23</span><br>
+            <button id="buildCity">Build City</button>
+            <span>bank: money: -25</span>
+        </div>
+        <div id="convertResourcesModal">
+            <span class="close">&times;</span> <!--float: right, onclick = close parentDiv-->
+            <h3>Convert Resources</h3>
+            <button id="sellSteel">Sell Steel</button>
+            <span>bank: money: 2</span><br>
+            <button id="sellTitanium">Sell Titanium</button>
+            <span>bank: money: 3</span><br>
+            <button id="convertPlants">Convert Plants</button>
+            <span>tr: 1, tile: greenery: 1, status: oxygen: 1</span><br>
+            <button id="convertHeat">Convert Heat</button>
+            <span>tr: 1, status: temperature: 1</span>
+        </div>
     </div>
-    <div class="flex-container">
-      <div class="row">
-        <div id="tile-1"class="tile double-steel"></div>
-        <div id="tile-2"class="tile ocean double-steel"></div>
-        <div id="tile-3"class="tile"></div>
-        <div id="tile-4"class="tile ocean card"></div>
-        <div id="tile-5"class="tile ocean"></div>
-      </div>
-      <div class="row">
-        <div id="tile-6"class="tile"></div>
-        <div id="tile-7"class="tile steel"></div>
-        <div id="tile-8"class="tile"></div>
-        <div id="tile-9"class="tile"></div>
-        <div id="tile-10"class="tile"></div>
-        <div id="tile-11"class="tile ocean two-cards"></div>
-      </div>
-      <div class="row">
-        <div id="tile-12"class="tile card"></div>
-        <div id="tile-13"class="tile"></div>
-        <div id="tile-14"class="tile"></div>
-        <div id="tile-15"class="tile"></div>
-        <div id="tile-16"class="tile"></div>
-        <div id="tile-17"class="tile"></div>
-        <div id="tile-18"class="tile steel"></div>
-      </div>
-      <div class="row">
-        <div id="tile-19"class="tile greenery titanium"></div>
-        <div id="tile-20"class="tile greenery"></div>
-        <div id="tile-21"class="tile greenery"></div>
-        <div id="tile-22"class="tile greenery"></div>
-        <div id="tile-23"class="tile double-greenery"></div>
-        <div id="tile-24"class="tile greenery"></div>
-        <div id="tile-25"class="tile greenery"></div>
-        <div id="tile-26"class="tile double-greenery ocean"></div>
-      </div>
-      <div class="row">
-        <div id="tile-27"class="tile double-greenery"></div>
-        <div id="tile-28"class="tile double-greenery"></div>
-        <div id="tile-29"class="tile double-greenery"></div>
-        <div id="tile-30"class="tile double-greenery ocean"></div>
-        <div id="tile-31"class="tile double-greenery ocean"></div>
-        <div id="tile-32"class="tile double-greenery ocean"></div>
-        <div id="tile-33"class="tile double-greenery"></div>
-        <div id="tile-34"class="tile double-greenery"></div>
-        <div id="tile-35"class="tile double-greenery"></div>
-      </div>
-      <div class="row">
-        <div id="tile-36"class="tile greenery"></div>
-        <div id="tile-37"class="tile double-greenery"></div>
-        <div id="tile-38"class="tile greenery"></div>
-        <div id="tile-39"class="tile greenery"></div>
-        <div id="tile-40"class="tile greenery"></div>
-        <div id="tile-41"class="tile greenery ocean"></div>
-        <div id="tile-42"class="tile greenery ocean"></div>
-        <div id="tile-43"class="tile greenery ocean"></div>
-      </div>
-      <div class="row">
-        <div id="tile-44"class="tile"></div>
-        <div id="tile-45"class="tile"></div>
-        <div id="tile-46"class="tile"></div>
-        <div id="tile-47"class="tile"></div>
-        <div id="tile-48"class="tile"></div>
-        <div id="tile-49"class="tile greenery"></div>
-        <div id="tile-50"class="tile"></div>
-      </div>
-      <div class="row">
-        <div id="tile-51"class="tile double-steel"></div>
-        <div id="tile-52"class="tile"></div>
-        <div id="tile-53"class="tile card"></div>
-        <div id="tile-54"class="tile card"></div>
-        <div id="tile-55"class="tile"></div>
-        <div id="tile-56"class="tile titanium"></div>
-      </div>
-      <div class="row">
-        <div id="tile-57"class="tile steel"></div>
-        <div id="tile-58"class="tile double-steel"></div>
-        <div id="tile-59"class="tile"></div>
-        <div id="tile-60"class="tile"></div>
-        <div id="tile-61"class="tile ocean double-titanium"></div>
-      </div>
-    </div>
-
-  </body>
+</body>
 </html>
