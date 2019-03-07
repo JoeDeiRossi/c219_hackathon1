@@ -37,6 +37,46 @@
         </div>
     </div>
     <div class="playerInfoArea"></div>
-    <div class="buttonAndHandArea"></div>
+    <div class="buttonAndHandArea">
+        <div class="actionArea">
+            <button id="playCard">Play a Card</button>
+            <button id="standardProject">Do a Standard Project</button>
+            <button id="convertResources">Convert your Resources</button>
+        </div>
+        <div id="playActionCardModal">
+            <span class="close">&times;</span> <!--float: right, onclick = close parentDiv-->
+            <h3>Play Action Card</h3>
+            <!--populate action cards from - player.hand-->
+            <div class='hand'></div>
+        </div>
+        <div id="standardProjectsModal">
+            <span class="close">&times;</span> <!--float: right, onclick = close parentDiv-->
+            <h3>Standard Projects</h3>
+            <button id="sellCards">Sell Cards</button>
+            <span>bank: money: 1</span><br> <!--make it so that you can only sell one card, will move to used cards inventory? or be discarded-->
+            <button id="powerPlant">Power Plant</button>
+            <span>bank: money: -11</span><br>
+            <button id="increaseTemperature">Increase Temperature</button>
+            <span>bank: money: -14</span><br>
+            <button id="buildOcean">Build Ocean</button>
+            <span>bank: money: -18</span><br>
+            <button id="buildGreenery">Build Greenery</button>
+            <span>bank: money: -23</span><br>
+            <button id="buildCity">Build City</button>
+            <span>bank: money: -25</span>
+        </div>
+        <div id="convertResourcesModal">
+            <span class="close">&times;</span> <!--float: right, onclick = close parentDiv-->
+            <h3>Convert Resources</h3>
+            <button id="sellSteel">Sell Steel</button>
+            <span>bank: money: 2</span><br>
+            <button id="sellTitanium">Sell Titanium</button>
+            <span>bank: money: 3</span><br>
+            <button id="convertPlants">Convert Plants</button>
+            <span>tr: 1, tile: greenery: 1, status: oxygen: 1</span><br>
+            <button id="convertHeat">Convert Heat</button>
+            <span>tr: 1, status: temperature: 1</span>
+        </div>
+    </div>
 </body>
 </html>

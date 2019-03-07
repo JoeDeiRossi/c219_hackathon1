@@ -81,10 +81,11 @@ class MapTile {
 
     clickHandler() {
         /* handle click by calling the function we got as a param and pass in THIS MapTile */
-      this.callback(this);
-      this.testForOcean();
-      this.testForAvailability();
+      // this.callback(this);
+      // this.testForOcean();
+      // this.testForAvailability();
       this.rewardCallback(this.rewards);
+
     }
 
     testForOcean() {
@@ -116,8 +117,7 @@ class MapTile {
         }
 
         /* add a click handler to the div */
-
-      this.domElement.click(this.clickHandler);
+        this.domElement.click(this.clickHandler);
 
         /* return the div */
         return this.domElement;
