@@ -50,13 +50,13 @@ class Map {
 }
 
 class MapTile {
-    constructor(number, rewards, canBeOcean, callback, rewardCallback) {
+    constructor(number, rewards, canBeOcean, rewardCallback) {
 
         /* store the dom element associated with this MapTile*/
         this.domElement = null;
 
         /* callback function that is passed down from Map (or Game, really) */
-        this.callback = callback;
+        this.rewardCallback = rewardCallback;
 
         /* this MapTile's number */
         this.tileNumber = number;
@@ -72,7 +72,6 @@ class MapTile {
         /* an object with this MapTile's rewards */
         this.rewards = rewards;
 
-        this.rewardCallback = rewardCallback;
         this.clickHandler = this.clickHandler.bind(this);
 
         /* array of MapTile objects that are neighbors */
@@ -81,9 +80,9 @@ class MapTile {
 
     clickHandler() {
         /* handle click by calling the function we got as a param and pass in THIS MapTile */
-      // this.callback(this);
-      // this.testForOcean();
-      // this.testForAvailability();
+    //   this.callback(this);
+      this.testForOcean();
+      this.testForAvailability();
       this.rewardCallback(this.rewards);
 
     }
