@@ -1,10 +1,9 @@
 
 class Inventory {
     constructor() {
-        this.player; //assign each inventory object to a player
         this.TR = 5; //starting value=5 instead of 20
         this.resources = ['money', 'steel', 'titanium', 'plants', 'energy', 'heat'];
-        this.inventoryDomElement; //stores DOM element created by render method
+        this.inventoryDomElement = null; //stores DOM element created by render method
         this.resourceTrackers = [];
     }
 
@@ -17,12 +16,10 @@ class Inventory {
         }
     }
 
-    render(numberOfPlayers) { //move to game object
-        for (var playerIndex = 1; playerIndex <= numberOfPlayers; playerIndex++) {
-            this.inventoryDomElement = $('<div>').addClass('inventory');
-            $('.players-display').append(this.inventoryDomElement);
-            return this.inventoryDomElement;
-        }
+    render() { //move to game object
+        this.inventoryDomElement = $('<div>').addClass('inventory');
+        $('.players-display').append(this.inventoryDomElement);
+        this.createTrackers();
     }
 
     getAmount(resource) { //takes in a number; ex: 0 for money, 1 for steel.... 5 for heat
