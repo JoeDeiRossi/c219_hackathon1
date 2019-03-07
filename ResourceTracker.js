@@ -40,7 +40,7 @@ class ResourceTracker {
     }
 
     /* returns production level */
-    getChange() {
+    getProduction() {
         return this.production;
     }
 
