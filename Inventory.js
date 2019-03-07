@@ -36,4 +36,12 @@ class Inventory {
     changeProduction(resource, amountToChange) {
         return this.resourceTrackers[resource].changeProduction(amountToChange);
     }
+    changeTR(amountToChange){ //can you have negative TR?, made a check just in case
+        if(this.TR >= 0){
+            this.TR += amountToChange;
+        } else {
+            this.TR = 0;
+        }
+        //return? just need to update TR values on DOM
+    }
 }

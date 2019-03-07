@@ -27,7 +27,7 @@ var cardDeck = [
     {'name': 'Solar Wind Power', 'cost': 11, 'action': {'bank': {'titanium': 2}, 'production':{'energy': 2}}},
     //tile cards
     {'name': 'Black Polar Dust', 'cost': 15, 'action': {'production': {'money': -2, 'heat': 3}, 'tile': {'ocean': 1}}},
-    {'name': 'Noctis City', 'cost': 18, 'action': {'production': {'money': 3, 'energy': -1}, 'tile': {'city': 'Noctis City'}}},
+    {'name': 'Noctis City', 'cost': 18, 'action': {'production': {'money': 3, 'energy': -1}, 'tile': {'city': 1}}},
     {'name': 'Underground City', 'cost': 18, 'action': {'production': {'steel': 2, 'energy': -2}, 'tile': {'city': 1}}},
     {'name': 'Towing a Comet', 'cost': 23, 'action': {'bank': {'plant': 2}, 'status': {'oxygen': 1}, 'tile': {'ocean': 1}}},
     {'name': 'Subterranean Reservoir', 'cost': 11, 'action': {'tile': {'ocean': 1}}},
