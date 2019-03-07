@@ -80,6 +80,7 @@ class MapTile {
     clickHandler() {
         /* handle click by calling the function we got as a param and pass in THIS MapTile */
       this.callback(this);
+      
     }
 
     render() {
