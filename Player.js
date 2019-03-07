@@ -7,12 +7,16 @@ class Player {
         this.tileCallBack = requestTileChange;
         this.dealCardCallBack = requestDealCard;
 
+        this.isSelling = false;
+
         this.hand = [];
 
         this.playedCards = [];
         this.actions = 2;
 
         this.playCard = this.playCard.bind(this);
+        this.checkStandardProjects = this.checkStandardProjects.bind(this);
+        this.checkResources = this.checkResources.bind(this);
         this.standardProjectSellCards = this.standardProjectSellCards.bind(this);
         this.standardProjectPowerPlant = this.standardProjectPowerPlant.bind(this);
         this.standardProjectAsteroid = this.standardProjectAsteroid.bind(this);
@@ -37,21 +41,26 @@ class Player {
     }
     eventListeners(){ //for buttons activating action modals and modals itself
         $("#playCard").on('click', function(){
-            $("#playActionCardModal").show();
+                $("#playActionCardModal").show();
         });
         $("#standardProject").on('click', function(){
+            this.checkStandardProjects();
             $("#standardProjectsModal").show();
         });
         $("#convertResources").on('click', function(){
+            this.checkResources();
             $("#convertResourcesModal").show();
         });
         //add playCard function click and bind
+
+        //standard project modal
         $("#sellCards").on('click', this.standardProjectSellCards);
         $("#powerPlant").on('click', this.standardProjectPowerPlant);
         $("#increaseTemperature").on('click', this.standardProjectAsteroid);
         $("#buildOcean").on('click', this.standardProjectAquifer);
         $("#buildGreenery").on('click', this.standardProjectGreenery);
         $("#buildCity").on('click', this.standardProjectCity);
+        //convert resources modal
         $("#sellSteel").on('click', this.sellSteel);
         $("#sellTitanium").on('click', this.sellTitanium);
         $("#convertPlants").on('click', this.convertPlants);
@@ -82,8 +91,8 @@ class Player {
                         bankAmountArray.push(bank);
                         bankAmountArray.push(action[index][bank]);
                     }
-                    for (var index = 0; index < bankAmountArray.length; index += 2) { //submit array to PLAYER's inventory BANK //look even for resource name, odd for amount //example array [energy, 3, heat, 2]
-                        this.inventory.changeAmount(index, index + 1)
+                    for (var bankChangeIndex = 0; bankChangeIndex < bankAmountArray.length; bankChangeIndex += 2) { //submit array to PLAYER's inventory BANK //look even for resource name, odd for amount //example array [energy, 3, heat, 2]
+                        this.inventory.resourceTrackers[bankChangeIndex].changeAmount(bankChangeIndex + 1)
                     }
                     break;
                 case 'production': //pass production objects to player's production
@@ -92,8 +101,8 @@ class Player {
                         productionAmountArray.push(production);
                         productionAmountArray.push(action[index][production]);
                     }
-                    for (var index = 0; index < productionAmountArray.length; index += 2) {//submit array to PLAYER's inventory PRODUCTION //look even for resource name, odd for amount //example array [energy, 3, heat, 2]
-                        this.inventory.changeProduction(index, index + 1)
+                    for (var productionChangeIndex = 0; productionChangeIndex < productionAmountArray.length; productionChangeIndex += 2) {//submit array to PLAYER's inventory PRODUCTION //look even for resource name, odd for amount //example array [energy, 3, heat, 2]
+                        this.inventory.resourceTrackers[productionChangeIndex].changeProduction(productionChangeIndex + 1)
                     }
                     break;
                 case 'status': //pass status objects to status
@@ -102,8 +111,8 @@ class Player {
                         statusAmountArray.push(status);
                         statusAmountArray.push(action[index][status]);
                     }
-                    for (var index = 0; index < statusAmountArray.length; index += 2) {//submit array to BOARD's STATUS to make changes //look even for status name, odd for amount //example array [temperature, 2, oxygen, 1]
-                        this.statusCallBack(index, index + 1); //requestStatusChange will need two parameters: statusType and amountToChange
+                    for (var statusChangeIndex = 0; statusChangeIndex < statusAmountArray.length; statusChangeIndex += 2) {//submit array to BOARD's STATUS to make changes //look even for status name, odd for amount //example array [temperature, 2, oxygen, 1]
+                        this.statusCallBack(statusChangeIndex, statusChangeIndex + 1); //requestStatusChange will need two parameters: statusType and amountToChange
                     }
                     break;
                 case 'tr': //pass tr number to player's tr
@@ -116,8 +125,8 @@ class Player {
                         tileTypeAmountArray.push(tileType);
                         tileTypeAmountArray.push(action[index][tileType]);
                     }
-                    for (var index = 0; index < statusAmountArray.length; index += 2) {//submit array to mapTiles //look even for tileType, odd for amount //example array [any, 1]; feeds [tileType, numberOfTiles]
-                        this.tileCallBack(index, index + 1);//requestTileChange will need two parameters: tileType and amountToChange
+                    for (var tileChangeIndex = 0; tileChangeIndex < statusAmountArray.length; tileChangeIndex += 2) {//submit array to mapTiles //look even for tileType, odd for amount //example array [any, 1]; feeds [tileType, numberOfTiles]
+                        this.tileCallBack(tileChangeIndex, tileChangeIndex + 1);//requestTileChange will need two parameters: tileType and amountToChange
                     }
                     break;
                 case 'drawActionCard': //dealCards to player
@@ -126,28 +135,31 @@ class Player {
                     break;
             }
         }
+        this.actions--;
     }
 
     checkStandardProjects() {
         //runs when 'Standard Projects' button is clicked
         //project buttons are greyed out by default, aka .disabled=true
-        if (this.hand.length > 0 && actions) {
-            $('.sellCardsButton').disabled = false;
+        if (this.hand.length <= 0) {
+            document.getElementById('sellCards').disabled = true;
+        } else {
+            this.isSelling = true;
         }
-        if (this.inventory.resourceTrackers[0].getAmount() > 11 && actions) {
-            $('.powerPlantButton').disabled = false;
+        if (this.inventory.resourceTrackers.money.getAmount() < 11){
+            document.getElementById('powerPlant').disabled = true;
         }
-        if (this.inventory.resourceTrackers[0].getAmount() > 14 && actions) {//also needs to check temp
-            $('.asteroidButton').disabled = false;
+        if (this.inventory.resourceTrackers.money.getAmount() < 14){//also needs to check temp
+            document.getElementById('increaseTemperature').disabled = true;
         }
-        if (this.inventory.resourceTrackers[0].getAmount() > 18 && actions) {//also needs to check # of oceans
-            $('.aquiferButton').disabled = false;
+        if (this.inventory.resourceTrackers.money.getAmount() < 18){//also needs to check # of oceans
+            document.getElementById('buildOcean').disabled = true;
         }
-        if (this.inventory.resourceTrackers[0].getAmount() > 23 && actions) {//also needs to check oxygen
-            $('.greeneryButton').disabled = false;
+        if (this.inventory.resourceTrackers.money.getAmount() < 23){//also needs to check oxygen
+            document.getElementById('buildGreenery').disabled = true;
         }
-        if (this.inventory.resourceTrackers[0].getAmount() > 25 && actions) {
-            $('.cityButton').disabled = false;
+        if (this.inventory.resourceTrackers.money.getAmount() < 25){
+            document.getElementById('buildCity').disabled = true;
         }
     }
 
@@ -155,88 +167,94 @@ class Player {
         //runs when .sellCardsButton is clicked
         //open hand modal
         //if player then clicks a card, remove it from their hand and increase their money by 1
-        //once they close the modal, actions-- (but not if they didn't sell any cards)
+        //once they close the modal, this.actions-- (but not if they didn't sell any cards)
+        $("#playActionCardModal").show();
+        this.actions--;
     }
 
     standardProjectPowerPlant() {
         //runs when .powerPlantButton is clicked
-        this.inventory.resourceTrackers[0].changeAmount(-11);
-        this.inventory.resourceTrackers[4].changeProduction(1);
-        actions--;
+        this.inventory.resourceTrackers.money.changeAmount(-11);
+        this.inventory.resourceTrackers.energy.changeProduction(1);
+        this.actions--;
     }
 
     standardProjectAsteroid() {
-        this.inventory.resourceTrackers[0].changeAmount(-14);
-        //needs to increase temp by 1 step and increase TR
-        actions--;
+        this.inventory.resourceTrackers.money.changeAmount(-14);
+        this.statusCallBack('temperature', 1); //needs to increase temp by 1 step and increase TR
+        this.inventory.changeTR(1);
+        this.actions--;
     }
 
     standardProjectAquifer() {
-        this.inventory.resourceTrackers[0].changeAmount(-18);
-        //needs to give player an ocean tile to place, which will also increase their TR
-        actions--;
+        this.inventory.resourceTrackers.money.changeAmount(-18);
+        this.tileCallBack('ocean', 1); //needs to give player an ocean tile to place, which will also increase their TR
+        this.inventory.changeTR(1);
+        this.actions--;
     }
 
     standardProjectGreenery() {
-        this.inventory.resourceTrackers[0].changeAmount(-23);
-        //needs to give player a greenery tile to place, which will increase oxygen and their TR
-        actions--;
+        this.inventory.resourceTrackers.money.changeAmount(-23);
+        this.tileCallBack('greenery', 1); //needs to give player a greenery tile to place, which will increase oxygen and their TR
+        this.inventory.changeTR(1);
+        this.actions--;
     }
 
     standardProjectCity() {
-        this.inventory.resourceTrackers[0].changeAmount(-25);
-        this.inventory.resourceTrackers[0].changeProduction(1);
-        //needs to give player a city tile to place
-        actions--;
+        this.inventory.resourceTrackers.money.changeAmount(-25);
+        this.inventory.resourceTrackers.money.changeProduction(2);
+        this.tileCallBack('city', 1); //needs to give player a city tile to place
+        this.inventory.changeTR(1);
+        this.actions--;
     }
 
-    convertResources() {
+    checkResources() {
         //runs when 'Conversions' button is clicked
         //convert buttons are greyed out by default, aka .disabled=true
-        if (this.inventory.getAmount(1) >= 1 && actions) {
-            $('#sellSteel').disabled = false;
+        if (this.inventory.resourceTrackers.steel.getAmount() < 1){
+            document.getElementById('sellSteel').disabled = true;
         }
-        if (this.inventory.getAmount(2) >= 1 && actions) {
-            $('#sellTitanium').disabled = false;
+        if (this.inventory.resourceTrackers.titanium.getAmount() < 1){
+            document.getElementById('sellTitanium').disabled = true;
         }
-        if (this.inventory.getAmount(3) >= 8 && actions) {
-            $('#convertPlants').disabled = false;
+        if (this.inventory.resourceTrackers.plants.getAmount() < 8){
+            document.getElementById('convertPlants').disabled = true;
         }
-        if (this.inventory.getAmount(5) >= 8 && actions) {
-            $('#convertHeat').disabled = false;
+        if (this.inventory.resourceTrackers.heat.getAmount() < 8){
+            document.getElementById('convertHeat').disabled = true;
+        }
     }
 
     sellSteel() {
         //runs when .sellSteelButton is clicked
-        var numberToSell; //get number to sell from user input
-        if (numberToSell <= this.inventory.resourceTrackers[1].getAmount()) {
-            this.inventory.resourceTrackers[1].changeAmount(-numberToSell);
-            this.inventory.resourceTrackers[0].changeAmount(2 * numberToSell);
-            this.actions--;
-        }
+        this.inventory.resourceTrackers.steel.changeAmount(-1);
+        this.inventory.resourceTrackers.money.changeAmount(2);
+        this.actions--;
     }
 
     sellTitanium() {
         //runs when .sellTitaniumButton is clicked
-        var numberToSell; //get number to sell from user input
-        if (numberToSell <= this.inventory.resourceTrackers[2].getAmount()) {
-            this.inventory.resourceTrackers[2].changeAmount(-numberToSell);
-            this.inventory.resourceTrackers[0].changeAmount(3 * numberToSell);
-            this.actions--;
-        }
+        this.inventory.resourceTrackers.titanium.changeAmount(-1);
+        this.inventory.resourceTrackers.money.changeAmount(3);
+        this.actions--;
     }
 
     convertPlants() {
         //runs when .convertPlantsButton is clicked
-        this.inventory.resourceTrackers[3].changeAmount(-8);
-        actions--;
+        this.inventory.resourceTrackers.plants.changeAmount(-8);
+        this.tileCallBack('greenery', 1);
+        this.statusCallBack('oxygen', 1);
+        this.inventory.changeTR(1);
+        this.actions--;
         //needs to give player a greenery tile to place, which will increase oxygen and their TR
     }
 
     convertHeat() {
         //runs when .convertHeatButton is clicked
-        this.inventory.resourceTrackers[5].changeAmount(-8);
-        actions--;
+        this.inventory.resourceTrackers.heat.changeAmount(-8);
+        this.statusCallBack('temperature', 1);
+        this.inventory.changeTR(1);
+        this.actions--;
         //also needs to increase temp by one step, and therefore increase TR by 1
     }
 }
