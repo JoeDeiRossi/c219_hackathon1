@@ -1,0 +1,125 @@
+body {
+  margin: 0;
+}
+
+.board {
+  height: 70vh;
+  background-color: purple;
+  font-size: 0;
+  width: 75%;
+}
+
+.board, .playerInfoArea {
+  display: inline-block;
+  font-size: 1rem;
+  height: 100%;
+}
+
+.statusInner {
+  font-size: 1rem;
+}
+
+.statusInner, .flex-container {
+  display: inline-block;
+}
+
+.buttonAndHandArea {
+  height: 30vh;
+  background-color: lightgreen;
+}
+
+.board-div {
+  width: 75%;
+  background-color: brown;
+}
+
+.status-div, .maptiles {
+  width: 95%;
+  border: 2px solid black;
+  position: relative;
+  top: 6%;
+  left: 2.5%;
+}
+
+.status-div {
+  height: 10%;
+
+}
+
+.maptiles {
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.status-div, .maptiles {
+  display: block;
+}
+
+.players-div {
+  background-color: dodgerblue;
+  width: 25%;
+}
+
+.players-display {
+  border: 2px solid black;
+  height: 85%;
+  width: 85%;
+  position: relative;
+  top: 7.5%;
+  left: 7.5%;
+}
+
+.action-cards-div {
+  background-color: purple;
+  height: 30vh;
+}
+
+.cards-display {
+  border: 2px solid black;
+  height: 85%;
+  width: 85%;
+  position: relative;
+  top: 7.5%;
+  left: 7.5%;
+}
+
+
+/* .flex-container{
+  display: flex;
+  background-color: navy;
+  flex-direction: column;
+  justify-content: center;
+} */
+
+ .row {
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+}
+
+.tile {
+  background-color: gold;
+  height: 20px;
+  width: 20px;
+  border: 1px solid black;
+  box-sizing: border-box;
+}
+
+.ocean {
+  background-color: skyblue;
+}
+
+/* ------------------------------------------------------------------------ */
+
+.actionCardContainer {
+  border: 1px solid black;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.playerInfo {
+  display: inline-block;
+}
