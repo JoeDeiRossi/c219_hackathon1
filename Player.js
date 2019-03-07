@@ -204,6 +204,7 @@ class Player {
         }
         if (this.inventory.getAmount(5) >= 8 && actions) {
             $('#convertHeat').disabled = false;
+        }
     }
 
     sellSteel() {
