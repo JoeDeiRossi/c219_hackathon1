@@ -50,13 +50,13 @@ class Map {
 }
 
 class MapTile {
-    constructor(number, rewards, canBeOcean, callback, rewardCallback) {
+    constructor(number, rewards, canBeOcean, rewardCallback) {
 
         /* store the dom element associated with this MapTile*/
         this.domElement = null;
 
         /* callback function that is passed down from Map (or Game, really) */
-        this.callback = callback;
+        this.rewardCallback = rewardCallback;
 
         /* this MapTile's number */
         this.tileNumber = number;
@@ -72,7 +72,6 @@ class MapTile {
         /* an object with this MapTile's rewards */
         this.rewards = rewards;
 
-        this.rewardCallback = rewardCallback;
         this.clickHandler = this.clickHandler.bind(this);
 
         /* array of MapTile objects that are neighbors */
@@ -81,9 +80,10 @@ class MapTile {
 
     clickHandler() {
         /* handle click by calling the function we got as a param and pass in THIS MapTile */
-      // this.callback(this);
-      // this.testForOcean();
-      // this.testForAvailability();
+    //   this.callback(this);
+      this.testForOcean();
+      this.testForAvailability();
+      this.removeRewardsFromMap();
       this.rewardCallback(this.rewards);
 
     }
@@ -101,11 +101,44 @@ class MapTile {
     testForAvailability() {
       if(this.available === true) {
         console.log('your tile was placed');
-        
+
       } else {
         console.log('choose another tile')
       }
       this.available = false;
+    }
+
+
+
+    showRewards() {
+      if(this.rewards.greenery === 1) {
+        this.domElement.text('p')
+      }
+      if(this.rewards.greenery === 2) {
+        this.domElement.text('pp')
+      }
+      if(this.rewards.steel === 1) {
+        this.domElement.text('s')
+      }
+      if(this.rewards.steel === 2) {
+        this.domElement.text('ss')
+      }
+      if(this.rewards.titanium === 1) {
+        this.domElement.append('t')
+      }
+      if(this.rewards.titanium === 2) {
+        this.domElement.text('tt')
+      }
+      if(this.rewards.card === 1) {
+        this.domElement.text('c')
+      }
+      if(this.rewards.card === 2) {
+        this.domElement.text('cc')
+      }
+    }
+
+    removeRewardsFromMap() {
+      this.domElement.text('')
     }
 
 
@@ -115,6 +148,7 @@ class MapTile {
         if(this.canBeOcean === true) {
           this.domElement.css('background-color', 'dodgerblue');
         }
+        this.showRewards()
 
         /* add a click handler to the div */
         this.domElement.click(this.clickHandler);

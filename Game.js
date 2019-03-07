@@ -2,7 +2,7 @@ $(document).ready(testFunction);
 
 class Game {
     constructor(players, cardArray, mapTileInfoArray) {
-      
+
         this.playCard = this.playCard.bind(this);
         this.rewardCallback = this.rewardCallback.bind(this);
         this.board = new Board(titleInfoArray, this.actionPhase, this.rewardCallback);
@@ -57,6 +57,10 @@ class Game {
             player.updateHand();
     }
 
+    chooseTileType() {
+      
+    }
+
     changePlayers() {
         /* change the current player to the next in players array */
         this.currentPlayerIndex++;
@@ -77,7 +81,7 @@ class Game {
     actionPhase() {
         console.log('test');
     }
-        
+
 
         /* show buttons or hand? give the player their options */
         /* then change players - call changePlayers at the end of each action */
@@ -216,7 +220,6 @@ function testFunction() {
     function tester() {
         console.log('test');
     }
-    
+
     test = new Game(1, cardArray, titleInfoArray);
 }
-
