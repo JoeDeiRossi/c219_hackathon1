@@ -37,7 +37,7 @@ class Game {
             this.dealCards(this.players[index], 2);
         }
 
-        // this.startRound();
+        this.startRound();
     }
 
     startRound() {
@@ -49,12 +49,12 @@ class Game {
         /* buy phase? */
     }
 
-    dealCards(player, number) {
+    dealCards(player, number, update=true) {
         var newCards = this.deck.drawCards(number);
         for(var cardIndex in newCards) {
             player.hand.push(newCards[cardIndex])
         }
-        player.updateHand();
+            player.updateHand();
     }
 
     changePlayers() {
@@ -73,8 +73,11 @@ class Game {
         }
     }
 
+    /* sets up the buttons and play area for the current player, call after changing player turns */
     actionPhase() {
         console.log('test');
+
+        
 
         /* show buttons or hand? give the player their options */
         /* then change players - call changePlayers at the end of each action */
@@ -212,6 +215,5 @@ function testFunction() {
         console.log('test');
     }
     
-    test = new Game(2, cardArray, titleInfoArray);
-    test.startGame();
+    test = new Game(1, cardArray, titleInfoArray);
 }
