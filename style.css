@@ -4,24 +4,29 @@ body {
   width: 100%;
 }
 
+.top {
+  height: 70%;
+  font-size: 0;
+}
+
 .board {
-  height: 70vh;
   background-color: purple;
-  /* font-size: 0; */
   width: 75%;
   position: relative;
+  height: 100%;
 }
 
 .board, .playerInfoArea {
   display: inline-block;
+  font-size: 1rem;
+  vertical-align: top;
 }
 
 .playerInfoArea {
   width: 25%;
   background-color: firebrick;
-  position: absolute;
   left: 75%;
-  height: 70vh;
+  height: 100%;
   font-size: .8rem;
 }
 
@@ -63,8 +68,9 @@ body {
 }
 
 .buttonAndHandArea {
-  height: 30vh;
+  height: 30%;
   background-color: lightgreen;
+  position: relative;
 }
 
 .status-div, .maptiles {
@@ -151,9 +157,48 @@ body {
 }
 
 /* ------------------------------------------------------------------------ */
+.actionArea {
+  position: relative;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.actionArea > button {
+  height: 150px;
+  width: 150px;
+  border-radius: 5px;
+  margin: 20px;
+  vertical-align: middle;
+  font-size: 1.5em;
+}
+
+.modal {
+  #display: none;
+  position: absolute;
+  bottom: 100%;
+  left: 25%;
+}
+
+.modalContent {
+  background: black;
+  color: white;
+}
+
+.close {
+  float: right;
+  font-size: 1.5em;
+}
+
+.close:hover {
+  color: grey;
+}
 
 .actionCardContainer {
-  border: 1px solid black;
+  border: 1px solid white;
   border-radius: 5px;
   display: inline-block;
+  height: 150px;
+  width: 150px;
+  vertical-align: middle;
 }
