@@ -32,10 +32,10 @@ var cardDeck = [
     {'name': 'Towing a Comet', 'cost': 23, 'action': {'bank': {'plant': 2}, 'status': {'oxygen': 1}, 'tile': {'ocean': 1}}},
     {'name': 'Subterranean Reservoir', 'cost': 11, 'action': {'tile': {'ocean': 1}}},
     {'name': 'Convoy from Europa', 'cost': 15, 'action': {'tile': {'ocean': 1}, 'drawActionCard': 1}},
-    {'name': 'Steel Mining Rights', 'cost': 9, 'action': {'tile': {'steel': 1}}},
-    {'name': 'Titanium Mining Rights', 'cost': 9, 'action': {'tile': {'titanium': 1}}},
+    {'name': 'Steel Mining Rights', 'cost': 9, 'action': {'tile': {'city': 1}}},
+    {'name': 'Titanium Mining Rights', 'cost': 9, 'action': {'tile': {'city': 1}}},
     {'name': 'Ice Asteroid', 'cost': 23, 'action': {'tile': {'ocean': 2}}},
-    {'name': 'Nuclear Zone', 'cost': 10, 'action': {'status': {'temperature': 2}, 'tile': {'any': 1}}}, //tr: -2 at the end of game
+    {'name': 'Nuclear Zone', 'cost': 10, 'action': {'status': {'temperature': 2}, 'tile': {'city': 1}}}, //tr: -2 at the end of game
 ];
 
 class Deck {
@@ -94,16 +94,7 @@ class Card {
         for(var i = 0; i < actionInput.length; i++){
             var actionDetail = $("<div>", {'class': 'actionDetail'});
             var text = actionDetail.text(actionInput[i]);
-            var addBreak = $("<br>");
-            if(i % 2 === 0){
-                action.append(text);
-            } else {
-                if(i === actionInput.length - 1){
-                    action.append(text);
-                } else{
-                    action.append(text, addBreak);
-                }
-            }
+            action.append(text);
         }
         innerContainer.append(actionName, actionCost, action);
         this.domElement = container.append(innerContainer);
