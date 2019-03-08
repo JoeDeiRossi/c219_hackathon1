@@ -14,6 +14,7 @@ class Player {
         this.playedCards = [];
         this.actions = 2;
 
+        this.eventListeners = this.eventListeners.bind(this);
         this.playCard = this.playCard.bind(this);
         this.checkStandardProjects = this.checkStandardProjects.bind(this);
         this.checkResources = this.checkResources.bind(this);
@@ -28,6 +29,7 @@ class Player {
         this.convertPlants = this.convertPlants.bind(this);
         this.convertHeat = this.convertHeat.bind(this);
 
+
         this.eventListeners();
     }
 
@@ -40,21 +42,24 @@ class Player {
         return this.domElement;
     }
     eventListeners(){ //for buttons activating action modals and modals itself
+
+        var test = this;
         $("#playCard").on('click', function(){
-                $("#playActionCardModal").show();
+            $("#playActionCardModal").show();
         });
         $("#standardProject").on('click', function(){
-            this.checkStandardProjects();
+            test.checkStandardProjects();
             $("#standardProjectsModal").show();
         });
         $("#convertResources").on('click', function(){
-            this.checkResources();
+            test.checkResources();
             $("#convertResourcesModal").show();
         });
 
         $(".close").on('click', function(){
             var modalParent = $(".close").parent();
-            modalParent.hide();
+            var modalGrandparent = modalParent.parent();
+            modalGrandparent.hide();
         });
 
         //standard project modal

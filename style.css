@@ -132,7 +132,7 @@ body {
   transform: translateX(-50%);
 }
 
-.modalContent {
+.playActionCardModalContent, .standardProjectsModalContent, .convertResourcesModalContent {
   background: black;
   color: white;
   padding: 5px 15px 15px 15px;
