@@ -77,65 +77,98 @@ class Player {
         }
     }
 
+    process(rewards) {
+        var type = Object.keys(rewards)[0];
+        var change = Object.values(rewards)[0];
+        console.log(type, change);
+
+        switch (type) {
+            case 'greenery':
+                this.inventory.resourceTrackers['plants'].changeAmount(change);
+                break;
+            case 'titanium':
+                this.inventory.resourceTrackers['titanium'].changeAmount(change);
+                break;
+            case 'steel':
+                this.inventory.resourceTrackers['steel'].changeAmount(change);
+                break;
+            case 'card':
+                this.dealCardCallBack(change);
+                break;
+        }
+        
+
+    }
+
     playCard(cardObj) {
 
         /* takes in card object from hand? or index of card in hand array 
            remove from hand array and move to used cards
            then execute the card's functions */
         var action = cardObj.action;
-        for(var index in action){
-            switch(index) {
-                case 'bank': //pass bank objects to player's bank
-                    var bankAmountArray = [];
-                    for (var bank in action[index]) {
-                        bankAmountArray.push(bank);
-                        bankAmountArray.push(action[index][bank]);
-                    }
-                    for (var bankChangeIndex = 0; bankChangeIndex < bankAmountArray.length; bankChangeIndex += 2) { //submit array to PLAYER's inventory BANK //look even for resource name, odd for amount //example array [energy, 3, heat, 2]
-                        this.inventory.resourceTrackers[bankChangeIndex].changeAmount(bankChangeIndex + 1)
-                    }
-                    break;
-                case 'production': //pass production objects to player's production
-                    var productionAmountArray = [];
-                    for (var production in action[index]) {
-                        productionAmountArray.push(production);
-                        productionAmountArray.push(action[index][production]);
-                    }
-                    for (var productionChangeIndex = 0; productionChangeIndex < productionAmountArray.length; productionChangeIndex += 2) {//submit array to PLAYER's inventory PRODUCTION //look even for resource name, odd for amount //example array [energy, 3, heat, 2]
-                        this.inventory.resourceTrackers[productionChangeIndex].changeProduction(productionChangeIndex + 1)
-                    }
-                    break;
-                case 'status': //pass status objects to status
-                    var statusAmountArray = [];
-                    for (var status in action[index]) {
-                        statusAmountArray.push(status);
-                        statusAmountArray.push(action[index][status]);
-                    }
-                    for (var statusChangeIndex = 0; statusChangeIndex < statusAmountArray.length; statusChangeIndex += 2) {//submit array to BOARD's STATUS to make changes //look even for status name, odd for amount //example array [temperature, 2, oxygen, 1]
-                        this.statusCallBack(statusChangeIndex, statusChangeIndex + 1); //requestStatusChange will need two parameters: statusType and amountToChange
-                    }
-                    break;
-                case 'tr': //pass tr number to player's tr
-                    var trAmount = action[index];
-                    this.inventory.changeTR(trAmount);//submit number to PLAYER's TR to make changes
-                    break;
-                case 'tile': //activate tile to click on, tiles should receive [ocean, city, steel, titanium, any]
-                    var tileTypeAmountArray = [];
-                    for (var tileType in action[index]){
-                        tileTypeAmountArray.push(tileType);
-                        tileTypeAmountArray.push(action[index][tileType]);
-                    }
-                    for (var tileChangeIndex = 0; tileChangeIndex < statusAmountArray.length; tileChangeIndex += 2) {//submit array to mapTiles //look even for tileType, odd for amount //example array [any, 1]; feeds [tileType, numberOfTiles]
-                        this.tileCallBack(tileChangeIndex, tileChangeIndex + 1);//requestTileChange will need two parameters: tileType and amountToChange
-                    }
-                    break;
-                case 'drawActionCard': //dealCards to player
-                    var dealNumberOfCards = action[index];
-                        this.dealCardCallBack(dealNumberOfCards); //submit number to GAME's DECK to push # of card(s) into currentPLAYER's HAND
-                    break;
+        if(this.inventory.resourceTrackers['money'].getAmount() >= cardObj.cost) {   
+            this.inventory.resourceTrackers['money'].changeAmount(-1 * cardObj.cost);
+            for(var index in action){
+                switch(index) {
+                    case 'bank': //pass bank objects to player's bank
+                    console.log('add to resources');
+                        var bankAmountArray = [];
+                        for (var bank in action[index]) {
+                            bankAmountArray.push(bank);
+                            bankAmountArray.push(action[index][bank]);
+                        }
+                        for (var bankChangeIndex = 0; bankChangeIndex < bankAmountArray.length; bankChangeIndex += 2) { //submit array to PLAYER's inventory BANK //look even for resource name, odd for amount //example array [energy, 3, heat, 2]
+                            this.inventory.resourceTrackers[bankAmountArray[bankChangeIndex]].changeAmount(bankAmountArray[bankChangeIndex + 1]);
+                        }
+                        break;
+                    case 'production': //pass production objects to player's production
+                    console.log('add to production');
+                        var productionAmountArray = [];
+                        for (var production in action[index]) {
+                            productionAmountArray.push(production);
+                            productionAmountArray.push(action[index][production]);
+                        }
+                        for (var productionChangeIndex = 0; productionChangeIndex < productionAmountArray.length; productionChangeIndex += 2) {//submit array to PLAYER's inventory PRODUCTION //look even for resource name, odd for amount //example array [energy, 3, heat, 2]
+                            this.inventory.resourceTrackers[productionAmountArray[productionChangeIndex]].changeAmount(productionAmountArray[productionChangeIndex + 1]);
+                        }
+                        break;
+                    case 'status': //pass status objects to status
+                        var statusAmountArray = [];
+                        for (var status in action[index]) {
+                            statusAmountArray.push(status);
+                            statusAmountArray.push(action[index][status]);
+                        }
+                        for (var statusChangeIndex = 0; statusChangeIndex < statusAmountArray.length; statusChangeIndex += 2) {//submit array to BOARD's STATUS to make changes //look even for status name, odd for amount //example array [temperature, 2, oxygen, 1]
+                            this.statusCallBack(statusAmountArray[statusChangeIndex], statusAmountArray[statusChangeIndex + 1]); //requestStatusChange will need two parameters: statusType and amountToChange
+                        }
+                        break;
+                    case 'tr': //pass tr number to player's tr
+                        console.log('add to TR');
+                        var trAmount = action[index];
+                        this.inventory.changeTR(trAmount);//submit number to PLAYER's TR to make changes
+                        break;
+                    case 'tile': //activate tile to click on, tiles should receive [ocean, city, steel, titanium, any]
+                        var tileTypeAmountArray = [];
+                        for (var tileType in action[index]){
+                            tileTypeAmountArray.push(tileType);
+                            tileTypeAmountArray.push(action[index][tileType]);
+                        }
+                        for (var tileChangeIndex = 0; tileChangeIndex < tileTypeAmountArray.length; tileChangeIndex += 2) {//submit array to mapTiles //look even for tileType, odd for amount //example array [any, 1]; feeds [tileType, numberOfTiles]
+                            console.log('handle tile add');
+                            this.tileCallBack(tileTypeAmountArray[tileChangeIndex], tileTypeAmountArray[tileChangeIndex + 1]);//requestTileChange will need two parameters: tileType and amountToChange
+                        }
+                        break;
+                    case 'drawActionCard': //dealCards to player
+                        var dealNumberOfCards = action[index];
+                            console.log('handle drawing card');
+                            this.dealCardCallBack(dealNumberOfCards); //submit number to GAME's DECK to push # of card(s) into currentPLAYER's HAND
+                        break;
+                }
             }
+            this.actions--;
+        } else {
+            console.log('Not enough money');
         }
-        this.actions--;
     }
 
     checkStandardProjects() {

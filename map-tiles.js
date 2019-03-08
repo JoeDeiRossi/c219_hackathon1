@@ -275,8 +275,6 @@ class MapTile {
 
     }
 
-    markAsUnavailable
-
     render() {
         var newDiv = $('<div>', {class: 'mapTile', id: 'tile-' + this.tileNumber});
         this.domElement.click(putClickHandlerFunctionHere);
