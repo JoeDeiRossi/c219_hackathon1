@@ -1,19 +1,19 @@
 body {
   margin: 0;
   height: 100vh;
+  width: 100%;
 }
 
 .board {
   height: 70vh;
   background-color: purple;
-  font-size: 0;
+  /* font-size: 0; */
   width: 75%;
   position: relative;
 }
 
 .board, .playerInfoArea {
   display: inline-block;
-  font-size: 1rem;
 }
 
 .playerInfoArea {
@@ -21,7 +21,7 @@ body {
   background-color: firebrick;
   position: absolute;
   left: 75%;
-  height: 70%;
+  height: 70vh;
   font-size: .8rem;
 }
 
@@ -49,10 +49,13 @@ body {
 
 .statusInner {
   font-size: 1rem;
+  width: 10%;
 }
 
 .statusInner, .flex-container {
   display: inline-block;
+  position: relative;
+  top: 30%;
 }
 
 .trackerType {
@@ -62,11 +65,6 @@ body {
 .buttonAndHandArea {
   height: 30vh;
   background-color: lightgreen;
-}
-
-.board-div {
-  width: 75%;
-  background-color: brown;
 }
 
 .status-div, .maptiles {
@@ -122,6 +120,10 @@ body {
   left: 7.5%;
 }
 
+.flex-container {
+  width: 20%;
+  left: 35%;
+}
 
 /* .flex-container{
   display: flex;

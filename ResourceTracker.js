@@ -54,7 +54,7 @@ class ResourceTracker {
                     $('<div>', {'class': 'trackerValue'}).text(0)
                 ),
                 $('<div>', {'class': 'trackerProduction'}).append(
-                    $('<div>', {'class': 'trackerLabel'}).text('Production'),
+                    $('<div>', {'class': 'trackerLabel'}).text('Prod.'),
                     $('<div>', {'class': 'trackerValue'}).text(1)
                 )
             )
