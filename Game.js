@@ -94,7 +94,8 @@ class Game {
         /* then change players - call changePlayers at the end of each action */
 
     rewardCallback(reward) {
-        console.log('test');
+        this.canPlaceTile = false;
+        console.log(reward);
     }
 
     /* connects Card click handler and Player class */
