@@ -125,7 +125,7 @@ body {
 }
 
 .modal {
-  #display: none;
+  display: none;
   position: absolute;
   bottom: 100%;
   left: 50%;
