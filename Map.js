@@ -1,9 +1,83 @@
+var titleInfoArray = [
+
+    {rewards: {steel: 2}, canBeOcean: false},                       //FIRST ROW
+    {rewards: {steel: 2}, canBeOcean: true},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {card: 1}, canBeOcean: true},
+    {rewards: {}, canBeOcean: true},
+
+    {rewards: {}, canBeOcean: false},                               //SECOND ROW
+    {rewards: {steel: 1}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {card: 2}, canBeOcean: true},
+
+    {rewards: {card: 1}, canBeOcean: false},                        //THIRD ROW
+    {rewards: {}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {steel: 1}, canBeOcean: false},
+
+    {rewards: {greenery: 1, titanium: 1}, canBeOcean: false},       //FOURTH ROW
+    {rewards: {greenery: 1}, canBeOcean: false},
+    {rewards: {greenery: 1}, canBeOcean: false},
+    {rewards: {greenery: 1}, canBeOcean: false},
+    {rewards: {greenery: 2}, canBeOcean: false},
+    {rewards: {greenery: 1}, canBeOcean: false},
+    {rewards: {greenery: 1}, canBeOcean: false},
+    {rewards: {greenery: 2}, canBeOcean: true},
+
+    {rewards: {greenery: 2}, canBeOcean: false},                    //FIFTH ROW
+    {rewards: {greenery: 2}, canBeOcean: false},
+    {rewards: {greenery: 2}, canBeOcean: false},
+    {rewards: {greenery: 2}, canBeOcean: true},
+    {rewards: {greenery: 2}, canBeOcean: true},
+    {rewards: {greenery: 2}, canBeOcean: true},
+    {rewards: {greenery: 2}, canBeOcean: false},
+    {rewards: {greenery: 2}, canBeOcean: false},
+    {rewards: {greenery: 2}, canBeOcean: false},
+
+    {rewards: {greenery: 1}, canBeOcean: false},                    //SIXTH ROW
+    {rewards: {greenery: 2}, canBeOcean: false},
+    {rewards: {greenery: 1}, canBeOcean: false},
+    {rewards: {greenery: 1}, canBeOcean: false},
+    {rewards: {greenery: 1}, canBeOcean: false},
+    {rewards: {greenery: 1}, canBeOcean: true},
+    {rewards: {greenery: 1}, canBeOcean: true},
+    {rewards: {greenery: 1}, canBeOcean: true},
+
+    {rewards: {}, canBeOcean: false},                               //SEVENTH ROW
+    {rewards: {}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {greenery: 1}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+
+    {rewards: {steel: 2}, canBeOcean: false},                       //8TH ROW
+    {rewards: {}, canBeOcean: false},
+    {rewards: {card: 1}, canBeOcean: false},
+    {rewards: {card: 1}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {titanium: 1}, canBeOcean: false},
+
+    {rewards: {steel: 1}, canBeOcean: false,},                      //9TH ROW
+    {rewards: {steel: 2}, canBeOcean: false,},
+    {rewards: {}, canBeOcean: false,},
+    {rewards: {}, canBeOcean: false,},
+    {rewards: {titanium: 2}, canBeOcean: true}
+  ];
+
 class Map {
-    constructor(tileInfoArray, mapTileClickHandler, rewardCallback) {
+    constructor(tileInfoArray, mapTileClickHandler, rewardCallback, askIfPlaceTileCallback) {
 
         this.data = tileInfoArray;
         this.mapTileCallback = mapTileClickHandler;
         this.rewardCallback = rewardCallback;
+        this.askIfPlaceTileCallback = askIfPlaceTileCallback;
 
         /* Map object has an array of MapTile objects */
         this.mapTiles = [];
@@ -32,7 +106,8 @@ class Map {
                     tileNumber,
                     this.data[tileNumber].rewards,
                     this.data[tileNumber].canBeOcean,
-                    this.mapTileCallback
+                    this.mapTileCallback,
+                    this.askIfPlaceTileCallback
                     );
                 this.mapTiles.push(newMapTile);
 
@@ -51,14 +126,14 @@ class Map {
 }
 
 class MapTile {
-    constructor(number, rewards, canBeOcean, rewardCallback) {
+    constructor(number, rewards, canBeOcean, rewardCallback, askIfPlaceTileCallback) {
 
         /* store the dom element associated with this MapTile*/
         this.domElement = null;
 
         /* callback function that is passed down from Map (or Game, really) */
         this.rewardCallback = rewardCallback;
-
+        this.askIfPlaceTileCallback = askIfPlaceTileCallback;
         /* this MapTile's number */
         this.tileNumber = number;
 
@@ -87,7 +162,10 @@ class MapTile {
 
       this.removeRewardsFromMap();
 
-      this.rewardCallback(this.rewards);
+
+      if(this.askIfPlaceTileCallback()) {
+        this.rewardCallback(this.rewards);
+      }
 
     }
 
