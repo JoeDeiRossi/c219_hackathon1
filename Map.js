@@ -4,6 +4,7 @@ class Map {
         this.data = tileInfoArray;
         this.mapTileCallback = mapTileClickHandler;
         this.rewardCallback = rewardCallback;
+
         /* Map object has an array of MapTile objects */
         this.mapTiles = [];
         this.mapRowLengths = [5, 6, 7, 8, 9, 8, 7, 6, 5];
@@ -83,10 +84,9 @@ class MapTile {
     //   this.callback(this);
       this.testForOcean();
       this.testForAvailability();
-<<<<<<< HEAD
+
       this.removeRewardsFromMap();
-=======
->>>>>>> da50261f8b85829c9101a6181f64c6f70b847be8
+
       this.rewardCallback(this.rewards);
 
     }
@@ -104,7 +104,6 @@ class MapTile {
     testForAvailability() {
       if(this.available === true) {
         console.log('your tile was placed');
-
       } else {
         console.log('choose another tile')
       }
@@ -141,7 +140,7 @@ class MapTile {
     }
 
     removeRewardsFromMap() {
-      this.domElement.text('')
+        this.domElement.text('')
     }
 
 

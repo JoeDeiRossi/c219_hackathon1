@@ -8,6 +8,7 @@ class Board {
         this.oceanTiles = 9;
         this.turnNumber = 1;
         this.domElement.append(this.map.render());
+        this.addTileCheck = true;
     }
 
     /* probably should have more methods */

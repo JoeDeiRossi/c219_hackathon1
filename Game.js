@@ -5,7 +5,7 @@ class Game {
 
         this.playCard = this.playCard.bind(this);
         this.rewardCallback = this.rewardCallback.bind(this);
-        this.board = new Board(titleInfoArray, this.actionPhase, this.rewardCallback);
+        this.board = new Board(titleInfoArray, this.actionPhase, this.rewardCallback, this.receiveTileOptions);
         this.deck = new Deck(this.playCard);
         this.players = [];
 
@@ -58,7 +58,7 @@ class Game {
     }
 
     chooseTileType() {
-      
+
     }
 
     changePlayers() {
@@ -97,6 +97,10 @@ class Game {
 
     mapTileCallback(reward) {
         /* add rewards to current player */
+    }
+
+    receiveTileOptions(tileArray) {
+      //determines which tiles are added to gameboard
     }
 
 }
