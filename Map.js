@@ -72,10 +72,9 @@ var titleInfoArray = [
   ];
 
 class Map {
-    constructor(tileInfoArray, mapTileClickHandler, rewardCallback, askIfPlaceTileCallback) {
+    constructor(tileInfoArray, rewardCallback, askIfPlaceTileCallback) {
 
         this.data = tileInfoArray;
-        this.mapTileCallback = mapTileClickHandler;
         this.rewardCallback = rewardCallback;
         this.askIfPlaceTileCallback = askIfPlaceTileCallback;
 
@@ -106,7 +105,7 @@ class Map {
                     tileNumber,
                     this.data[tileNumber].rewards,
                     this.data[tileNumber].canBeOcean,
-                    this.mapTileCallback,
+                    this.rewardCallback,
                     this.askIfPlaceTileCallback
                     );
                 this.mapTiles.push(newMapTile);
@@ -164,7 +163,7 @@ class MapTile {
 
 
       if(this.askIfPlaceTileCallback()) {
-        this.rewardCallback(this.rewards);
+        this.rewardCallback(this, this.rewards);
       }
 
     }

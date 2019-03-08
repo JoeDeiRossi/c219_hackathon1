@@ -77,6 +77,29 @@ class Player {
         }
     }
 
+    process(rewards) {
+        var type = Object.keys(rewards)[0];
+        var change = Object.values(rewards)[0];
+        console.log(type, change);
+
+        switch (type) {
+            case 'greenery':
+                this.inventory.resourceTrackers['plants'].changeAmount(change);
+                break;
+            case 'titanium':
+                this.inventory.resourceTrackers['titanium'].changeAmount(change);
+                break;
+            case 'steel':
+                this.inventory.resourceTrackers['steel'].changeAmount(change);
+                break;
+            case 'card':
+                this.dealCardCallBack(change);
+                break;
+        }
+        
+
+    }
+
     playCard(cardObj) {
 
         /* takes in card object from hand? or index of card in hand array 
@@ -138,7 +161,7 @@ class Player {
                     case 'drawActionCard': //dealCards to player
                         var dealNumberOfCards = action[index];
                             console.log('handle drawing card');
-                            // this.dealCardCallBack(dealNumberOfCards); //submit number to GAME's DECK to push # of card(s) into currentPLAYER's HAND
+                            this.dealCardCallBack(dealNumberOfCards); //submit number to GAME's DECK to push # of card(s) into currentPLAYER's HAND
                         break;
                 }
             }

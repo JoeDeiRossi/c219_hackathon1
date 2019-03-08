@@ -1,8 +1,8 @@
 class Board {
-    constructor(tileInfoArray, mapTileClickHandler, rewardCallback, askIfPlaceTileCallback) {
+    constructor(tileInfoArray, rewardCallback, askIfPlaceTileCallback) {
 
         this.domElement = $('.board');
-        this.map = new Map(tileInfoArray, mapTileClickHandler, rewardCallback, askIfPlaceTileCallback);
+        this.map = new Map(tileInfoArray, rewardCallback, askIfPlaceTileCallback);
         this.domElement.append(this.map.render());
         this.addTileCheck = true;
     }

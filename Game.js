@@ -4,11 +4,13 @@ class Game {
     constructor(players) {
 
         this.playCard = this.playCard.bind(this);
-        this.rewardCallback = this.rewardCallback.bind(this);
+        this.tilePlacementResultsCallback = this.tilePlacementResultsCallback.bind(this);
         this.playerChangeStatusCallback = this.playerChangeStatusCallback.bind(this);
         this.playerAddTileCallback = this.playerAddTileCallback.bind(this);
+        this.playerDrawCardCallback = this.playerDrawCardCallback.bind(this);
+        this.askIfCanPlaceTile = this.askIfCanPlaceTile.bind(this);
 
-        this.board = new Board(titleInfoArray, this.actionPhase, this.rewardCallback, this.askIfCanPlaceTile);
+        this.board = new Board(titleInfoArray, this.tilePlacementResultsCallback, this.askIfCanPlaceTile);
         this.deck = new Deck(this.playCard);
         this.players = [];
 
@@ -17,10 +19,16 @@ class Game {
         this.roundEnd = false;
         this.gameOver = false;
 
+        this.oxygen = {min: 0, max: 14, current: 0};
+        this.temperature = {min: -30, max: 8, current: -30};
+        this.oceanTiles = 9;
+        this.turnNumber = 1;
+
         this.canPlaceTile = false;
+        this.tilePlacementType = null;
 
         for (var index = 0; index < players; index++) {
-            var newPlayer = new Player(index, this.playerChangeStatusCallback, this.playerAddTileCallback);
+            var newPlayer = new Player(index, this.playerChangeStatusCallback, this.playerAddTileCallback, this.playerDrawCardCallback);
             this.players.push(newPlayer);
 
             $('.playerInfoArea').append(newPlayer.render());
@@ -30,11 +38,6 @@ class Game {
         this.turnCount = 0;
         this.currentPlayerIndex = 0;
         this.currentPlayer = this.players[this.currentPlayerIndex];
-
-        this.oxygen = {min: 0, max: 14, current: 0};
-        this.temperature = {min: -30, max: 8, current: -30};
-        this.oceanTiles = 9;
-        this.turnNumber = 1;
 
         this.startGame();
     }
@@ -54,13 +57,13 @@ class Game {
     startRound() {
         /* all players get two cards per turn */
         for (var index in this.players) {
-            this.dealCards(this.players[index], 2);
+            this.dealCards(this.players[index], 6);
         }
 
         /* buy phase? */
     }
 
-    dealCards(player, number, update=true) {
+    dealCards(player, number) {
         var newCards = this.deck.drawCards(number);
         for(var cardIndex in newCards) {
             player.hand.push(newCards[cardIndex])
@@ -93,9 +96,13 @@ class Game {
         /* show buttons or hand? give the player their options */
         /* then change players - call changePlayers at the end of each action */
 
-    rewardCallback(reward) {
+    tilePlacementResultsCallback(mapTile, rewards) {
         this.canPlaceTile = false;
-        console.log(reward);
+
+        mapTile.owner = this.currentPlayer;
+        mapTile.typeOfTile = this.tilePlacementType;
+        
+        this.currentPlayer.process(rewards);
     }
 
     /* connects Card click handler and Player class */
@@ -141,12 +148,16 @@ class Game {
 
     playerAddTileCallback(tileType, change) {
         this.canPlaceTile = true;
+        this.tilePlacementType = tileType;
     }
 
     askIfCanPlaceTile() {
       return this.canPlaceTile;
     }
 
+    playerDrawCardCallback(cardCount) {
+        this.dealCards(this.currentPlayer, cardCount);
+    }
 }
 
 var test;
