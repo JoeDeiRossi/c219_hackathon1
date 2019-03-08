@@ -1,3 +1,76 @@
+var titleInfoArray = [
+
+    {rewards: {steel: 2}, canBeOcean: false},                       //FIRST ROW
+    {rewards: {steel: 2}, canBeOcean: true},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {card: 1}, canBeOcean: true},
+    {rewards: {}, canBeOcean: true},
+
+    {rewards: {}, canBeOcean: false},                               //SECOND ROW
+    {rewards: {steel: 1}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {card: 2}, canBeOcean: true},
+
+    {rewards: {card: 1}, canBeOcean: false},                        //THIRD ROW
+    {rewards: {}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {steel: 1}, canBeOcean: false},
+
+    {rewards: {greenery: 1, titanium: 1}, canBeOcean: false},       //FOURTH ROW
+    {rewards: {greenery: 1}, canBeOcean: false},
+    {rewards: {greenery: 1}, canBeOcean: false},
+    {rewards: {greenery: 1}, canBeOcean: false},
+    {rewards: {greenery: 2}, canBeOcean: false},
+    {rewards: {greenery: 1}, canBeOcean: false},
+    {rewards: {greenery: 1}, canBeOcean: false},
+    {rewards: {greenery: 2}, canBeOcean: true},
+
+    {rewards: {greenery: 2}, canBeOcean: false},                    //FIFTH ROW
+    {rewards: {greenery: 2}, canBeOcean: false},
+    {rewards: {greenery: 2}, canBeOcean: false},
+    {rewards: {greenery: 2}, canBeOcean: true},
+    {rewards: {greenery: 2}, canBeOcean: true},
+    {rewards: {greenery: 2}, canBeOcean: true},
+    {rewards: {greenery: 2}, canBeOcean: false},
+    {rewards: {greenery: 2}, canBeOcean: false},
+    {rewards: {greenery: 2}, canBeOcean: false},
+
+    {rewards: {greenery: 1}, canBeOcean: false},                    //SIXTH ROW
+    {rewards: {greenery: 2}, canBeOcean: false},
+    {rewards: {greenery: 1}, canBeOcean: false},
+    {rewards: {greenery: 1}, canBeOcean: false},
+    {rewards: {greenery: 1}, canBeOcean: false},
+    {rewards: {greenery: 1}, canBeOcean: true},
+    {rewards: {greenery: 1}, canBeOcean: true},
+    {rewards: {greenery: 1}, canBeOcean: true},
+
+    {rewards: {}, canBeOcean: false},                               //SEVENTH ROW
+    {rewards: {}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {greenery: 1}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+
+    {rewards: {steel: 2}, canBeOcean: false},                       //8TH ROW
+    {rewards: {}, canBeOcean: false},
+    {rewards: {card: 1}, canBeOcean: false},
+    {rewards: {card: 1}, canBeOcean: false},
+    {rewards: {}, canBeOcean: false},
+    {rewards: {titanium: 1}, canBeOcean: false},
+
+    {rewards: {steel: 1}, canBeOcean: false,},                      //9TH ROW
+    {rewards: {steel: 2}, canBeOcean: false,},
+    {rewards: {}, canBeOcean: false,},
+    {rewards: {}, canBeOcean: false,},
+    {rewards: {titanium: 2}, canBeOcean: true}
+  ];
+
 class Map {
     constructor(tileInfoArray, mapTileClickHandler, rewardCallback) {
 
