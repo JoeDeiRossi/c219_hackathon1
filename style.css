@@ -9,9 +9,15 @@ body {
   font-size: 0;
 }
 
+.buttonAndHandArea {
+  height: 30%;
+  background-color: lightgreen;
+  position: relative;
+}
+
 .board {
   background-color: purple;
-  width: 75%;
+  width: 70%;
   position: relative;
   height: 100%;
 }
@@ -23,7 +29,7 @@ body {
 }
 
 .playerInfoArea {
-  width: 25%;
+  width: 30%;
   background-color: firebrick;
   left: 75%;
   height: 100%;
@@ -54,91 +60,36 @@ body {
 
 .statusInner {
   font-size: 1rem;
-  width: 10%;
+  width: 15%;
+  border: 1px solid black;
+  position: relative;
+  left: 50px;
+  text-align: center;
+
 }
 
 .statusInner, .flex-container {
   display: inline-block;
   position: relative;
-  top: 30%;
+  top: 20%;
 }
 
 .trackerType {
   text-decoration: underline;
+  font-weight: bold;
 }
 
-.buttonAndHandArea {
-  height: 30%;
-  background-color: lightgreen;
-  position: relative;
-}
-
-.status-div, .maptiles {
-  width: 95%;
-  border: 2px solid black;
-  position: relative;
-  top: 6%;
-  left: 2.5%;
-}
-
-.status-div {
-  height: 10%;
-
-}
-
-.maptiles {
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-}
-
-.status-div, .maptiles {
-  display: block;
-}
-
-.players-div {
-  background-color: dodgerblue;
-  width: 25%;
-}
-
-.players-display {
-  border: 2px solid black;
-  height: 85%;
-  width: 85%;
-  position: relative;
-  top: 7.5%;
-  left: 7.5%;
-}
-
-.action-cards-div {
-  background-color: purple;
-  height: 30vh;
-}
-
-.cards-display {
-  border: 2px solid black;
-  height: 85%;
-  width: 85%;
-  position: relative;
-  top: 7.5%;
-  left: 7.5%;
+.statusLabel{
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 .flex-container {
-  width: 20%;
-  left: 35%;
+  width: 50%;
+  left: 20%;
 }
 
-/* .flex-container{
-  display: flex;
-  background-color: navy;
-  flex-direction: column;
-  justify-content: center;
-} */
-
- .row {
+.row {
   flex-direction: row;
   display: flex;
   justify-content: center;
@@ -146,8 +97,8 @@ body {
 
 .tile {
   background-color: gold;
-  height: 20px;
-  width: 20px;
+  height: 50px;
+  width: 50px;
   border: 1px solid black;
   box-sizing: border-box;
 }
@@ -166,7 +117,7 @@ body {
 
 .actionArea > button {
   height: 150px;
-  width: 150px;
+  width: 125px;
   border-radius: 5px;
   margin: 20px;
   vertical-align: middle;
@@ -177,17 +128,20 @@ body {
   #display: none;
   position: absolute;
   bottom: 100%;
-  left: 25%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .modalContent {
   background: black;
   color: white;
+  padding: 5px 15px 15px 15px;
 }
 
 .close {
   float: right;
   font-size: 1.5em;
+  padding-right: 15px;
 }
 
 .close:hover {
@@ -198,7 +152,7 @@ body {
   border: 1px solid white;
   border-radius: 5px;
   display: inline-block;
-  height: 150px;
-  width: 150px;
+  height: 200px;
+  width: 200px;
   vertical-align: middle;
 }

@@ -51,7 +51,11 @@ class Player {
             this.checkResources();
             $("#convertResourcesModal").show();
         });
-        //add playCard function click and bind
+
+        $(".close").on('click', function(){
+            var modalParent = $(".close").parent();
+            modalParent.hide();
+        });
 
         //standard project modal
         $("#sellCards").on('click', this.standardProjectSellCards);
