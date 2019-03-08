@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  height: 100vh;
 }
 
 .board {
@@ -7,12 +8,43 @@ body {
   background-color: purple;
   font-size: 0;
   width: 75%;
+  position: relative;
 }
 
 .board, .playerInfoArea {
   display: inline-block;
   font-size: 1rem;
-  height: 100%;
+}
+
+.playerInfoArea {
+  width: 25%;
+  background-color: firebrick;
+  position: absolute;
+  left: 75%;
+  height: 70%;
+  font-size: .8rem;
+}
+
+.playerInfo {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  align-items: center;
+}
+
+.playerInner,
+.inventory,
+.inventoryInner,
+.trackerContainer {
+  display: inline-block;
+  text-align: center;
+}
+
+.inventory,
+.inventoryInner {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
 }
 
 .statusInner {
@@ -21,6 +53,10 @@ body {
 
 .statusInner, .flex-container {
   display: inline-block;
+}
+
+.trackerType {
+  text-decoration: underline;
 }
 
 .buttonAndHandArea {
@@ -117,9 +153,5 @@ body {
 .actionCardContainer {
   border: 1px solid black;
   border-radius: 5px;
-  display: inline-block;
-}
-
-.playerInfo {
   display: inline-block;
 }

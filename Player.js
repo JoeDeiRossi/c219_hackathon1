@@ -33,7 +33,7 @@ class Player {
 
     render() {
         this.domElement = $('<div>', {'class': 'playerInfo'}).append(
-            $('<div>', {'class': 'playerInner'}).text('Player' + (this.number + 1)),
+            $('<div>', {'class': 'playerInner'}).text('Player ' + (this.number + 1) + '\nTR: ' + this.inventory.TR),
             this.inventory.render()
         );
 
