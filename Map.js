@@ -72,11 +72,13 @@ var titleInfoArray = [
   ];
 
 class Map {
-    constructor(tileInfoArray, mapTileClickHandler, rewardCallback) {
+    constructor(tileInfoArray, mapTileClickHandler, rewardCallback, askIfPlaceTileCallback) {
 
         this.data = tileInfoArray;
         this.mapTileCallback = mapTileClickHandler;
         this.rewardCallback = rewardCallback;
+        this.askIfPlaceTileCallback = askIfPlaceTileCallback;
+
         /* Map object has an array of MapTile objects */
         this.mapTiles = [];
         this.mapRowLengths = [5, 6, 7, 8, 9, 8, 7, 6, 5];
@@ -104,7 +106,8 @@ class Map {
                     tileNumber,
                     this.data[tileNumber].rewards,
                     this.data[tileNumber].canBeOcean,
-                    this.mapTileCallback
+                    this.mapTileCallback,
+                    this.askIfPlaceTileCallback
                     );
                 this.mapTiles.push(newMapTile);
 
@@ -123,14 +126,14 @@ class Map {
 }
 
 class MapTile {
-    constructor(number, rewards, canBeOcean, rewardCallback) {
+    constructor(number, rewards, canBeOcean, rewardCallback, askIfPlaceTileCallback) {
 
         /* store the dom element associated with this MapTile*/
         this.domElement = null;
 
         /* callback function that is passed down from Map (or Game, really) */
         this.rewardCallback = rewardCallback;
-
+        this.askIfPlaceTileCallback = askIfPlaceTileCallback;
         /* this MapTile's number */
         this.tileNumber = number;
 
@@ -156,7 +159,13 @@ class MapTile {
     //   this.callback(this);
       this.testForOcean();
       this.testForAvailability();
-      this.rewardCallback(this.rewards);
+
+      this.removeRewardsFromMap();
+
+
+      if(this.askIfPlaceTileCallback()) {
+        this.rewardCallback(this.rewards);
+      }
 
     }
 
@@ -173,11 +182,43 @@ class MapTile {
     testForAvailability() {
       if(this.available === true) {
         console.log('your tile was placed');
-        
       } else {
         console.log('choose another tile')
       }
       this.available = false;
+    }
+
+
+
+    showRewards() {
+      if(this.rewards.greenery === 1) {
+        this.domElement.text('p')
+      }
+      if(this.rewards.greenery === 2) {
+        this.domElement.text('pp')
+      }
+      if(this.rewards.steel === 1) {
+        this.domElement.text('s')
+      }
+      if(this.rewards.steel === 2) {
+        this.domElement.text('ss')
+      }
+      if(this.rewards.titanium === 1) {
+        this.domElement.append('t')
+      }
+      if(this.rewards.titanium === 2) {
+        this.domElement.text('tt')
+      }
+      if(this.rewards.card === 1) {
+        this.domElement.text('c')
+      }
+      if(this.rewards.card === 2) {
+        this.domElement.text('cc')
+      }
+    }
+
+    removeRewardsFromMap() {
+        this.domElement.text('')
     }
 
 
@@ -187,6 +228,7 @@ class MapTile {
         if(this.canBeOcean === true) {
           this.domElement.css('background-color', 'dodgerblue');
         }
+        this.showRewards()
 
         /* add a click handler to the div */
         this.domElement.click(this.clickHandler);

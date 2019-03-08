@@ -2,13 +2,13 @@ $(document).ready(testFunction);
 
 class Game {
     constructor(players) {
-      
+
         this.playCard = this.playCard.bind(this);
         this.rewardCallback = this.rewardCallback.bind(this);
         this.playerChangeStatusCallback = this.playerChangeStatusCallback.bind(this);
         this.playerAddTileCallback = this.playerAddTileCallback.bind(this);
 
-        this.board = new Board(titleInfoArray, this.actionPhase, this.rewardCallback);
+        this.board = new Board(titleInfoArray, this.actionPhase, this.rewardCallback, this.askIfCanPlaceTile);
         this.deck = new Deck(this.playCard);
         this.players = [];
 
@@ -88,7 +88,7 @@ class Game {
     actionPhase() {
         console.log('test');
     }
-        
+
 
         /* show buttons or hand? give the player their options */
         /* then change players - call changePlayers at the end of each action */
@@ -143,6 +143,10 @@ class Game {
         this.canPlaceTile = true;
     }
 
+    askIfCanPlaceTile() {
+      return this.canPlaceTile;
+    }
+
 }
 
 var test;
@@ -151,7 +155,6 @@ function testFunction() {
     function tester() {
         console.log('test');
     }
-    
+
     test = new Game(1);
 }
-
