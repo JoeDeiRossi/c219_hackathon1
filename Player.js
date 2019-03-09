@@ -174,6 +174,10 @@ class Player {
                         break;
                 }
             }
+            var indexOfObj = this.hand.indexOf(cardObj);
+            this.hand.splice(indexOfObj, 1);
+            console.log(this.hand)
+            $("#playActionCardModal").hide();
             this.actions--;
         } else {
             console.log('Not enough money');
@@ -211,6 +215,7 @@ class Player {
         //if player then clicks a card, remove it from their hand and increase their money by 1
         //once they close the modal, this.actions-- (but not if they didn't sell any cards)
         $("#playActionCardModal").show();
+        $("#standardProjectsModal").hide();
         this.actions--;
     }
 
@@ -218,6 +223,7 @@ class Player {
         //runs when .powerPlantButton is clicked
         this.inventory.resourceTrackers.money.changeAmount(-11);
         this.inventory.resourceTrackers.energy.changeProduction(1);
+        $("#standardProjectsModal").hide();
         this.actions--;
     }
 
@@ -225,6 +231,7 @@ class Player {
         this.inventory.resourceTrackers.money.changeAmount(-14);
         this.statusCallBack('temperature', 1); //needs to increase temp by 1 step and increase TR
         this.inventory.changeTR(1);
+        $("#standardProjectsModal").hide();
         this.actions--;
     }
 
@@ -232,6 +239,7 @@ class Player {
         this.inventory.resourceTrackers.money.changeAmount(-18);
         this.tileCallBack('ocean', 1); //needs to give player an ocean tile to place, which will also increase their TR
         this.inventory.changeTR(1);
+        $("#standardProjectsModal").hide();
         this.actions--;
     }
 
@@ -239,6 +247,7 @@ class Player {
         this.inventory.resourceTrackers.money.changeAmount(-23);
         this.tileCallBack('greenery', 1); //needs to give player a greenery tile to place, which will increase oxygen and their TR
         this.inventory.changeTR(1);
+        $("#standardProjectsModal").hide();
         this.actions--;
     }
 
@@ -247,6 +256,7 @@ class Player {
         this.inventory.resourceTrackers.money.changeProduction(2);
         this.tileCallBack('city', 1); //needs to give player a city tile to place
         this.inventory.changeTR(1);
+        $("#standardProjectsModal").hide();
         this.actions--;
     }
 
@@ -271,6 +281,7 @@ class Player {
         //runs when .sellSteelButton is clicked
         this.inventory.resourceTrackers.steel.changeAmount(-1);
         this.inventory.resourceTrackers.money.changeAmount(2);
+        $("#convertResourcesModal").hide();
         this.actions--;
     }
 
@@ -278,6 +289,7 @@ class Player {
         //runs when .sellTitaniumButton is clicked
         this.inventory.resourceTrackers.titanium.changeAmount(-1);
         this.inventory.resourceTrackers.money.changeAmount(3);
+        $("#convertResourcesModal").hide();
         this.actions--;
     }
 
@@ -287,6 +299,7 @@ class Player {
         this.tileCallBack('greenery', 1);
         this.statusCallBack('oxygen', 1);
         this.inventory.changeTR(1);
+        $("#convertResourcesModal").hide();
         this.actions--;
         //needs to give player a greenery tile to place, which will increase oxygen and their TR
     }
@@ -296,6 +309,7 @@ class Player {
         this.inventory.resourceTrackers.heat.changeAmount(-8);
         this.statusCallBack('temperature', 1);
         this.inventory.changeTR(1);
+        $("#convertResourcesModal").hide();
         this.actions--;
         //also needs to increase temp by one step, and therefore increase TR by 1
     }
