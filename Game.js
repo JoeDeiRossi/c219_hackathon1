@@ -12,7 +12,8 @@ class Game {
         this.addTile = this.addTile.bind(this);
 
 
-        this.map = new Map(tileInfoArray, this.tilePlacementResultsCallback, this.askIfCanPlaceTile);
+
+        this.map = new Map(this.tilePlacementResultsCallback, this.askIfCanPlaceTile);
         $('.board').append(this.map.render());
 
         // action cards new callbacks
