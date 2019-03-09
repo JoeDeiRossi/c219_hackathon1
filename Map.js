@@ -156,16 +156,25 @@ class MapTile {
     clickHandler() {
         /* handle click by calling the function we got as a param and pass in THIS MapTile */
     //   this.callback(this);
-      this.testForOcean();
-      this.testForAvailability();
+        this.testForAvailability();
+        this.testForOcean();
 
-      this.removeRewardsFromMap();
+        this.removeRewardsFromMap();
 
-
-      if(this.askIfPlaceTileCallback()) {
-        this.rewardCallback(this, this.rewards);
+        if(this.askIfPlaceTileCallback()) {
+          this.rewardCallback(this, this.rewards);
       }
 
+    }
+
+    testForAvailability() {
+        if(this.available === true) {
+            console.log('your tile was placed');
+            this.domElement.css('background-color', 'grey');
+        } else {
+            alert('Please choose another tile.')
+        }
+        this.available = false;
     }
 
     testForOcean() {
@@ -177,17 +186,6 @@ class MapTile {
       }
       this.canBeOcean = false;
     }
-
-    testForAvailability() {
-      if(this.available === true) {
-        console.log('your tile was placed');
-      } else {
-        console.log('choose another tile')
-      }
-      this.available = false;
-    }
-
-
 
     showRewards() {
       if(this.rewards.greenery === 1) {

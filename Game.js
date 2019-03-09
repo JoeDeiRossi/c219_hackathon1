@@ -77,7 +77,7 @@ class Game {
         if (this.currentPlayerIndex >= this.players.length) {
             this.currentPlayerIndex = 0;
         }
-        this.currentPlayer = this.players[currentPlayerIndex];
+        this.currentPlayer = this.players[this.currentPlayerIndex];
 
         /* increment the turn counter by 1 - if everyone has had a turn, end the round */
         this.turnCount++;
@@ -146,9 +146,10 @@ class Game {
         return this.temperature; //need to update values to DOM
     }
 
-    playerAddTileCallback(tileType, change) {
+    playerAddTileCallback(tileInfo) {
         this.canPlaceTile = true;
-        this.tilePlacementType = tileType;
+        this.tilePlacementType = tileInfo[0];
+        this.tilePlacementAmount = tileInfo[1];
     }
 
     askIfCanPlaceTile() {
