@@ -129,7 +129,7 @@ class MapTile {
         this.testForOcean();
         this.removeRewardsFromMap();
         if(this.askIfPlaceTileCallback()) {
-          this.rewardCallback(this, this.rewards);
+          this.rewardCallback(this);
       }
     }
     testForAvailability() {

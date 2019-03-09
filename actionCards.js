@@ -164,7 +164,6 @@ class Card {
     }
     handleClick() {
         this.playAction();
-        debugger;
         this.clickCallBack.playCard(this);
     }
     render() {

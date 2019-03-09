@@ -1,22 +1,19 @@
 $(document).ready(testFunction);
 
 class Game {
-    constructor(players) {
+    constructor(playerCount) {
 
         this.tilePlacementResultsCallback = this.tilePlacementResultsCallback.bind(this);
-        //this.playerChangeStatusCallback = this.playerChangeStatusCallback.bind(this);
-        //this.playerAddTileCallback = this.playerAddTileCallback.bind(this);
-        //this.playerDrawCardCallback = this.playerDrawCardCallback.bind(this);
         this.askIfCanPlaceTile = this.askIfCanPlaceTile.bind(this);
-
-        /*action cards new callbacks*/
         this.getCurrentPlayerStats = this.getCurrentPlayerStats.bind(this);
         this.changeWorldStats = this.changeWorldStats.bind(this);
         this.changeCurrentPlayerStats = this.changeCurrentPlayerStats.bind(this);
         this.playActionCard = this.playActionCard.bind(this);
-        this.addTile = this.addTile.bind(this);
+        // this.addTile = this.addTile.bind(this);
 
         this.board = new Board(titleInfoArray, this.tilePlacementResultsCallback, this.askIfCanPlaceTile);
+
+        // action cards new callbacks
         this.deck = new Deck({
             getPlayerStats: this.getCurrentPlayerStats,
             changeWorldStats: this.changeWorldStats,
@@ -24,13 +21,12 @@ class Game {
             playCard: this.playActionCard,
             addTile: this.addTile,
         });
+
         this.players = [];
         this.activePlayers = [];
 
+        this.playerCount = playerCount;
         this.currentPlayer = null;
-        this.firstTurn = true;
-        this.roundEnd = false;
-        this.gameOver = false;
 
         this.oxygen = {min: 0, max: 14, current: 0};
         this.temperature = {min: -30, max: 8, current: -30};
@@ -38,34 +34,30 @@ class Game {
         this.turnNumber = 1;
 
         this.canPlaceTile = false;
-        this.tilePlacementType = null;
 
-        for (var index = 0; index < players; index++) {
-            var newPlayer = new Player(index, this.playerChangeStatusCallback, this.playerAddTileCallback, this.playerDrawCardCallback);
-            this.players.push(newPlayer);
-
-            $('.playerInfoArea').append(newPlayer.render());
-
-        }
-
-        this.turnCount = 0;
         this.currentPlayerIndex = 0;
-        this.currentPlayer = this.players[this.currentPlayerIndex];
+        this.currentPlayer = null;
 
         this.startGame();
     }
 
+
+
+    // ---- GAME SEQUENCE ------------------------------------------------------
+
     startGame() {
-        /* starting hand */
         console.log('starting game')
 
-        for (var index in this.players) {
-            this.dealCards(this.players[index], 2);
+        this.makePlayers();
+
+        this.dealCards(4);
+        for (var index = this.players.length - 1; index >= 0; index--) {
             this.players[index].inventory.resourceTrackers['money'].changeAmount(25);
         }
 
         this.startRound();
     }
+
 
     startRound() {
         /* all players get two cards per turn */
@@ -73,54 +65,139 @@ class Game {
         for (var index in this.players) {
             this.dealCards(this.players[index], 6);
         }
-
-        /* buy phase? */
     }
 
-    dealCards(player, number) {
-        var newCards = this.deck.drawCards(number);
-        for(var cardIndex in newCards) {
-            player.hand.push(newCards[cardIndex])
+    makePlayers() {
+        for (var index = 0; index < this.playerCount; index++) {
+            var newPlayer = new Player(index, this.playerChangeStatusCallback, this.playerAddTileCallback, this.playerDrawCardCallback);
+            this.players.push(newPlayer);
+
+            $('.playerInfoArea').append(newPlayer.render());
+
         }
-            player.updateHand();
+
+        this.currentPlayer = this.players[0];
+    }
+
+    startRound() {
+        this.activePlayers = this.players.slice();
+
+        // all players get two cards per turn and reset actions to 2
+        for (var playerIndex in this.players) {
+            this.dealCards(this.players[playerIndex], 2);
+            this.players[playerIndex].actions = 2;
+        }
+    }
+
+    // runs after every Player action
+    // decrements the current Player's actions by 1 and checks if they have 0 actions left
+    //     if true, change currentPlayer to the next activePlayer
+    afterPlayerAction() {
+        this.currentPlayer.actions--;
+        if (this.currentPlayer.actions === 0) {
+            this.changePlayers();
+        }
+    }
+
+    // runs when Player clicks on the pass button
+    // checks if the player has 2 actions remaining
+    //     if true, remove them from the activePlayers
+    pass() {
+        if(this.currentPlayer.actions === 2) {
+            this.currentPlayerIndex--;
+            // kick current Player out of activePlayers
+        }
+        this.changePlayers();
+    }
+
+    // checks if round should end, if so call endRound
+    endRoundCheck() {
+        if(this.activePlayers.length === 0) {
+            this.allocateResources();
+            this.startRound();
+        }
     }
 
     changePlayers() {
-        /* change the current player to the next in players array */
+        // change the current player to the next in players array
         this.currentPlayerIndex++;
-        if (this.currentPlayerIndex >= this.players.length) {
+        if (this.currentPlayerIndex >= this.activePlayers.length) {
             this.currentPlayerIndex = 0;
         }
-        this.currentPlayer = this.players[this.currentPlayerIndex];
+        this.currentPlayer = this.activePlayers[this.currentPlayerIndex];
+        this.endRoundCheck();
+    }
 
-        /* increment the turn counter by 1 - if everyone has had a turn, end the round */
-        this.turnCount++;
-        if(this.turnCount >= this.players.length) {
-            this.turnCount = 0;
-            this.roundEnd();
+    // ---- GAME FUNCTIONS -----------------------------------------------------
+
+    // if player is not specified, dealCards will deal cards to all players
+    dealCards(number, player) {
+        var newCards;
+
+        for(var playerIndex in this.players) {
+            if (!player || this.players[playerIndex] === player) {
+                newCards = this.deck.drawCards(number);
+                for(var cardIndex in newCards) {
+                    this.players[playerIndex].hand.push(newCards[cardIndex])
+                }
+                this.players[playerIndex].updateHand();
+            }
         }
     }
 
-    /* sets up the buttons and play area for the current player, call after changing player turns */
-    actionPhase() {
-        console.log('test');
+    // updates the status display on the board
+    updateStatus() {
+        $(".statusOxygen > .statusValue").text(this.oxygen.current + '%');
+        $(".statusTemp > .statusValue").text(this.temperature.current + 'C');
     }
 
 
-        /* show buttons or hand? give the player their options */
-        /* then change players - call changePlayers at the end of each action */
+    // INCOMPLETE - for each Player, add resources equal to their production
+    allocateResources() {
 
-    tilePlacementResultsCallback(mapTile, rewards) {
+        for (var playerIndex in this.players) {
+            // add resources equal to their production
+        }
+    }
+
+
+    
+    // ---- CALLBACK FUNCTIONS -------------------------------------------------
+
+    // called when Card is clicked, and played - handled by Player
+    playActionCard(card) {
+        this.currentPlayer.playCard(card);
+        this.afterPlayerAction();
+    }
+
+    // called by Player when they play a card or tile that lets them draw cards
+    playerDrawCardCallback(cardCount) {
+        this.dealCards(this.currentPlayer, cardCount);
+    }
+
+    // called by Player when they play a card or convert resources and get to place a tile
+    addTile(type, amount) {
+        this.canPlaceTile = true;
+    }
+
+    // called by MapTile whenever it is clicked
+    // if the player has played a card or converted resources to place a tile, canPlaceTile should be true
+    askIfCanPlaceTile() {
+      return this.canPlaceTile;
+    }
+
+    // called by MapTile when a tile has been successfully placed
+    // MapTile sends itself so that Game can edit its owner and type fields
+    // Game also grabs the tile rewards and sends it to the currentPlayer
+    tilePlacementResultsCallback(mapTile) {
         this.canPlaceTile = false;
 
         mapTile.owner = this.currentPlayer;
         mapTile.typeOfTile = this.tilePlacementType;
-
+        
         this.currentPlayer.process(rewards);
+        this.afterPlayerAction();
     }
-
-
-    /*card action callbacks*/
 
     changeWorldStats(type, amount){
         if(this[type].current === this[type].max){
@@ -130,9 +207,17 @@ class Game {
         this.updateStatus();
     }
 
-    updateStatus() {
-        $(".statusOxygen > .statusValue").text(this.oxygen.current + '%');
-        $(".statusTemp > .statusValue").text(this.temperature.current + 'C');
+    // called by Player when they play a card or convert resouces and get to change temp or O2 levels
+    playerChangeStatusCallback(status, change) {
+        switch(status) {
+            case 'temperature':
+                this.addTemperature(change);
+                break;
+            case 'oxygen':
+                this.addOxygen(change);
+        }
+        this.updateStatus();
+        this.afterPlayerAction();
     }
 
     getCurrentPlayerStats(type, bankOrProduction) {
@@ -161,71 +246,11 @@ class Game {
             this.currentPlayer.updateHand();
         }
     }
-
-    playActionCard(cardObj) {
-        this.currentPlayer.playCard(cardObj);
-    }
-
-
-    /* connects Card click handler and Player class */
-
-    // playerChangeStatusCallback(status, change) {
-    //     switch(status) {
-    //         case 'temperature':
-    //             this.addTemperature(change);
-    //             break;
-    //         case 'oxygen':
-    //             this.addOxygen(change);
-    //     }
-    //
-    //     this.updateStatus();
-    // }
-
-    // addOxygen(amountToAdd){
-    //     if(this.oxygen.current === this.oxygen.max){
-    //         return;
-    //     } else {
-    //         this.oxygen.current += amountToAdd;
-    //     }
-    //     return this.oxygen;
-    // }
-    //
-    // addTemperature(amountToAdd){
-    //     if(this.temperature.current === this.temperature.max){
-    //         return;
-    //     } else {
-    //         this.temperature.current += amountToAdd;
-    //     }
-    //     return this.temperature; //need to update values to DOM
-    //}
-
-    addTile(type, amount) {
-        this.canPlaceTile = true;
-        this.tilePlacementType = type;
-        this.tilePlacementAmount = amount;
-    }
-
-    // playerAddTileCallback(tileInfo) {
-    //     this.canPlaceTile = true;
-    //     this.tilePlacementType = tileInfo[0];
-    //     this.tilePlacementAmount = tileInfo[1];
-    // }
-
-    askIfCanPlaceTile() {
-      return this.canPlaceTile;
-    }
-
-    // playerDrawCardCallback(cardCount) {
-    //     this.dealCards(this.currentPlayer, cardCount);
-    // }
 }
 
 var test;
 
 function testFunction() {
-    function tester() {
-        console.log('test');
-    }
-
-    test = new Game(1);
+    console.log('making a game object');
+    test = new Game(2);
 }

@@ -117,7 +117,6 @@ class Player {
         /* takes in card object from hand? or index of card in hand array
            remove from hand array and move to used cards
            then execute the card's functions */
-            debugger;
             var indexOfObj = this.hand.indexOf(cardObj);
             this.hand.splice(indexOfObj, 1);
             console.log(this.hand);
