@@ -161,7 +161,7 @@ class Game {
     }
 
 
-    
+
     // ---- CALLBACK FUNCTIONS -------------------------------------------------
 
     // called when Card is clicked, and played - handled by Player
@@ -194,8 +194,8 @@ class Game {
 
         mapTile.owner = this.currentPlayer;
         mapTile.typeOfTile = this.tilePlacementType;
-        
-        this.currentPlayer.process(rewards);
+
+        this.currentPlayer.process(maptile.rewards);
         this.afterPlayerAction();
     }
 
