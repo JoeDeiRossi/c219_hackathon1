@@ -117,7 +117,11 @@ class Card {
                         }
                         for (var productionChangeIndex = 0; productionChangeIndex < productionAmountArray.length; productionChangeIndex += 2) {//submit array to PLAYER's inventory PRODUCTION //look even for resource name, odd for amount //example array [energy, 3, heat, 2]
                             //this.inventory.resourceTrackers[productionAmountArray[productionChangeIndex]].changeAmount(productionAmountArray[productionChangeIndex + 1]);
-                            this.clickCallBack.changePlayerStats(productionAmountArray[productionChangeIndex], productionAmountArray[productionChangeIndex + 1], 'production');
+                            if (this.clickCallBack.getPlayerStats(productionAmountArray[productionChangeIndex], 'production') + productionAmountArray[productionChangeIndex + 1] < 0) {
+                                alert('not enough production')
+                            } else {
+                                this.clickCallBack.changePlayerStats(productionAmountArray[productionChangeIndex], productionAmountArray[productionChangeIndex + 1], 'production');
+                            }
                         }
                         console.log(productionAmountArray)
                         break;
