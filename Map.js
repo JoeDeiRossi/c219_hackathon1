@@ -152,16 +152,22 @@ class MapTile {
     }
     showRewards() {
       if(this.rewards.greenery === 1) {
-        this.domElement.text('p')
+        // this.domElement.text('p')
+        this.domElement.append('<i class="fa fa-leaf"></i>')
       }
       if(this.rewards.greenery === 2) {
-        this.domElement.text('pp')
+        // this.domElement.text('pp')
+        this.domElement.append('<i class="fa fa-leaf"></i>')
+        this.domElement.append('<i class="fa fa-leaf"></i>')
+
       }
       if(this.rewards.steel === 1) {
-        this.domElement.text('s')
+        // this.domElement.text('s')
+        this.domElement.append('<i class="fa fa-cog">');
       }
       if(this.rewards.steel === 2) {
-        this.domElement.text('ss')
+        this.domElement.append('<i class="fa fa-cog">');
+        this.domElement.append('<i class="fa fa-cog">');
       }
       if(this.rewards.titanium === 1) {
         this.domElement.append('t')
@@ -170,10 +176,12 @@ class MapTile {
         this.domElement.text('tt')
       }
       if(this.rewards.card === 1) {
-        this.domElement.text('c')
+        // this.domElement.text('c')
+        this.domElement.append('<i class="fa fa-credit-card">');
       }
       if(this.rewards.card === 2) {
-        this.domElement.text('cc')
+        this.domElement.append('<i class="fa fa-credit-card">');
+        this.domElement.append('<i class="fa fa-credit-card">');
       }
     }
     removeRewardsFromMap() {

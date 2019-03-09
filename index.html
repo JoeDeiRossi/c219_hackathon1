@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Document</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="style.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="resourceTracker.js"></script>
@@ -45,45 +46,52 @@
                 <button id="standardProject">Do a Standard Project</button>
                 <button id="convertResources">Convert your Resources</button>
             </div>
-            <div id="playActionCardModal" class="modal">
-                <div class="playActionCardModalContent">
-                    <span class="close">&times;</span> <!--float: right, onclick = close parentDiv-->
-                    <h3>Play Action Card</h3>
-                    <!--populate action cards from - player.hand-->
-                    <div class='hand'></div>
-                </div>
+            <div class="modal-shadow">
+              <div id="playActionCardModal" class="modal">
+                  <div class="playActionCardModalContent">
+                      <span class="close">&times;</span> <!--float: right, onclick = close parentDiv-->
+                      <h3>Play Action Card</h3>
+                      <!--populate action cards from - player.hand-->
+                      <div class='hand'></div>
+                  </div>
+              </div>
             </div>
-            <div id="standardProjectsModal" class="modal">
-                <div class="standardProjectsModalContent">
-                    <span class="close">&times;</span> <!--float: right, onclick = close parentDiv-->
-                    <h3>Standard Projects</h3>
-                    <button id="sellCards">Sell Cards</button>
-                    <span>money: 1</span><br> <!--make it so that you can only sell one card, will move to used cards inventory? or be discarded-->
-                    <button id="powerPlant">Power Plant</button>
-                    <span>money: -11</span><br>
-                    <button id="increaseTemperature">Increase Temperature</button>
-                    <span>money: -14</span><br>
-                    <button id="buildOcean">Build Ocean</button>
-                    <span>money: -18</span><br>
-                    <button id="buildGreenery">Build Greenery</button>
-                    <span>money: -23</span><br>
-                    <button id="buildCity">Build City</button>
-                    <span>money: -25</span>
-                </div>
+
+            <div class="modal-shadow">
+              <div id="standardProjectsModal" class="modal">
+                  <div class="standardProjectsModalContent">
+                      <span class="close">&times;</span> <!--float: right, onclick = close parentDiv-->
+                      <h3>Standard Projects</h3>
+                      <button id="sellCards">Sell Cards</button>
+                      <span>money: 1</span><br> <!--make it so that you can only sell one card, will move to used cards inventory? or be discarded-->
+                      <button id="powerPlant">Power Plant</button>
+                      <span>money: -11</span><br>
+                      <button id="increaseTemperature">Increase Temperature</button>
+                      <span>money: -14</span><br>
+                      <button id="buildOcean">Build Ocean</button>
+                      <span>money: -18</span><br>
+                      <button id="buildGreenery">Build Greenery</button>
+                      <span>money: -23</span><br>
+                      <button id="buildCity">Build City</button>
+                      <span>money: -25</span>
+                  </div>
+              </div>
             </div>
-            <div id="convertResourcesModal" class="modal">
-                <div class="convertResourcesModalContent">
-                    <span class="close">&times;</span> <!--float: right, onclick = close parentDiv-->
-                    <h3>Convert Resources</h3>
-                    <button id="sellSteel">Sell Steel</button>
-                    <span>money: 2</span><br>
-                    <button id="sellTitanium">Sell Titanium</button>
-                    <span>money: 3</span><br>
-                    <button id="convertPlants">Convert Plants</button>
-                    <span>tr: 1, tile: greenery: 1, status: oxygen: 1</span><br>
-                    <button id="convertHeat">Convert Heat</button>
-                    <span>tr: 1, status: temperature: 1</span>
-                </div>
+            <div class="modal-shadow">
+              <div id="convertResourcesModal" class="modal">
+                  <div class="convertResourcesModalContent">
+                      <span class="close">&times;</span> <!--float: right, onclick = close parentDiv-->
+                      <h3>Convert Resources</h3>
+                      <button id="sellSteel">Sell Steel</button>
+                      <span>money: 2</span><br>
+                      <button id="sellTitanium">Sell Titanium</button>
+                      <span>money: 3</span><br>
+                      <button id="convertPlants">Convert Plants</button>
+                      <span>tr: 1, tile: greenery: 1, status: oxygen: 1</span><br>
+                      <button id="convertHeat">Convert Heat</button>
+                      <span>tr: 1, status: temperature: 1</span>
+                  </div>
+              </div>
             </div>
         </div>
     </body>
