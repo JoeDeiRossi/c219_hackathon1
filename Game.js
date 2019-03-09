@@ -9,9 +9,11 @@ class Game {
         this.changeWorldStats = this.changeWorldStats.bind(this);
         this.changeCurrentPlayerStats = this.changeCurrentPlayerStats.bind(this);
         this.playActionCard = this.playActionCard.bind(this);
-        // this.addTile = this.addTile.bind(this);
+        this.addTile = this.addTile.bind(this);
 
-        this.board = new Board(titleInfoArray, this.tilePlacementResultsCallback, this.askIfCanPlaceTile);
+
+        this.map = new Map(tileInfoArray, this.tilePlacementResultsCallback, this.askIfCanPlaceTile);
+        $('.board').append(this.map.render());
 
         // action cards new callbacks
         this.deck = new Deck({
@@ -68,8 +70,11 @@ class Game {
     }
 
     makePlayers() {
-        for (var index = 0; index < this.playerCount; index++) {
-            var newPlayer = new Player(index, this.playerChangeStatusCallback, this.playerAddTileCallback, this.playerDrawCardCallback);
+        for (var index = 0; index < this.playerCount; index++){
+            var newPlayer = new Player(index, {
+                changeStatus: this.changeWorldStats,
+                addTile: this.addTile,
+                drawCard: this.playerDrawCardCallback});
             this.players.push(newPlayer);
 
             $('.playerInfoArea').append(newPlayer.render());
@@ -195,7 +200,7 @@ class Game {
         mapTile.owner = this.currentPlayer;
         mapTile.typeOfTile = this.tilePlacementType;
         
-        this.currentPlayer.process(rewards);
+        this.currentPlayer.process(mapTile.rewards);
         this.afterPlayerAction();
     }
 

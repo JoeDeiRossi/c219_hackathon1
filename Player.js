@@ -1,9 +1,13 @@
 class Player {
-    constructor(number) {
+    constructor(number, callbacks) {
         this.playerDomElement = null;
         this.number = number;
         this.inventory = new Inventory;
-
+        this.callback = {
+            changeStatus: callbacks.changeStatus,
+            addTile: callbacks.addTile,
+            drawCard: callbacks.drawCard
+        };
         this.isSelling = false;
 
         this.hand = [];
@@ -179,7 +183,7 @@ class Player {
 
     standardProjectAsteroid() {
         this.inventory.resourceTrackers.money.changeAmount(-14);
-        this.statusCallBack('temperature', 1); //needs to increase temp by 1 step and increase TR
+        this.callback.changeStatus('temperature', 1); //needs to increase temp by 1 step and increase TR
         this.inventory.changeTR(1);
         // $("#standardProjectsModal").hide();
         $(".modal-shadow").hide();
@@ -188,7 +192,7 @@ class Player {
 
     standardProjectAquifer() {
         this.inventory.resourceTrackers.money.changeAmount(-18);
-        this.tileCallBack('ocean', 1); //needs to give player an ocean tile to place, which will also increase their TR
+        this.callback.addTile('ocean', 1); //needs to give player an ocean tile to place, which will also increase their TR
         this.inventory.changeTR(1);
         // $("#standardProjectsModal").hide();
         $(".modal-shadow").hide();
@@ -197,7 +201,7 @@ class Player {
 
     standardProjectGreenery() {
         this.inventory.resourceTrackers.money.changeAmount(-23);
-        this.tileCallBack('greenery', 1); //needs to give player a greenery tile to place, which will increase oxygen and their TR
+        this.callback.addTile('greenery', 1); //needs to give player a greenery tile to place, which will increase oxygen and their TR
         this.inventory.changeTR(1);
         // $("#standardProjectsModal").hide();
         $(".modal-shadow").hide();
@@ -207,7 +211,7 @@ class Player {
     standardProjectCity() {
         this.inventory.resourceTrackers.money.changeAmount(-25);
         this.inventory.resourceTrackers.money.changeProduction(2);
-        this.tileCallBack('city', 1); //needs to give player a city tile to place
+        this.callback.addTile('city', 1); //needs to give player a city tile to place
         this.inventory.changeTR(1);
         // $("#standardProjectsModal").hide();
         $(".modal-shadow").hide();
@@ -256,8 +260,8 @@ class Player {
     convertPlants() {
         //runs when .convertPlantsButton is clicked
         this.inventory.resourceTrackers.plants.changeAmount(-8);
-        this.tileCallBack('greenery', 1);
-        this.statusCallBack('oxygen', 1);
+        this.callback.addTile('greenery', 1);
+        this.callback.changeStatus('oxygen', 1);
         this.inventory.changeTR(1);
         // $("#convertResourcesModal").hide();
         $(".modal-shadow").hide();
@@ -268,7 +272,7 @@ class Player {
     convertHeat() {
         //runs when .convertHeatButton is clicked
         this.inventory.resourceTrackers.heat.changeAmount(-8);
-        this.statusCallBack('temperature', 1);
+        this.callback.changeStatus('temperature', 1);
         this.inventory.changeTR(1);
         // $("#convertResourcesModal").hide();
         $(".modal-shadow").hide();
