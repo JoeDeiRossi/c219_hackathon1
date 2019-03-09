@@ -50,6 +50,8 @@ class Game {
     startGame() {
         console.log('starting game')
 
+        $('#pass').on('click', this.pass);
+
         this.makePlayers();
 
         this.dealCards(4);
@@ -133,6 +135,8 @@ class Game {
         this.endRoundCheck();
     }
 
+
+
     // ---- GAME FUNCTIONS -----------------------------------------------------
 
     // if player is not specified, dealCards will deal cards to all players
@@ -156,12 +160,18 @@ class Game {
         $(".statusTemp > .statusValue").text(this.temperature.current + 'C');
     }
 
-
-    // INCOMPLETE - for each Player, add resources equal to their production
+    // for each Player, add resources equal to their production
     allocateResources() {
+        var currentInventory;
+        var resources = ['money', 'steel', 'titanium', 'plants', 'energy', 'heat'];
 
         for (var playerIndex in this.players) {
-            // add resources equal to their production
+            var currentInventory = this.players[playerIndex].inventory;
+            
+            for (var resourceIndex in resources) {
+                currentInventory.resourceTrackers[resources[resourceIndex]].changeAmount(
+                    currentInventory.resourceTrackers[resources[resourceIndex]].getProduction());
+            }
         }
     }
 
