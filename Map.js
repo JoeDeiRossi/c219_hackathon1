@@ -162,7 +162,7 @@ class MapTile {
         this.removeRewardsFromMap();
 
         if(this.askIfPlaceTileCallback()) {
-          this.rewardCallback(this, this.rewards);
+          this.rewardCallback(this);
       }
 
     }
