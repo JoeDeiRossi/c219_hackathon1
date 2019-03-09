@@ -30,6 +30,10 @@ class ResourceTracker {
             this.production = -5;
         }
 
+        if(!this.canBeNegative && this.production < 0){
+            this.production = 0;
+        }
+
         this.updateValues();
         return this.production;
     }
