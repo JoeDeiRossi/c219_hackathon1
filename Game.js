@@ -13,6 +13,7 @@ class Game {
         this.board = new Board(titleInfoArray, this.tilePlacementResultsCallback, this.askIfCanPlaceTile);
         this.deck = new Deck(this.playCard);
         this.players = [];
+        this.activePlayers = [];
 
         this.currentPlayer = null;
         this.firstTurn = true;
@@ -56,6 +57,7 @@ class Game {
 
     startRound() {
         /* all players get two cards per turn */
+        this.activePlayer = this.players.slice();
         for (var index in this.players) {
             this.dealCards(this.players[index], 6);
         }
@@ -101,7 +103,7 @@ class Game {
 
         mapTile.owner = this.currentPlayer;
         mapTile.typeOfTile = this.tilePlacementType;
-        
+
         this.currentPlayer.process(rewards);
     }
 

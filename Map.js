@@ -179,10 +179,12 @@ class MapTile {
     }
 
     testForAvailability() {
-      if(this.available === true) {
+      if(this.available) {
         console.log('your tile was placed');
       } else {
-        console.log('choose another tile')
+        console.log('choose another tile');
+
+
       }
       this.available = false;
     }
@@ -227,6 +229,7 @@ class MapTile {
         if(this.canBeOcean === true) {
           this.domElement.css('background-color', 'dodgerblue');
         }
+
         this.showRewards()
 
         /* add a click handler to the div */
