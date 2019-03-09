@@ -45,22 +45,28 @@ class Player {
 
         var test = this;
         $("#playCard").on('click', function(){
-            $("#playActionCardModal").show();
+            // $("#playActionCardModal").show();
+            $("#playActionCardModal").parent().show();
         });
         $("#standardProject").on('click', function(){
             test.checkStandardProjects();
-            $("#standardProjectsModal").show();
+            // $("#standardProjectsModal").show();
+            $("#standardProjectsModal").parent().show();
         });
         $("#convertResources").on('click', function(){
             test.checkResources();
-            $("#convertResourcesModal").show();
+            // $("#convertResourcesModal").show();
+            $("#convertResourcesModal").parent().show();
         });
 
         $(".close").on('click', function(){
             var modalParent = $(".close").parent();
             var modalGrandparent = modalParent.parent();
-            modalGrandparent.hide();
+            // modalGrandparent.hide();
+            $(".modal-shadow").hide();
         });
+
+
 
         //standard project modal
         $("#sellCards").on('click', this.standardProjectSellCards);
@@ -105,17 +111,17 @@ class Player {
                 this.dealCardCallBack(change);
                 break;
         }
-        
+
 
     }
 
     playCard(cardObj) {
 
-        /* takes in card object from hand? or index of card in hand array 
+        /* takes in card object from hand? or index of card in hand array
            remove from hand array and move to used cards
            then execute the card's functions */
         var action = cardObj.action;
-        if(this.inventory.resourceTrackers['money'].getAmount() >= cardObj.cost) {   
+        if(this.inventory.resourceTrackers['money'].getAmount() >= cardObj.cost) {
             this.inventory.resourceTrackers['money'].changeAmount(-1 * cardObj.cost);
             for(var index in action){
                 switch(index) {
@@ -177,7 +183,8 @@ class Player {
             var indexOfObj = this.hand.indexOf(cardObj);
             this.hand.splice(indexOfObj, 1);
             console.log(this.hand)
-            $("#playActionCardModal").hide();
+            // $("#playActionCardModal").hide();
+            $(".modal-shadow").hide();
             this.actions--;
         } else {
             console.log('Not enough money');
@@ -189,24 +196,32 @@ class Player {
         //project buttons are greyed out by default, aka .disabled=true
         if (this.hand.length <= 0) {
             document.getElementById('sellCards').disabled = true;
+            $(document.getElementById('sellCards')).css('cursor', 'not-allowed');
         } else {
             this.isSelling = true;
         }
         if (this.inventory.resourceTrackers.money.getAmount() < 11){
             document.getElementById('powerPlant').disabled = true;
+            $(document.getElementById('powerPlant')).css('cursor', 'not-allowed');
         }
         if (this.inventory.resourceTrackers.money.getAmount() < 14){//also needs to check temp
             document.getElementById('increaseTemperature').disabled = true;
+            $(document.getElementById('increaseTemperature')).css('cursor', 'not-allowed');
         }
         if (this.inventory.resourceTrackers.money.getAmount() < 18){//also needs to check # of oceans
             document.getElementById('buildOcean').disabled = true;
+            $(document.getElementById('buildOcean')).css('cursor', 'not-allowed');
         }
         if (this.inventory.resourceTrackers.money.getAmount() < 23){//also needs to check oxygen
             document.getElementById('buildGreenery').disabled = true;
+            $(document.getElementById('buildGreenery')).css('cursor', 'not-allowed');
         }
         if (this.inventory.resourceTrackers.money.getAmount() < 25){
             document.getElementById('buildCity').disabled = true;
+            $(document.getElementById('buildCity')).css('cursor', 'not-allowed');
         }
+
+
     }
 
     standardProjectSellCards() {
@@ -215,7 +230,8 @@ class Player {
         //if player then clicks a card, remove it from their hand and increase their money by 1
         //once they close the modal, this.actions-- (but not if they didn't sell any cards)
         $("#playActionCardModal").show();
-        $("#standardProjectsModal").hide();
+        // $("#standardProjectsModal").hide();
+        $(".modal-shadow").hide();
         this.actions--;
     }
 
@@ -223,7 +239,8 @@ class Player {
         //runs when .powerPlantButton is clicked
         this.inventory.resourceTrackers.money.changeAmount(-11);
         this.inventory.resourceTrackers.energy.changeProduction(1);
-        $("#standardProjectsModal").hide();
+        // $("#standardProjectsModal").hide();
+        $(".modal-shadow").hide();
         this.actions--;
     }
 
@@ -231,7 +248,8 @@ class Player {
         this.inventory.resourceTrackers.money.changeAmount(-14);
         this.statusCallBack('temperature', 1); //needs to increase temp by 1 step and increase TR
         this.inventory.changeTR(1);
-        $("#standardProjectsModal").hide();
+        // $("#standardProjectsModal").hide();
+        $(".modal-shadow").hide();
         this.actions--;
     }
 
@@ -239,7 +257,8 @@ class Player {
         this.inventory.resourceTrackers.money.changeAmount(-18);
         this.tileCallBack('ocean', 1); //needs to give player an ocean tile to place, which will also increase their TR
         this.inventory.changeTR(1);
-        $("#standardProjectsModal").hide();
+        // $("#standardProjectsModal").hide();
+        $(".modal-shadow").hide();
         this.actions--;
     }
 
@@ -247,7 +266,8 @@ class Player {
         this.inventory.resourceTrackers.money.changeAmount(-23);
         this.tileCallBack('greenery', 1); //needs to give player a greenery tile to place, which will increase oxygen and their TR
         this.inventory.changeTR(1);
-        $("#standardProjectsModal").hide();
+        // $("#standardProjectsModal").hide();
+        $(".modal-shadow").hide();
         this.actions--;
     }
 
@@ -256,7 +276,8 @@ class Player {
         this.inventory.resourceTrackers.money.changeProduction(2);
         this.tileCallBack('city', 1); //needs to give player a city tile to place
         this.inventory.changeTR(1);
-        $("#standardProjectsModal").hide();
+        // $("#standardProjectsModal").hide();
+        $(".modal-shadow").hide();
         this.actions--;
     }
 
@@ -265,15 +286,19 @@ class Player {
         //convert buttons are greyed out by default, aka .disabled=true
         if (this.inventory.resourceTrackers.steel.getAmount() < 1){
             document.getElementById('sellSteel').disabled = true;
+            $(document.getElementById('sellSteel')).css('cursor', 'not-allowed')
         }
         if (this.inventory.resourceTrackers.titanium.getAmount() < 1){
             document.getElementById('sellTitanium').disabled = true;
+            $(document.getElementById('sellTitanium')).css('cursor', 'not-allowed')
         }
         if (this.inventory.resourceTrackers.plants.getAmount() < 8){
             document.getElementById('convertPlants').disabled = true;
+            $(document.getElementById('convertPlants')).css('cursor', 'not-allowed')
         }
         if (this.inventory.resourceTrackers.heat.getAmount() < 8){
             document.getElementById('convertHeat').disabled = true;
+            $(document.getElementById('convertHeat')).css('cursor', 'not-allowed')
         }
     }
 
@@ -281,7 +306,8 @@ class Player {
         //runs when .sellSteelButton is clicked
         this.inventory.resourceTrackers.steel.changeAmount(-1);
         this.inventory.resourceTrackers.money.changeAmount(2);
-        $("#convertResourcesModal").hide();
+        // $("#convertResourcesModal").hide();
+        $(".modal-shadow").hide();
         this.actions--;
     }
 
@@ -289,7 +315,8 @@ class Player {
         //runs when .sellTitaniumButton is clicked
         this.inventory.resourceTrackers.titanium.changeAmount(-1);
         this.inventory.resourceTrackers.money.changeAmount(3);
-        $("#convertResourcesModal").hide();
+        // $("#convertResourcesModal").hide();
+        $(".modal-shadow").hide();
         this.actions--;
     }
 
@@ -299,7 +326,8 @@ class Player {
         this.tileCallBack('greenery', 1);
         this.statusCallBack('oxygen', 1);
         this.inventory.changeTR(1);
-        $("#convertResourcesModal").hide();
+        // $("#convertResourcesModal").hide();
+        $(".modal-shadow").hide();
         this.actions--;
         //needs to give player a greenery tile to place, which will increase oxygen and their TR
     }
@@ -309,7 +337,8 @@ class Player {
         this.inventory.resourceTrackers.heat.changeAmount(-8);
         this.statusCallBack('temperature', 1);
         this.inventory.changeTR(1);
-        $("#convertResourcesModal").hide();
+        // $("#convertResourcesModal").hide();
+        $(".modal-shadow").hide();
         this.actions--;
         //also needs to increase temp by one step, and therefore increase TR by 1
     }
