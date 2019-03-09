@@ -1,7 +1,7 @@
 class Player {
     constructor(number, requestStatusChange, requestTileChange, requestDealCard) {
         this.domElement = null;
-        this.number = number;
+        this.number = number + 1;
         this.inventory = new Inventory;
         this.statusCallBack = requestStatusChange;
         this.tileCallBack = requestTileChange;

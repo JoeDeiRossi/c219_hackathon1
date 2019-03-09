@@ -13,11 +13,10 @@ class Game {
         this.board = new Board(titleInfoArray, this.tilePlacementResultsCallback, this.askIfCanPlaceTile);
         this.deck = new Deck(this.playCard);
         this.players = [];
-        this.activePlayers = []
+        this.activePlayers = [];
 
         this.playerCount = playerCount;
         this.currentPlayer = null;
-        this.firstTurn = true;
 
         this.oxygen = {min: 0, max: 14, current: 0};
         this.temperature = {min: -30, max: 8, current: -30};
@@ -29,7 +28,7 @@ class Game {
         this.tilePlacementAmount = null;
 
         this.currentPlayerIndex = 0;
-        this.currentPlayer = this.players[this.currentPlayerIndex];
+        this.currentPlayer = null;
 
         this.startGame();
     }
@@ -58,28 +57,57 @@ class Game {
 
             $('.playerInfoArea').append(newPlayer.render());
         }
+
+        this.currentPlayer = this.players[0];
     }
 
     startRound() {
         this.activePlayers = this.players.slice();
 
-        // all players get two cards per turn
-        for (var index in this.players) {
-            this.dealCards(this.players[index], 2);
+        // all players get two cards per turn and reset actions to 2
+        for (var playerIndex in this.players) {
+            this.dealCards(this.players[playerIndex], 2);
+            this.players[playerIndex].actions = 2;
         }
+    }
 
-        // allocate resources
-        this.allocateResources();
+    // runs after every Player action
+    // decrements the current Player's actions by 1 and checks if they have 0 actions left
+    //     if true, change currentPlayer to the next activePlayer
+    afterPlayerAction() {
+        this.currentPlayer.actions--;
+        if (this.currentPlayer.actions === 0) {
+            this.changePlayers();
+        }
+    }
 
+    // runs when Player clicks on the pass button
+    // checks if the player has 2 actions remaining
+    //     if true, remove them from the activePlayers
+    pass() {
+        if(this.currentPlayer.actions === 2) {
+            this.currentPlayerIndex--;
+            // kick current Player out of activePlayers
+        }
+        this.changePlayers();
+    }
+
+    // checks if round should end, if so call endRound
+    endRoundCheck() {
+        if(this.activePlayers.length === 0) {
+            this.allocateResources();
+            this.startRound();
+        }
     }
 
     changePlayers() {
         // change the current player to the next in players array
         this.currentPlayerIndex++;
-        if (this.currentPlayerIndex >= this.players.length) {
+        if (this.currentPlayerIndex >= this.activePlayers.length) {
             this.currentPlayerIndex = 0;
         }
-        this.currentPlayer = this.players[this.currentPlayerIndex];
+        this.currentPlayer = this.activePlayers[this.currentPlayerIndex];
+        this.endRoundCheck();
     }
 
 
@@ -122,6 +150,7 @@ class Game {
     // called when Card is clicked, and played - handled by Player
     playCard(card) {
         this.currentPlayer.playCard(card);
+        this.afterPlayerAction();
     }
 
     // called by Player when they play a card or tile that lets them draw cards
@@ -136,19 +165,15 @@ class Game {
         this.tilePlacementAmount = tileInfo[1];
     }
 
-    /* 
-       called by MapTile whenever it is clicked
-       if the player has played a card or converted resources to place a tile, canPlaceTile should be true
-    */
+    // called by MapTile whenever it is clicked
+    // if the player has played a card or converted resources to place a tile, canPlaceTile should be true
     askIfCanPlaceTile() {
       return this.canPlaceTile;
     }
 
-    /* 
-       called by MapTile when a tile has been successfully placed
-       MapTile sends itself so that Game can edit its owner and type fields
-       Game also grabs the tile rewards and sends it to the currentPlayer
-    */
+    // called by MapTile when a tile has been successfully placed
+    // MapTile sends itself so that Game can edit its owner and type fields
+    // Game also grabs the tile rewards and sends it to the currentPlayer
     tilePlacementResultsCallback(mapTile) {
         this.canPlaceTile = false;
 
@@ -156,6 +181,7 @@ class Game {
         mapTile.typeOfTile = this.tilePlacementType;
         
         this.currentPlayer.process(rewards);
+        this.afterPlayerAction();
     }
 
     // called by Player when they play a card or convert resouces and get to change temp or O2 levels
@@ -169,6 +195,7 @@ class Game {
         }
 
         this.updateStatus();
+        this.afterPlayerAction();
     }
 
 }
