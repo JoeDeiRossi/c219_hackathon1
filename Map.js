@@ -1,4 +1,4 @@
-var titleInfoArray = [
+var tileInfoArray = [
     {rewards: {steel: 2}, canBeOcean: false},                       //FIRST ROW
     {rewards: {steel: 2}, canBeOcean: true},
     {rewards: {}, canBeOcean: false},
@@ -62,7 +62,7 @@ var titleInfoArray = [
     {rewards: {titanium: 2}, canBeOcean: true}
   ];
 class Map {
-    constructor(tileInfoArray, rewardCallback, askIfPlaceTileCallback) {
+    constructor(rewardCallback, askIfPlaceTileCallback) {
         this.data = tileInfoArray;
         this.rewardCallback = rewardCallback;
         this.askIfPlaceTileCallback = askIfPlaceTileCallback;
