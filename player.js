@@ -42,14 +42,18 @@ class Player {
 
     render() {
         this.playerDomElement = $('<div>', {'class': 'playerInfo'}).append(
-            $('<div>', {'class': 'playerInner'}).text('Player ' + (this.number + 1) + '\nTR: ' + this.inventory.TR),
+            $('<div>', {'class': 'playerInner'}).append(
+              $('<div>', {'class': 'playerNum'}).text('Player ' + (this.number + 1)),
+              $('<div>', {'class': 'playerTR'}).text('TR: ' + this.inventory.TR)
+            ),
+            // $('<div>', {'class': 'playerInner'}).text('Player ' + (this.number + 1) + '\nTR: ' + this.inventory.TR),
             this.inventory.render()
         );
         return this.playerDomElement;
     }
 
     updateTr(){
-        $(this.playerDomElement).find('.playerInner').text('Player ' + (this.number + 1) + '\nTR: ' + this.inventory.TR);
+        $(this.playerDomElement).find('.playerTR').text('TR: ' + this.inventory.TR);
     }
   
     updateHand() {
