@@ -62,7 +62,7 @@ class ResourceTracker {
             $('<div>', {'class': 'trackerInner'}).append(
                 $('<div>', {'class': 'trackerType'}).append(icons[this.type]),
                 $('<div>', {'class': 'trackerAmount'}).append(
-                    $('<div>', {'class': 'trackerLabel'}).text('Amount'),
+                    // $('<div>', {'class': 'trackerLabel'}).text('Amount'),
                     $('<div>', {'class': 'trackerValue'}).text(0)
                 ),
                 $('<div>', {'class': 'trackerProduction'}).append(
