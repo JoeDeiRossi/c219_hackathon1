@@ -49,6 +49,10 @@ class Game {
         for (var index in this.players) {
             this.dealCards(this.players[index], 2);
             this.players[index].inventory.resourceTrackers['money'].changeAmount(25);
+            this.players[index].inventory.resourceTrackers['steel'].changeAmount(10);
+            this.players[index].inventory.resourceTrackers['titanium'].changeAmount(10);
+            this.players[index].inventory.resourceTrackers['plants'].changeAmount(10);
+            this.players[index].inventory.resourceTrackers['heat'].changeAmount(10);
         }
 
         this.startRound();
