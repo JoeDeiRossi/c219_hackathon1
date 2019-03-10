@@ -50,9 +50,17 @@ class ResourceTracker {
 
     /* creates a ResouceTracker and passes it back to a parent PlayerInventory */
     render() {
+        var icons = {
+            'money': '<i class="fa fa-bitcoin"></i>',
+            'steel': '<i class="fa fa-cog"></i>',
+            'titanium': '<i class="fa fa-star"></i>',
+            'plants': '<i class="fa fa-leaf"></i>',
+            'energy': '<i class="fa fa-bolt"></i>',
+            'heat': '<i class="fa fa-free-code-camp"></i>'
+        };
         this.domElement = $('<div>', {'class': 'trackerContainer'}).append(
             $('<div>', {'class': 'trackerInner'}).append(
-                $('<div>', {'class': 'trackerType'}).text(this.type),
+                $('<div>', {'class': 'trackerType'}).append(icons[this.type]),
                 $('<div>', {'class': 'trackerAmount'}).append(
                     $('<div>', {'class': 'trackerLabel'}).text('Amount'),
                     $('<div>', {'class': 'trackerValue'}).text(0)
@@ -62,7 +70,7 @@ class ResourceTracker {
                     $('<div>', {'class': 'trackerValue'}).text(1)
                 )
             )
-        )
+        );
         
         return this.domElement;
     }

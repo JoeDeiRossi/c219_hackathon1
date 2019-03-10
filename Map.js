@@ -80,6 +80,8 @@ class Map {
                 if(this.mapTiles[index].canBeOcean === true && this.mapTiles[index].available === true){
                     this.mapTiles[index].domElement.on('click', this.mapTiles[index].clickHandler);
                     this.mapTiles[index].domElement.addClass('glow-active');
+                    //this.mapTiles[index].domElement.removeClass('tile-inactive');
+                    this.mapTiles[index].domElement.addClass('oceanTile-active');
                 }
             }
         } else if(type === 'greenery'){
@@ -87,6 +89,7 @@ class Map {
                 if(this.mapTiles[index].canBeOcean === false && this.mapTiles[index].rewards.hasOwnProperty('greenery') && this.mapTiles[index].available === true){
                     this.mapTiles[index].domElement.on('click', this.mapTiles[index].clickHandler);
                     this.mapTiles[index].domElement.addClass('glow-active');
+                    this.mapTiles[index].domElement.addClass('greeneryTile-active');
                 }
             }
         } else if(type === 'city'){
@@ -94,6 +97,7 @@ class Map {
                 if(this.mapTiles[index].canBeOcean === false && !this.mapTiles[index].rewards.hasOwnProperty('greenery') && this.mapTiles[index].available === true){
                     this.mapTiles[index].domElement.on('click', this.mapTiles[index].clickHandler);
                     this.mapTiles[index].domElement.addClass('glow-active');
+                    this.mapTiles[index].domElement.addClass('cityTile-active');
                 }
             }
         }
@@ -102,6 +106,9 @@ class Map {
         for(var index = 0; index < this.mapTiles.length; index++){
             this.mapTiles[index].domElement.find('.glow-active').off('click');
             this.mapTiles[index].domElement.removeClass('glow-active');
+            this.mapTiles[index].domElement.removeClass('oceanTile-active');
+            this.mapTiles[index].domElement.removeClass('greeneryTile-active');
+            this.mapTiles[index].domElement.removeClass('cityTile-active');
         }
     }
     render() {
@@ -189,35 +196,36 @@ class MapTile {
     showRewards() {
       if(this.rewards.greenery === 1) {
         // this.domElement.text('p')
-        this.domElement.append('<i class="fa fa-leaf"></i>')
+        this.domElement.append('<i class="fa fa-leaf"></i>');
       }
       if(this.rewards.greenery === 2) {
         // this.domElement.text('pp')
-        this.domElement.append('<i class="fa fa-leaf"></i>')
-        this.domElement.append('<i class="fa fa-leaf"></i>')
+        this.domElement.append('<i class="fa fa-leaf"></i>');
+        this.domElement.append('<i class="fa fa-leaf"></i>');
 
       }
       if(this.rewards.steel === 1) {
         // this.domElement.text('s')
-        this.domElement.append('<i class="fa fa-cog">');
+        this.domElement.append('<i class="fa fa-cog"></i>');
       }
       if(this.rewards.steel === 2) {
-        this.domElement.append('<i class="fa fa-cog">');
-        this.domElement.append('<i class="fa fa-cog">');
+        this.domElement.append('<i class="fa fa-cog"></i>');
+        this.domElement.append('<i class="fa fa-cog"></i>');
       }
       if(this.rewards.titanium === 1) {
-        this.domElement.append('t')
+        this.domElement.append('<i class="fa fa-star"></i>');
       }
       if(this.rewards.titanium === 2) {
-        this.domElement.text('tt')
+          this.domElement.append('<i class="fa fa-star"></i>');
+          this.domElement.append('<i class="fa fa-star"></i>');
       }
       if(this.rewards.card === 1) {
         // this.domElement.text('c')
-        this.domElement.append('<i class="fa fa-credit-card">');
+        this.domElement.append('<i class="fa fa-credit-card"></i>');
       }
       if(this.rewards.card === 2) {
-        this.domElement.append('<i class="fa fa-credit-card">');
-        this.domElement.append('<i class="fa fa-credit-card">');
+        this.domElement.append('<i class="fa fa-credit-card"></i>');
+        this.domElement.append('<i class="fa fa-credit-card"></i>');
       }
     }
     removeRewardsFromMap() {
@@ -225,11 +233,11 @@ class MapTile {
     }
     render() {
         /* make a div for this MapTile and store it */
-        this.domElement = $('<div>', {'class': 'tile'});
+        this.domElement = $('<div>', {'class': 'tile tile-inactive'});
         if(this.canBeOcean === true) {
           this.domElement.css('background-color', 'dodgerblue');
         }
-        this.showRewards()
+        this.showRewards();
         /* add a click handler to the div */
         //this.domElement.click(this.clickHandler);
         /* return the div */

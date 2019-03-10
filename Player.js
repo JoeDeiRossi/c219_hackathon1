@@ -125,6 +125,7 @@ class Player {
                 break;
         }
         this.inventory.changeTR(1);
+        this.updateTr();
     }
     playCard(cardObj) {
         /* takes in card object from hand? or index of card in hand array
@@ -203,6 +204,7 @@ class Player {
         this.inventory.resourceTrackers.money.changeAmount(-14);
         this.callback.changeStatus('temperature', 1); //needs to increase temp by 1 step and increase TR
         this.inventory.changeTR(1);
+        this.updateTr();
         // $("#standardProjectsModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
@@ -332,6 +334,7 @@ class Player {
         this.inventory.resourceTrackers.heat.changeAmount(-8);
         this.callback.changeStatus('temperature', 1);
         this.inventory.changeTR(1);
+        this.updateTr();
         // $("#convertResourcesModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
