@@ -4,7 +4,7 @@ class messageModals {
         this.type = type;   //could be error, confirm, or quantity
         this.callback = callback;
         this.resourceBank = resourceBank;
-        this.quantityInput = null;
+        this.inputDomElement = null;
     }
 
     deleteModal() {
@@ -31,14 +31,14 @@ class messageModals {
 
     inputModal() {
         var modal = $('<div>').addClass('infoModal').text('How many?');
-        this.quantityInput = $('<input>',{
+        this.inputDomElement = $('<input>',{
             type: 'number',
             max: this.resourceBank,
             min: 1
         }).val(1);
         var confirmButton = $('<button>').addClass('confirmButton').text('CONFIRM').on('click', this.callback).on('click',           this.deleteModal);
         var cancelButton = $('<button>').addClass('cancelButton').text('CANCEL').on('click', this.deleteModal);
-        modal.append(this.quantityInput, confirmButton, cancelButton);
+        modal.append(this.inputDomElement, confirmButton, cancelButton);
         $('body').append(modal);
         modal.show();
     }
@@ -51,5 +51,18 @@ class messageModals {
         } else {
             this.inputModal();
         }
+    }
+
+    //allocateResources (in game.js) should create new modal displaying what changes are occurring
+        //for each player
+            //energy converts to heat
+            //money gained (from TR and production)
+            //resources gained (from production)
+            //# of cards received? Can't display everyone's cards all at once
+}
+
+class distributionModal {
+    constructor(playersArray) {
+        this.players = playersArray;
     }
 }
