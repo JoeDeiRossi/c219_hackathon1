@@ -188,7 +188,7 @@ body {
 }
 
 .infoModal {
-  background-color: chartreuse;
+  background: linear-gradient(to bottom right, silver, orangered);
   position: absolute;
   top: 20%;
   left: 50%;
@@ -197,9 +197,12 @@ body {
   font-family: 'IBM Plex Mono', monospace;
 }
 
-.cancelButton,
-.confirmButton {
+.cancelButton {
   background-color: firebrick;
+}
+
+.confirmButton {
+  background-color: yellowgreen;
 }
 
 .actionCardContainer {
