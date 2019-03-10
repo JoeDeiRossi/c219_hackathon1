@@ -70,7 +70,9 @@ class Map {
         this.mapTiles = [];
         this.mapRowLengths = [5, 6, 7, 8, 9, 8, 7, 6, 5];
         this.domElement = null;
+
     }
+
     render() {
         /* outer flex container for the Map */
         this.domElement = $('<div>', {'class': 'flex-container'});
@@ -121,6 +123,7 @@ class MapTile {
         this.clickHandler = this.clickHandler.bind(this);
         /* array of MapTile objects that are neighbors */
     //   this.neighbors = ['???????????'];
+
     }
     clickHandler() {
         /* handle click by calling the function we got as a param and pass in THIS MapTile */
@@ -141,6 +144,8 @@ class MapTile {
         }
         this.available = false;
     }
+
+
     testForOcean() {
       if(this.canBeOcean === true && $('.statusOceanTiles .statusValue').text() > 0) {
         this.domElement.css('background-color', 'blue');
@@ -170,10 +175,12 @@ class MapTile {
         this.domElement.append('<i class="fa fa-cog">');
       }
       if(this.rewards.titanium === 1) {
-        this.domElement.append('t')
+        // this.domElement.append('t')
+        this.domElement.append('<i class="fa fa-star">');
       }
       if(this.rewards.titanium === 2) {
-        this.domElement.text('tt')
+        this.domElement.append('<i class="fa fa-star">');
+        this.domElement.append('<i class="fa fa-star">');
       }
       if(this.rewards.card === 1) {
         // this.domElement.text('c')
@@ -187,6 +194,8 @@ class MapTile {
     removeRewardsFromMap() {
         this.domElement.text('')
     }
+
+
     render() {
         /* make a div for this MapTile and store it */
         this.domElement = $('<div>', {'class': 'tile'});
