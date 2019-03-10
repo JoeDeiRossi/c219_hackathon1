@@ -1,267 +1,295 @@
 @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono:700');
 
 body {
-  margin: 0;
-  height: 100vh;
-  width: 100%;
-  background-color: black;
+    margin: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: black;
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: orangered;
+    position: absolute;
+    left: 1%;
 }
 
 .top {
-  height: 70%;
-  font-size: 0;
+    height: 70%;
+    font-size: 0;
 }
 
 .buttonAndHandArea {
-  height: 25%;
-  position: relative;
+    height: 25%;
+    position: relative;
 }
 
 .board {
-  width: 70%;
-  position: relative;
-  height: 100%;
+    width: 70%;
+    position: relative;
+    height: 100%;
 }
 
 .board, .playerInfoArea {
-  display: inline-block;
-  vertical-align: top;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 0;
 }
 
 .playerInfoArea {
-  width: 30%;
-  left: 75%;
-  height: 100%;
-  font-size: .8rem;
+    width: 30%;
+    left: 75%;
+    height: 100%;
+    font-size: .8rem;
+
 }
 
 .playerInfo {
-  width: 100%;
-  height: 25%;
-  display: flex;
-  align-items: center;
-  border: 5px solid #87421F;
-  border-radius: 10px;
-  box-sizing: border-box;
-  color: orange;
+    width: 100%;
+    height: 25%;
+    display: flex;
+    align-items: center;
+    border: 5px solid #87421F;
+    border-radius: 10px;
+    box-sizing: border-box;
+    color: orange;
+    background-color: rgba(25,25,25, .7)
+}
+
+.playerInner {
+    margin: 0 5px;
+}
+
+.playerNum {
+    font-size: 1rem;
 }
 
 .playerHighlight {
-  border: 5px solid gold;
+    border: 5px solid gold;
 }
 
 .playerPassedHighlight {
-  border: 5px solid gray;
-  color: gray;
+    border: 5px solid gray;
+    color: gray;
 }
 
 .playerInner,
 .inventory,
 .inventoryInner,
 .trackerContainer {
-  display: inline-block;
-  text-align: center;
+    display: inline-block;
+    text-align: center;
 }
 
 .inventory,
 .inventoryInner {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
 }
 
-.trackerType, .trackerAmount, .trackerProduction {
-  border: 2px solid #676767;
-  box-sizing: border-box;
+.trackerContainer {
+    width: 15%;
+}
+
+.trackerAmount, .trackerProduction {
+    border: 1px solid #676767;
+    box-sizing: border-box;
 }
 
 .trackerType {
-  font-size: 1.5em;
+    font-size: 1.5em;
 }
 
 .trackerLabel {
-  color: silver;
+    color: silver;
+}
+
+.trackerAmount > .trackerValue {
+    font-size: 1.2rem;
 }
 
 .statusInner, .flex-container {
-  display: inline-block;
-  position: relative;
-  vertical-align: top;
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
 }
 
 .statusInner {
-  font-size: 1.5rem;
-  width: 25%;
-  position: relative;
-  left: 15px;
-  text-align: center;
-  height: 70%;
-  color: #87421F;
-  top: 15%;
+    font-size: 1.5rem;
+    width: 25%;
+    position: relative;
+    left: 15px;
+    text-align: center;
+    height: 70%;
+    color: #87421F;
+    top: 15%;
 }
 
 .statusTurnNumber, .statusOxygen, .statusTemp, .statusOceanTiles {
-  height: 20%;
+    height: 20%;
+    border-radius: 5px;
+    width: 80%;
+    background-color: rgba(25,25,25, .7)
 }
 
 .statusLabel{
-  color: silver;
-  text-decoration: underline;
-  margin: 10%;
+    color: silver;
+    text-decoration: underline;
+    margin: 10%;
 }
 
 .flex-container {
-  width: 65%;
-  left: 5%;
-  background-image: url("images/bruno-m.png");
-  background-size: cover;
-  background-position: center;
-  top: 10%;
-  font-size: 1rem;
+    width: 65%;
+    left: 5%;
+    background-image: url("images/bruno-m.png");
+    background-size: cover;
+    background-position: center;
+    top: 10%;
+    font-size: 1rem;
 }
 
 .row {
-  flex-direction: row;
-  display: flex;
-  justify-content: center;
+    flex-direction: row;
+    display: flex;
+    justify-content: center;
 }
 
 .tile {
-  background-color: transparent;
-  height: 6vmin;
-  width: 6vmin;
-  border: 1px solid silver;
-  box-sizing: border-box;
-  color: silver;
+    background-color: transparent;
+    height: 6vmin;
+    width: 6vmin;
+    border: 1px solid silver;
+    box-sizing: border-box;
+    color: silver;
 }
 
 .tile-inactive {
-  cursor: not-allowed;
+    cursor: not-allowed;
 }
 
 .oceanTile-active {
-  cursor: url('images/ocean.png') 22.5 22.5, auto;
+    cursor: url('images/ocean.png') 22.5 22.5, auto;
 }
 
 .greeneryTile-active {
-  cursor: url('images/greenery.png') 22.5 22.5, auto;
+    cursor: url('images/greenery.png') 22.5 22.5, auto;
 }
 
 .cityTile-active {
-  cursor: url('images/city.png') 22.5 22.5, auto;
+    cursor: url('images/city.png') 22.5 22.5, auto;
 }
 
 /* ------------------------------------------------------------------------ */
 .actionArea {
-  position: relative;
-  text-align: center;
-  top: 50%;
-  transform: translateY(-50%);
+    position: relative;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .actionArea > button {
-  border-radius: 5px;
-  margin: 3vw;
-  vertical-align: middle;
-  font-family: 'IBM Plex Mono', monospace;
-  background: linear-gradient(to bottom right, silver, orangered);
-  height: 20vmin;
-  width: 20vmin;
-  font-size: 3.5vh;
-  border: none;
+    border-radius: 5px;
+    margin: 3vw;
+    vertical-align: middle;
+    font-family: 'IBM Plex Mono', monospace;
+    background: linear-gradient(to bottom right, silver, orangered);
+    height: 20vmin;
+    width: 20vmin;
+    font-size: 3.5vh;
+    border: none;
 }
 
 .actionArea > button:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .modal-shadow {
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(0,0,0,0.7);
-  display: none;
-  position: fixed;
-  top: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0,0,0,0.7);
+    display: none;
+    position: fixed;
+    top: 0;
 }
 
 
 .modal {
-  /* display: none; */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 5px solid #832A0D;
-  font-family: 'IBM Plex Mono', monospace;
+    /* display: none; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 5px solid #832A0D;
+    font-family: 'IBM Plex Mono', monospace;
 }
 
 .modal button:hover, .modal .hand:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 
 .playActionCardModalContent, .standardProjectsModalContent, .convertResourcesModalContent {
-  background: linear-gradient(to bottom right, silver, orangered);
-  padding: 5px 15px 15px 15px;
+    background: linear-gradient(to bottom right, silver, orangered);
+    padding: 5px 15px 15px 15px;
 }
 
 .close {
-  float: right;
-  font-size: 1.5em;
-  padding-right: 15px;
+    float: right;
+    font-size: 1.5em;
+    padding-right: 15px;
 }
 
 .close:hover {
-  color: grey;
-  cursor: pointer;
+    color: grey;
+    cursor: pointer;
 }
 
 .infoModal {
-  background: linear-gradient(to bottom right, silver, orangered);
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 5px solid #87421F;
-  font-family: 'IBM Plex Mono', monospace;
-  padding: 20px;
+    background: linear-gradient(to bottom right, silver, orangered);
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 5px solid #87421F;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 20px;
 }
 
 .cancelButton {
-  background-color: firebrick;
-  font-weight: bold;
+    background-color: firebrick;
+    font-weight: bold;
 }
 
 .confirmButton {
-  background-color: yellowgreen;
-  font-weight: bold;
+    background-color: yellowgreen;
+    font-weight: bold;
 }
 
 .confirmButton {
-  background-color: yellowgreen;
+    background-color: yellowgreen;
 }
 
 .actionCardContainer {
-  border: 3px solid #87421F;
-  border-radius: 5px;
-  box-sizing: border-box;
-  display: inline-block;
-  height: 150px;
-  width: 150px;
-  vertical-align: middle;
+    border: 3px solid #87421F;
+    border-radius: 5px;
+    box-sizing: border-box;
+    display: inline-block;
+    height: 150px;
+    width: 150px;
+    vertical-align: middle;
 }
 
 .actionCardInner {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 5px;
-  font-size: 0.7em;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 5px;
+    font-size: 0.7em;
 }
 
 
 .glow-active {
-  box-shadow: 0 0 10px 5px yellow;
+    box-shadow: 0 0 10px 5px yellow;
 }
