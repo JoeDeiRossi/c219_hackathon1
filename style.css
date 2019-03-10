@@ -134,11 +134,11 @@ h1 {
 .statusLabel{
     color: silver;
     text-decoration: underline;
-    margin: 10% 10% 0 10%;
+    margin: 10%;
     height: 20%;
     border-radius: 5px;
     width: 80%;
-    background-color: rgba(25,25,25, .7)
+    background-color: rgba(25,25,25, 0.7)
 }
 
 .flex-container {
