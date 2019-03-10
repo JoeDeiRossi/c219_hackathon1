@@ -56,6 +56,10 @@ class Game {
         this.dealCards(4);
         for (var index = this.players.length - 1; index >= 0; index--) {
             this.players[index].inventory.resourceTrackers['money'].changeAmount(25);
+            this.players[index].inventory.resourceTrackers['steel'].changeAmount(10);
+            this.players[index].inventory.resourceTrackers['titanium'].changeAmount(10);
+            this.players[index].inventory.resourceTrackers['plants'].changeAmount(10);
+            this.players[index].inventory.resourceTrackers['heat'].changeAmount(10);
         }
 
         this.startRound();
