@@ -121,11 +121,10 @@ class Player {
                 this.inventory.resourceTrackers['steel'].changeAmount(change);
                 break;
             case 'card':
-                this.dealCardCallBack(change);
+                this.callback.drawCard(change);
                 break;
         }
-
-
+        this.inventory.changeTR(1);
     }
     playCard(cardObj) {
         /* takes in card object from hand? or index of card in hand array
@@ -217,7 +216,7 @@ class Player {
     standardProjectAquiferConfirm() {
         this.inventory.resourceTrackers.money.changeAmount(-18);
         this.callback.addTile('ocean', 1); //needs to give player an ocean tile to place, which will also increase their TR
-        this.inventory.changeTR(1);
+
         // $("#standardProjectsModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
@@ -231,7 +230,7 @@ class Player {
     standardProjectGreeneryConfirm() {
         this.inventory.resourceTrackers.money.changeAmount(-23);
         this.callback.addTile('greenery', 1); //needs to give player a greenery tile to place, which will increase oxygen and their TR
-        this.inventory.changeTR(1);
+
         // $("#standardProjectsModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
@@ -246,7 +245,7 @@ class Player {
         this.inventory.resourceTrackers.money.changeAmount(-25);
         this.inventory.resourceTrackers.money.changeProduction(2);
         this.callback.addTile('city', 1); //needs to give player a city tile to place
-        this.inventory.changeTR(1);
+
         // $("#standardProjectsModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
@@ -318,7 +317,6 @@ class Player {
         this.inventory.resourceTrackers.plants.changeAmount(-8);
         this.callback.addTile('greenery', 1);
         this.callback.changeStatus('oxygen', 1);
-        this.inventory.changeTR(1);
         // $("#convertResourcesModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
