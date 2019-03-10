@@ -191,6 +191,7 @@ class Game {
         this.currentPlayer = this.activePlayers[this.currentPlayerIndex];
         if (this.currentPlayer) {
             this.highlightCurrentPlayer();
+            this.currentPlayer.actions = 2;
         }
         this.endRoundCheck();
     }
