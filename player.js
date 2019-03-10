@@ -138,7 +138,6 @@ class Player {
         //if player then clicks a card, remove it from their hand and increase their money by 1
         //once they close the modal, this.actions-- (but not if they didn't sell any cards)
         $("#playActionCardModal").show();
-        // $("#standardProjectsModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
     }
@@ -151,7 +150,6 @@ class Player {
     standardProjectPowerPlantConfirm() {
         this.inventory.resourceTrackers.money.changeAmount(-11);
         this.inventory.resourceTrackers.energy.changeProduction(1);
-        // $("#standardProjectsModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
     }
@@ -166,7 +164,6 @@ class Player {
         this.callback.changeStatus('temperature', 1); //needs to increase temp by 1 step and increase TR
         this.inventory.changeTR(1);
         this.updateTr();
-        // $("#standardProjectsModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
     }
@@ -179,8 +176,6 @@ class Player {
     standardProjectAquiferConfirm() {
         this.inventory.resourceTrackers.money.changeAmount(-18);
         this.callback.addTile('ocean', 1); //needs to give player an ocean tile to place, which will also increase their TR
-
-        // $("#standardProjectsModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
     }
@@ -193,8 +188,6 @@ class Player {
     standardProjectGreeneryConfirm() {
         this.inventory.resourceTrackers.money.changeAmount(-23);
         this.callback.addTile('greenery', 1); //needs to give player a greenery tile to place, which will increase oxygen and their TR
-
-        // $("#standardProjectsModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
     }
@@ -208,8 +201,6 @@ class Player {
         this.inventory.resourceTrackers.money.changeAmount(-25);
         this.inventory.resourceTrackers.money.changeProduction(2);
         this.callback.addTile('city', 1); //needs to give player a city tile to place
-
-        // $("#standardProjectsModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
     }
@@ -236,7 +227,6 @@ class Player {
     }
 
     sellSteel() {
-
         this.inputModal = new messageModals('quantity', this.sellSteelConfirm, this.inventory.resourceTrackers.steel.getAmount());
         this.inputModal.buildModal();
     }
@@ -245,16 +235,12 @@ class Player {
         var userInput = this.inputModal.quantityInput.val();
         this.inventory.resourceTrackers.steel.changeAmount(-1 * userInput);
         this.inventory.resourceTrackers.money.changeAmount(2 * userInput);
-        $("#convertResourcesModal").hide();
-
-
         $(".modal-shadow").hide();
 
         this.actions--;
     }
 
     sellTitanium() {
-
         this.inputModal = new messageModals('quantity', this.sellTitaniumConfirm, this.inventory.resourceTrackers.titanium.getAmount());
         this.inputModal.buildModal();
     }
@@ -263,9 +249,6 @@ class Player {
         var userInput = this.inputModal.quantityInput.val();
         this.inventory.resourceTrackers.titanium.changeAmount(-1 * userInput);
         this.inventory.resourceTrackers.money.changeAmount(3 * userInput);
-        $("#convertResourcesModal").hide();
-
-
         $(".modal-shadow").hide();
 
         this.actions--;
@@ -280,7 +263,6 @@ class Player {
         this.inventory.resourceTrackers.plants.changeAmount(-8);
         this.callback.addTile('greenery', 1);
         this.callback.changeStatus('oxygen', 1);
-        // $("#convertResourcesModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
         //needs to give player a greenery tile to place, which will increase oxygen and their TR
@@ -296,7 +278,6 @@ class Player {
         this.callback.changeStatus('temperature', 1);
         this.inventory.changeTR(1);
         this.updateTr();
-        // $("#convertResourcesModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
         //also needs to increase temp by one step, and therefore increase TR by 1
