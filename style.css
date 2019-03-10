@@ -13,7 +13,7 @@ body {
 }
 
 .buttonAndHandArea {
-  height: 30%;
+  height: 25%;
   position: relative;
 }
 
@@ -25,9 +25,9 @@ body {
 
 .board, .playerInfoArea {
   display: inline-block;
-  font-size: 1rem;
   vertical-align: top;
   font-family: 'IBM Plex Mono', monospace;
+  font-size: 0;
 }
 
 .playerInfoArea {
@@ -42,10 +42,19 @@ body {
   height: 25%;
   display: flex;
   align-items: center;
-  border: 5px solid silver;
-  border-radius: 5px;
+  border: 5px solid #87421F;
+  border-radius: 10px;
   box-sizing: border-box;
   color: orange;
+}
+
+.playerHighlight {
+  border: 5px solid gold;
+}
+
+.playerPassedHighlight {
+  border: 5px solid gray;
+  color: gray;
 }
 
 .playerInner,
@@ -63,27 +72,34 @@ body {
   justify-content: space-around;
 }
 
+.trackerType, .trackerAmount, .trackerProduction {
+  border: 2px solid #676767;
+  box-sizing: border-box;
+}
+
 .trackerType {
-  text-decoration: underline;
-  font-weight: bold;
+  font-size: 1.5em;
+}
+
+.trackerLabel {
+  color: silver;
 }
 
 .statusInner, .flex-container {
   display: inline-block;
   position: relative;
-  top: 15%;
   vertical-align: top;
 }
 
 .statusInner {
-  font-size: 1rem;
-  width: 15%;
+  font-size: 1.5rem;
+  width: 25%;
   position: relative;
   left: 15px;
   text-align: center;
   height: 70%;
-  color: silver;
-  font-size: 20px;
+  color: #87421F;
+  top: 15%;
 }
 
 .statusTurnNumber, .statusOxygen, .statusTemp, .statusOceanTiles {
@@ -91,17 +107,19 @@ body {
 }
 
 .statusLabel{
+  color: silver;
   text-decoration: underline;
-  font-weight: bold;
   margin: 10%;
 }
 
 .flex-container {
-  width: 75%;
+  width: 65%;
   left: 5%;
   background-image: url("images/bruno-m.png");
   background-size: cover;
   background-position: center;
+  top: 10%;
+  font-size: 1rem;
 }
 
 .row {
@@ -112,15 +130,27 @@ body {
 
 .tile {
   background-color: transparent;
-  height: 50px;
-  width: 50px;
+  height: 6vmin;
+  width: 6vmin;
   border: 1px solid silver;
   box-sizing: border-box;
   color: silver;
 }
 
-.tile:hover {
-  cursor: pointer;
+.tile-inactive {
+  cursor: not-allowed;
+}
+
+.oceanTile-active {
+  cursor: url('images/ocean.png') 22.5 22.5, auto;
+}
+
+.greeneryTile-active {
+  cursor: url('images/greenery.png') 22.5 22.5, auto;
+}
+
+.cityTile-active {
+  cursor: url('images/city.png') 22.5 22.5, auto;
 }
 
 /* ------------------------------------------------------------------------ */
@@ -133,13 +163,14 @@ body {
 
 .actionArea > button {
   border-radius: 5px;
-  margin: 50px;
+  margin: 3vw;
   vertical-align: middle;
   font-family: 'IBM Plex Mono', monospace;
   background: linear-gradient(to bottom right, silver, orangered);
-  height: 150px;
-  width: 175px;
-  font-size: 1.5em;
+  height: 20vmin;
+  width: 20vmin;
+  font-size: 3.5vh;
+  border: none;
 }
 
 .actionArea > button:hover {
@@ -149,7 +180,7 @@ body {
 .modal-shadow {
   height: 100vh;
   width: 100vw;
-  background-color: rgba(250,250,250,0.2);
+  background-color: rgba(0,0,0,0.7);
   display: none;
   position: fixed;
   top: 0;
@@ -162,7 +193,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: 5px solid silver;
+  border: 5px solid #832A0D;
   font-family: 'IBM Plex Mono', monospace;
 }
 
@@ -193,12 +224,19 @@ body {
   top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: 5px solid silver;
+  border: 5px solid #87421F;
   font-family: 'IBM Plex Mono', monospace;
+  padding: 20px;
 }
 
 .cancelButton {
   background-color: firebrick;
+  font-weight: bold;
+}
+
+.confirmButton {
+  background-color: yellowgreen;
+  font-weight: bold;
 }
 
 .confirmButton {
@@ -206,7 +244,7 @@ body {
 }
 
 .actionCardContainer {
-  border: 3px solid black;
+  border: 3px solid #87421F;
   border-radius: 5px;
   box-sizing: border-box;
   display: inline-block;
@@ -226,13 +264,4 @@ body {
 
 .glow-active {
   box-shadow: 0 0 10px 5px yellow;
-}
-
-@media only screen and (max-width: 980px) {
-  .actionArea > button {
-    height: 100px;
-    width: 115px;
-    font-size: 1em;
-  }
-
 }

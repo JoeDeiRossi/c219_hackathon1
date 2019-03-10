@@ -10,6 +10,7 @@ class Game {
         this.changeCurrentPlayerStats = this.changeCurrentPlayerStats.bind(this);
         this.playActionCard = this.playActionCard.bind(this);
         this.addTile = this.addTile.bind(this);
+        this.pass = this.pass.bind(this);
 
 
 
@@ -49,9 +50,13 @@ class Game {
     // ---- GAME SEQUENCE ------------------------------------------------------
 
     startGame() {
-        console.log('starting game')
+        console.log('starting game');
+
+        $('#pass').on('click', this.pass);
 
         this.makePlayers();
+
+        this.addEventHandlers();
 
         this.dealCards(4);
         for (var index = this.players.length - 1; index >= 0; index--) {
@@ -65,13 +70,43 @@ class Game {
         this.startRound();
     }
 
+    addEventHandlers() {
+        var test = this;
+        $("#playCard").off().on('click', function(e){
+            // $("#playActionCardModal").show();
+            $("#playActionCardModal").parent().show();
+            test.currentPlayer.updateHand();
+        });
+        $("#standardProject").on('click', function(){
+            test.currentPlayer.checkStandardProjects();
+            // $("#standardProjectsModal").show();
+            $("#standardProjectsModal").parent().show();
+        });
+        $("#convertResources").on('click', function(){
+            test.currentPlayer.checkResources();
+            // $("#convertResourcesModal").show();
+            $("#convertResourcesModal").parent().show();
+        });
 
-    startRound() {
-        /* all players get two cards per turn */
-        this.activePlayer = this.players.slice();
-        for (var index in this.players) {
-            this.dealCards(this.players[index], 6);
-        }
+        $(".close").on('click', function(){
+            var modalParent = $(".close").parent();
+            var modalGrandparent = modalParent.parent();
+            // modalGrandparent.hide();
+            $(".modal-shadow").hide();
+        });
+
+        //standard project modal
+        $("#sellCards").on('click', test.currentPlayer.standardProjectSellCards);
+        $("#powerPlant").on('click', test.currentPlayer.standardProjectPowerPlant);
+        $("#increaseTemperature").on('click', test.currentPlayer.standardProjectAsteroid);
+        $("#buildOcean").on('click', test.currentPlayer.standardProjectAquifer);
+        $("#buildGreenery").on('click', test.currentPlayer.standardProjectGreenery);
+        $("#buildCity").on('click', test.currentPlayer.standardProjectCity);
+        //convert resources modal
+        $("#sellSteel").on('click', test.currentPlayer.sellSteel);
+        $("#sellTitanium").on('click', test.currentPlayer.sellTitanium);
+        $("#convertPlants").on('click', test.currentPlayer.convertPlants);
+        $("#convertHeat").on('click', test.currentPlayer.convertHeat);
     }
 
     makePlayers() {
@@ -87,6 +122,7 @@ class Game {
         }
 
         this.currentPlayer = this.players[0];
+        this.highlightCurrentPlayer();
     }
 
     startRound() {
@@ -97,6 +133,21 @@ class Game {
             this.dealCards(this.players[playerIndex], 2);
             this.players[playerIndex].actions = 2;
         }
+
+        this.currentPlayerIndex = 0;
+        this.currentPlayer = this.activePlayers[this.currentPlayerIndex]
+        this.highlightCurrentPlayer();
+
+        $('.playerInfo').removeClass('playerPassedHighlight');
+    }
+
+    highlightCurrentPlayer() {
+        $('.playerInfo').removeClass('playerHighlight');
+        $(this.currentPlayer.playerDomElement).addClass('playerHighlight');
+    }
+
+    muteCurrentPlayer() {
+        $(this.currentPlayer.playerDomElement).addClass('playerPassedHighlight');
     }
 
     // runs after every Player action
@@ -114,8 +165,9 @@ class Game {
     //     if true, remove them from the activePlayers
     pass() {
         if(this.currentPlayer.actions === 2) {
+            this.muteCurrentPlayer();
+            this.activePlayers.splice(this.currentPlayerIndex, 1);
             this.currentPlayerIndex--;
-            // kick current Player out of activePlayers
         }
         this.changePlayers();
     }
@@ -124,6 +176,8 @@ class Game {
     endRoundCheck() {
         if(this.activePlayers.length === 0) {
             this.allocateResources();
+            this.turnNumber++;
+            this.updateStatus();
             this.startRound();
         }
     }
@@ -135,8 +189,13 @@ class Game {
             this.currentPlayerIndex = 0;
         }
         this.currentPlayer = this.activePlayers[this.currentPlayerIndex];
+        if (this.currentPlayer) {
+            this.highlightCurrentPlayer();
+        }
         this.endRoundCheck();
     }
+
+
 
     // ---- GAME FUNCTIONS -----------------------------------------------------
 
@@ -161,12 +220,18 @@ class Game {
         $(".statusTemp > .statusValue").text(this.temperature.current + 'C');
     }
 
-
-    // INCOMPLETE - for each Player, add resources equal to their production
+    // for each Player, add resources equal to their production
     allocateResources() {
+        var currentInventory;
+        var resources = ['money', 'steel', 'titanium', 'plants', 'energy', 'heat'];
 
         for (var playerIndex in this.players) {
-            // add resources equal to their production
+            currentInventory = this.players[playerIndex].inventory;
+
+            for (var resourceIndex in resources) {
+                currentInventory.resourceTrackers[resources[resourceIndex]].changeAmount(
+                    currentInventory.resourceTrackers[resources[resourceIndex]].getProduction());
+            }
         }
     }
 
