@@ -184,6 +184,9 @@ class Game {
     // called by Player when they play a card or convert resources and get to place a tile
     addTile(type, amount) {
         this.canPlaceTile = true;
+        for(var repeat = 0; repeat < amount; repeat++){
+            this.map.findTileCategory(type)
+        }
     }
 
     // called by MapTile whenever it is clicked
@@ -197,10 +200,8 @@ class Game {
     // Game also grabs the tile rewards and sends it to the currentPlayer
     tilePlacementResultsCallback(mapTile) {
         this.canPlaceTile = false;
-
+        this.map.removeClicks();
         mapTile.owner = this.currentPlayer;
-        mapTile.typeOfTile = this.tilePlacementType;
-        
         this.currentPlayer.process(mapTile.rewards);
         this.afterPlayerAction();
     }
@@ -214,17 +215,6 @@ class Game {
     }
 
     // called by Player when they play a card or convert resouces and get to change temp or O2 levels
-    playerChangeStatusCallback(status, change) {
-        switch(status) {
-            case 'temperature':
-                this.addTemperature(change);
-                break;
-            case 'oxygen':
-                this.addOxygen(change);
-        }
-        this.updateStatus();
-        this.afterPlayerAction();
-    }
 
     getCurrentPlayerStats(type, bankOrProduction) {
         if(bankOrProduction === 'bank') {

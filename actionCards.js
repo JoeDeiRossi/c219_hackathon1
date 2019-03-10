@@ -2,7 +2,7 @@ var cardDeck = [
     //production cards
     {'name': 'Giant Space Mirror', 'cost': 17, 'action': {'production': {'energy': 3}}},
     {'name': 'Geothermal Power', 'cost': 11, 'action': {'production': {'energy': 2}}},
-    {'name': 'Strip Mine', 'cost': 25, 'action': {'production': {'steel': 2, 'titanium': 1, 'energy': -2}, 'status': {'oxygen': 2}}},
+    {'name': 'Strip Mine', 'cost': 25, 'action': {'production': {'energy': -2, 'steel': 2, 'titanium': 1}, 'status': {'oxygen': 2}}},
     {'name': 'Deep Well Heating', 'cost': 13, 'action': {'production': {'energy': 1}, 'status': {'temperature': 1}}},
     {'name': 'Peroxide Power', 'cost': 7, 'action': {'production': {'money': -1, 'energy': 2}}},
     {'name': 'Rad-Chem Factory', 'cost': 8, 'action': {'production': {'energy': -1}, 'tr': 2}},
@@ -10,44 +10,31 @@ var cardDeck = [
     {'name': 'Adapted Lichen', 'cost': 9, 'action': {'production': {'plants': 1}}},
     {'name': 'Carbonate Processing', 'cost': 6, 'action': {'production': {'energy': -1, 'heat': 3}}},
     {'name': 'Micro-Mills', 'cost': 3, 'action': {'production': {'heat': 1}}},
-    {'name': 'Magnetic Field Dome', 'cost': 5, 'action': {'production': {'plants': 1, 'energy': -2}, 'tr': 1}},
+    {'name': 'Magnetic Field Dome', 'cost': 5, 'action': {'production': {'energy': -2, 'plants': 1}, 'tr': 1}},
     {'name': 'Import of Advanced GHG', 'cost': 9, 'action': {'production': {'heat': 2}}},
     {'name': 'Nuclear Power', 'cost': 10, 'action': {'production': {'money': -2, 'energy': 3}}},
     {'name': 'Soletta', 'cost': 35, 'action': {'production': {'heat': 7}}},
-    {'name': 'Magnetic Field Generators', 'cost': 20, 'action': {'production': {'plants': 2, 'energy': -4}, 'tr': 3}},
+    {'name': 'Magnetic Field Generators', 'cost': 20, 'action': {'production': {'energy': -4, 'plants': 2}, 'tr': 3}},
     {'name': 'Fueled Generators', 'cost': 1, 'action': {'production': {'money': -1, 'energy': 1}}},
     {'name': 'GHG Factories', 'cost': 11, 'action': {'production': {'energy': -1, 'heat': 4}}},
     {'name': 'Lunar Beam', 'cost': 13, 'action': {'production': {'money': -2, 'energy': 2, 'heat': 2}}},
     {'name': 'Industrial Microbes', 'cost': 12, 'action': {'production': {'steel': 1, 'energy': 1}}},
-    {'name': 'Food Factory', 'cost': 12, 'action': {'production': {'money': 4, 'plants': -1}}}, //tr: 1 at the end of game
+    {'name': 'Food Factory', 'cost': 12, 'action': {'production': {'plants': -1, 'money': 4}}}, //tr: 1 at the end of game
     {'name': 'Solar Power', 'cost': 11, 'action': {'production': {'energy': 1}}}, //tr: 1 at the end of game
     //bank cards
     {'name': 'Release of Inert Gas', 'cost': 14, 'action': {'tr': 2}},
-    {'name': 'Imported GHG', 'cost': 7, 'action': {'bank': {'heat': 3}, 'production': {'heat': 1}}},
-    {'name': 'Solar Wind Power', 'cost': 11, 'action': {'bank': {'titanium': 2}, 'production':{'energy': 2}}},
+    {'name': 'Imported GHG', 'cost': 7, 'action': {'production': {'heat': 1}, 'bank': {'heat': 3}}},
+    {'name': 'Solar Wind Power', 'cost': 11, 'action': {'production':{'energy': 2}, 'bank': {'titanium': 2}}},
     //tile cards
     {'name': 'Black Polar Dust', 'cost': 15, 'action': {'production': {'money': -2, 'heat': 3}, 'tile': {'ocean': 1}}},
-    {'name': 'Noctis City', 'cost': 18, 'action': {'production': {'money': 3, 'energy': -1}, 'tile': {'city': 1}}},
-    {'name': 'Underground City', 'cost': 18, 'action': {'production': {'steel': 2, 'energy': -2}, 'tile': {'city': 1}}},
+    {'name': 'Noctis City', 'cost': 18, 'action': {'production': {'energy': -1, 'money': 3}, 'tile': {'city': 1}}},
+    {'name': 'Underground City', 'cost': 18, 'action': {'production': {'energy': -2, 'steel': 2}, 'tile': {'city': 1}}},
     {'name': 'Towing a Comet', 'cost': 23, 'action': {'bank': {'plants': 2}, 'status': {'oxygen': 1}, 'tile': {'ocean': 1}}},
     {'name': 'Subterranean Reservoir', 'cost': 11, 'action': {'tile': {'ocean': 1}}},
     {'name': 'Convoy from Europa', 'cost': 15, 'action': {'tile': {'ocean': 1}, 'drawActionCard': 1}},
-    {'name': 'Convoy from Europa', 'cost': 15, 'action': {'tile': {'ocean': 1}, 'drawActionCard': 1}},
-    {'name': 'Convoy from Europa', 'cost': 15, 'action': {'tile': {'ocean': 1}, 'drawActionCard': 1}},
-    {'name': 'Convoy from Europa', 'cost': 15, 'action': {'tile': {'ocean': 1}, 'drawActionCard': 1}},
-    {'name': 'Convoy from Europa', 'cost': 15, 'action': {'tile': {'ocean': 1}, 'drawActionCard': 1}},
-    {'name': 'Convoy from Europa', 'cost': 15, 'action': {'tile': {'ocean': 1}, 'drawActionCard': 1}},
-    {'name': 'Convoy from Europa', 'cost': 15, 'action': {'tile': {'ocean': 1}, 'drawActionCard': 1}},
-    {'name': 'Convoy from Europa', 'cost': 15, 'action': {'tile': {'ocean': 1}, 'drawActionCard': 1}},
-    {'name': 'Convoy from Europa', 'cost': 15, 'action': {'tile': {'ocean': 1}, 'drawActionCard': 1}},
-    {'name': 'Convoy from Europa', 'cost': 15, 'action': {'tile': {'ocean': 1}, 'drawActionCard': 1}},
-    {'name': 'Convoy from Europa', 'cost': 15, 'action': {'tile': {'ocean': 1}, 'drawActionCard': 1}},
-    {'name': 'Convoy from Europa', 'cost': 15, 'action': {'tile': {'ocean': 1}, 'drawActionCard': 1}},
-    {'name': 'Convoy from Europa', 'cost': 15, 'action': {'tile': {'ocean': 1}, 'drawActionCard': 1}},
-    {'name': 'Convoy from Europa', 'cost': 15, 'action': {'tile': {'ocean': 1}, 'drawActionCard': 1}},
     {'name': 'Steel Mining Rights', 'cost': 9, 'action': {'tile': {'city': 1}}},
     {'name': 'Titanium Mining Rights', 'cost': 9, 'action': {'tile': {'city': 1}}},
-    {'name': 'Ice Asteroid', 'cost': 23, 'action': {'tile': {'ocean': 2}}},
+    {'name': 'Ice Asteroid', 'cost': 23, 'action': {'tile': {'ocean': 1}}},
     {'name': 'Nuclear Zone', 'cost': 10, 'action': {'status': {'temperature': 2}, 'tile': {'city': 1}}}, //tr: -2 at the end of game
 ];
 
@@ -93,7 +80,7 @@ class Card {
     }
     playAction() {
         if (this.clickCallBack.getPlayerStats('money', 'bank') >= this.cost) {
-            this.clickCallBack.changePlayerStats('money', (this.cost * -1), 'bank');
+
             for (var index in this.actionInfo) {
                 switch (index) {
                     case 'bank': //pass bank objects to player's bank
@@ -119,6 +106,7 @@ class Card {
                             //this.inventory.resourceTrackers[productionAmountArray[productionChangeIndex]].changeAmount(productionAmountArray[productionChangeIndex + 1]);
                             if (this.clickCallBack.getPlayerStats(productionAmountArray[productionChangeIndex], 'production') + productionAmountArray[productionChangeIndex + 1] < 0) {
                                 alert('not enough production')
+                                return;
                             } else {
                                 this.clickCallBack.changePlayerStats(productionAmountArray[productionChangeIndex], productionAmountArray[productionChangeIndex + 1], 'production');
                             }
@@ -162,6 +150,7 @@ class Card {
                         break;
                 }
             }
+            this.clickCallBack.changePlayerStats('money', (this.cost * -1), 'bank');
         } else {
             alert('Not enough money');
         }
