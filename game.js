@@ -1,5 +1,3 @@
-$(document).ready(testFunction);
-
 class Game {
     constructor(playerCount) {
 
@@ -311,11 +309,4 @@ class Game {
             this.currentPlayer.updateHand();
         }
     }
-}
-
-var test;
-
-function testFunction() {
-    console.log('making a game object');
-    test = new Game(2);
 }
