@@ -163,7 +163,10 @@ class Card {
                 }
             }
         } else {
-            alert('Not enough money');
+            // alert('Not enough money');
+            var modal = new messageModals('error');
+            modal.buildModal();
+            console.log('Not enough money');
         }
     }
     handleClick() {

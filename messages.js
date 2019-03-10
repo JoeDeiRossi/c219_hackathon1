@@ -14,27 +14,27 @@ class messageModals {
 
     buildModal() {
         if (this.type === 'error') {
-            var modal = $('<div>').addClass('modal').text('Insufficient funds and/or resources');
-            var cancelButton = $('<button>').text('CANCEL').on('click', this.deleteModal);
+            var modal = $('<div>').addClass('infoModal').text('Insufficient funds and/or resources');
+            var cancelButton = $('<button>').addClass('cancelButton').text('CANCEL').on('click', this.deleteModal);
             modal.append(cancelButton);
             $('body').append(modal);
             modal.show();
         } else if (this.type === 'confirm') {
-            var modal = $('<div>').addClass('modal').text('Are you sure?');
-            var confirmButton = $('<button>').text('CONFIRM').on('click', this.callback).on('click',           this.deleteModal);
-            var cancelButton = $('<button>').text('CANCEL').on('click', this.deleteModal);
+            var modal = $('<div>').addClass('infoModal').text('Are you sure?');
+            var confirmButton = $('<button>').addClass('confirmButton').text('CONFIRM').on('click', this.callback).on('click',           this.deleteModal);
+            var cancelButton = $('<button>').addClass('cancelButton').text('CANCEL').on('click', this.deleteModal);
             modal.append(confirmButton, cancelButton);
             $('body').append(modal);
             modal.show();
         } else {
-            var modal = $('<div>').addClass('modal').text('How many?');
+            var modal = $('<div>').addClass('infoModal').text('How many?');
             this.quantityInput = $('<input>',{
                 type: 'number',
                 max: this.resourceBank,
                 min: 1
             }).val(1);
-            var confirmButton = $('<button>').text('CONFIRM').on('click', this.callback).on('click',           this.deleteModal);
-            var cancelButton = $('<button>').text('CANCEL').on('click', this.deleteModal);
+            var confirmButton = $('<button>').addClass('confirmButton').text('CONFIRM').on('click', this.callback).on('click',           this.deleteModal);
+            var cancelButton = $('<button>').addClass('cancelButton').text('CANCEL').on('click', this.deleteModal);
             modal.append(this.quantityInput, confirmButton, cancelButton);
             $('body').append(modal);
             modal.show();

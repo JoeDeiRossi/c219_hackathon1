@@ -133,18 +133,9 @@ class Player {
            then execute the card's functions */
             var indexOfObj = this.hand.indexOf(cardObj);
             this.hand.splice(indexOfObj, 1);
-
-            this.actions--;
-        } else {
-            var modal = new messageModals('error');
-            modal.buildModal();
-            console.log('Not enough money');
-        }
-
             console.log(this.hand);
             this.updateHand();
             $(".modal-shadow").hide();
-
     }
 
     checkStandardProjects() {
