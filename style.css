@@ -48,6 +48,15 @@ body {
   color: orange;
 }
 
+.playerHighlight {
+  border: 5px solid gold;
+}
+
+.playerPassedHighlight {
+  border: 5px solid gray;
+  color: gray;
+}
+
 .playerInner,
 .inventory,
 .inventoryInner,

@@ -10,6 +10,7 @@ class Game {
         this.changeCurrentPlayerStats = this.changeCurrentPlayerStats.bind(this);
         this.playActionCard = this.playActionCard.bind(this);
         this.addTile = this.addTile.bind(this);
+        this.pass = this.pass.bind(this);
 
 
 
@@ -63,6 +64,46 @@ class Game {
         this.startRound();
     }
 
+    addEventHandlers() {
+        var test = this;
+        $("#playCard").off().on('click', function(e){
+            // $("#playActionCardModal").show();
+            e.preventDefault();
+            $("#playActionCardModal").parent().show();
+            test.updateHand();
+        });
+        $("#standardProject").on('click', function(){
+            test.checkStandardProjects();
+            // $("#standardProjectsModal").show();
+            $("#standardProjectsModal").parent().show();
+        });
+        $("#convertResources").on('click', function(){
+            test.checkResources();
+            // $("#convertResourcesModal").show();
+            $("#convertResourcesModal").parent().show();
+        });
+
+        $(".close").on('click', function(){
+            var modalParent = $(".close").parent();
+            var modalGrandparent = modalParent.parent();
+            // modalGrandparent.hide();
+            $(".modal-shadow").hide();
+        });
+
+        //standard project modal
+        $("#sellCards").on('click', this.standardProjectSellCards);
+        $("#powerPlant").on('click', this.standardProjectPowerPlant);
+        $("#increaseTemperature").on('click', this.standardProjectAsteroid);
+        $("#buildOcean").on('click', this.standardProjectAquifer);
+        $("#buildGreenery").on('click', this.standardProjectGreenery);
+        $("#buildCity").on('click', this.standardProjectCity);
+        //convert resources modal
+        $("#sellSteel").on('click', this.sellSteel);
+        $("#sellTitanium").on('click', this.sellTitanium);
+        $("#convertPlants").on('click', this.convertPlants);
+        $("#convertHeat").on('click', this.convertHeat);
+    }
+
 
     startRound() {
         /* all players get two cards per turn */
@@ -85,6 +126,7 @@ class Game {
         }
 
         this.currentPlayer = this.players[0];
+        this.highlightCurrentPlayer();
     }
 
     startRound() {
@@ -95,6 +137,16 @@ class Game {
             this.dealCards(this.players[playerIndex], 2);
             this.players[playerIndex].actions = 2;
         }
+    }
+
+    highlightCurrentPlayer() {
+        $('.playerInfo').removeClass('playerHighlight');
+        $(this.currentPlayer.playerDomElement).addClass('playerHighlight');
+    }
+
+    muteCurrentPlayer() {
+        $('.playerInfo').removeClass('playerPassedHighlight');
+        $(this.currentPlayer.playerDomElement).addClass('playerPassedHighlight');
     }
 
     // runs after every Player action
@@ -112,8 +164,9 @@ class Game {
     //     if true, remove them from the activePlayers
     pass() {
         if(this.currentPlayer.actions === 2) {
+            this.muteCurrentPlayer();
+            this.activePlayers.splice(this.currentPlayerIndex, 1);
             this.currentPlayerIndex--;
-            // kick current Player out of activePlayers
         }
         this.changePlayers();
     }
@@ -122,6 +175,8 @@ class Game {
     endRoundCheck() {
         if(this.activePlayers.length === 0) {
             this.allocateResources();
+            this.turnNumber++;
+            this.updateStatus();
             this.startRound();
         }
     }
@@ -133,6 +188,7 @@ class Game {
             this.currentPlayerIndex = 0;
         }
         this.currentPlayer = this.activePlayers[this.currentPlayerIndex];
+        this.highlightCurrentPlayer();
         this.endRoundCheck();
     }
 
@@ -168,7 +224,7 @@ class Game {
 
         for (var playerIndex in this.players) {
             var currentInventory = this.players[playerIndex].inventory;
-            
+
             for (var resourceIndex in resources) {
                 currentInventory.resourceTrackers[resources[resourceIndex]].changeAmount(
                     currentInventory.resourceTrackers[resources[resourceIndex]].getProduction());

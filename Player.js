@@ -46,43 +46,6 @@ class Player {
 
     eventListeners(){ //for buttons activating action modals and modals itself
 
-        var test = this;
-        $("#playCard").on('click', function(){
-            // $("#playActionCardModal").show();
-            $("#playActionCardModal").parent().show();
-        });
-        $("#standardProject").on('click', function(){
-            test.checkStandardProjects();
-            // $("#standardProjectsModal").show();
-            $("#standardProjectsModal").parent().show();
-        });
-        $("#convertResources").on('click', function(){
-            test.checkResources();
-            // $("#convertResourcesModal").show();
-            $("#convertResourcesModal").parent().show();
-        });
-
-        $(".close").on('click', function(){
-            var modalParent = $(".close").parent();
-            var modalGrandparent = modalParent.parent();
-            // modalGrandparent.hide();
-            $(".modal-shadow").hide();
-        });
-
-
-
-        //standard project modal
-        $("#sellCards").on('click', this.standardProjectSellCards);
-        $("#powerPlant").on('click', this.standardProjectPowerPlant);
-        $("#increaseTemperature").on('click', this.standardProjectAsteroid);
-        $("#buildOcean").on('click', this.standardProjectAquifer);
-        $("#buildGreenery").on('click', this.standardProjectGreenery);
-        $("#buildCity").on('click', this.standardProjectCity);
-        //convert resources modal
-        $("#sellSteel").on('click', this.sellSteel);
-        $("#sellTitanium").on('click', this.sellTitanium);
-        $("#convertPlants").on('click', this.convertPlants);
-        $("#convertHeat").on('click', this.convertHeat);
     }
 
     updateHand() {
@@ -124,7 +87,7 @@ class Player {
             var indexOfObj = this.hand.indexOf(cardObj);
             this.hand.splice(indexOfObj, 1);
             console.log(this.hand);
-            this.updateHand();
+            // this.updateHand();
             $(".modal-shadow").hide();
     }
 
