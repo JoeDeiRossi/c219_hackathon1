@@ -13,7 +13,6 @@ class Player {
         this.hand = [];
         this.actions = 2;
 
-        this.eventListeners = this.eventListeners.bind(this);
         this.playCard = this.playCard.bind(this);
         this.checkStandardProjects = this.checkStandardProjects.bind(this);
         this.checkResources = this.checkResources.bind(this);
@@ -36,10 +35,9 @@ class Player {
         this.convertPlantsConfirm = this.convertPlantsConfirm.bind(this);
         this.convertHeat = this.convertHeat.bind(this);
         this.convertHeatConfirm = this.convertHeatConfirm.bind(this);
-
+      
         this.inputModal = null;
 
-        this.eventListeners();
     }
 
     render() {
@@ -53,48 +51,7 @@ class Player {
     updateTr(){
         $(this.playerDomElement).find('.playerInner').text('Player ' + (this.number + 1) + '\nTR: ' + this.inventory.TR);
     }
-
-    eventListeners(){ //for buttons activating action modals and modals itself
-
-        var test = this;
-        $("#playCard").on('click', function(){
-            // $("#playActionCardModal").show();
-            $("#playActionCardModal").parent().show();
-        });
-        $("#standardProject").on('click', function(){
-            test.checkStandardProjects();
-            // $("#standardProjectsModal").show();
-            $("#standardProjectsModal").parent().show();
-        });
-        $("#convertResources").on('click', function(){
-            test.checkResources();
-            // $("#convertResourcesModal").show();
-            $("#convertResourcesModal").parent().show();
-        });
-
-        $(".close").on('click', function(){
-            var modalParent = $(".close").parent();
-            var modalGrandparent = modalParent.parent();
-            // modalGrandparent.hide();
-            $(".modal-shadow").hide();
-        });
-
-
-
-        //standard project modal
-        $("#sellCards").on('click', this.standardProjectSellCards);
-        $("#powerPlant").on('click', this.standardProjectPowerPlant);
-        $("#increaseTemperature").on('click', this.standardProjectAsteroid);
-        $("#buildOcean").on('click', this.standardProjectAquifer);
-        $("#buildGreenery").on('click', this.standardProjectGreenery);
-        $("#buildCity").on('click', this.standardProjectCity);
-        //convert resources modal
-        $("#sellSteel").on('click', this.sellSteel);
-        $("#sellTitanium").on('click', this.sellTitanium);
-        $("#convertPlants").on('click', this.convertPlants);
-        $("#convertHeat").on('click', this.convertHeat);
-    }
-
+  
     updateHand() {
         /* clear hand */
         $('.hand').empty();
@@ -125,6 +82,7 @@ class Player {
                 break;
         }
         this.inventory.changeTR(1);
+        this.updateTr();
     }
     playCard(cardObj) {
         /* takes in card object from hand? or index of card in hand array
@@ -133,7 +91,7 @@ class Player {
             var indexOfObj = this.hand.indexOf(cardObj);
             this.hand.splice(indexOfObj, 1);
             console.log(this.hand);
-            this.updateHand();
+            // this.updateHand();
             $(".modal-shadow").hide();
     }
 
@@ -203,6 +161,7 @@ class Player {
         this.inventory.resourceTrackers.money.changeAmount(-14);
         this.callback.changeStatus('temperature', 1); //needs to increase temp by 1 step and increase TR
         this.inventory.changeTR(1);
+        this.updateTr();
         // $("#standardProjectsModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
@@ -332,6 +291,7 @@ class Player {
         this.inventory.resourceTrackers.heat.changeAmount(-8);
         this.callback.changeStatus('temperature', 1);
         this.inventory.changeTR(1);
+        this.updateTr();
         // $("#convertResourcesModal").hide();
         $(".modal-shadow").hide();
         this.actions--;

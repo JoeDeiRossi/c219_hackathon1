@@ -12,42 +12,44 @@ class messageModals {
         modal.remove();
     }
 
+    errorModal() {
+        var modal = $('<div>').addClass('infoModal').text('Insufficient funds and/or resources');
+        var cancelButton = $('<button>').addClass('cancelButton').text('CANCEL').on('click', this.deleteModal);
+        modal.append(cancelButton);
+        $('body').append(modal);
+        modal.show();
+    }
+
+    confirmModal() {
+        var modal = $('<div>').addClass('infoModal').text('Are you sure?');
+        var confirmButton = $('<button>').addClass('confirmButton').text('CONFIRM').on('click', this.callback).on('click',           this.deleteModal);
+        var cancelButton = $('<button>').addClass('cancelButton').text('CANCEL').on('click', this.deleteModal);
+        modal.append(confirmButton, cancelButton);
+        $('body').append(modal);
+        modal.show();
+    }
+
+    inputModal() {
+        var modal = $('<div>').addClass('infoModal').text('How many?');
+        this.quantityInput = $('<input>',{
+            type: 'number',
+            max: this.resourceBank,
+            min: 1
+        }).val(1);
+        var confirmButton = $('<button>').addClass('confirmButton').text('CONFIRM').on('click', this.callback).on('click',           this.deleteModal);
+        var cancelButton = $('<button>').addClass('cancelButton').text('CANCEL').on('click', this.deleteModal);
+        modal.append(this.quantityInput, confirmButton, cancelButton);
+        $('body').append(modal);
+        modal.show();
+    }
+
     buildModal() {
         if (this.type === 'error') {
-            var modal = $('<div>').addClass('infoModal').text('Insufficient funds and/or resources');
-            var cancelButton = $('<button>').addClass('cancelButton').text('CANCEL').on('click', this.deleteModal);
-            modal.append(cancelButton);
-            $('body').append(modal);
-            modal.show();
+            this.errorModal();
         } else if (this.type === 'confirm') {
-            var modal = $('<div>').addClass('infoModal').text('Are you sure?');
-            var confirmButton = $('<button>').addClass('confirmButton').text('CONFIRM').on('click', this.callback).on('click',           this.deleteModal);
-            var cancelButton = $('<button>').addClass('cancelButton').text('CANCEL').on('click', this.deleteModal);
-            modal.append(confirmButton, cancelButton);
-            $('body').append(modal);
-            modal.show();
+            this.confirmModal();
         } else {
-            var modal = $('<div>').addClass('infoModal').text('How many?');
-            this.quantityInput = $('<input>',{
-                type: 'number',
-                max: this.resourceBank,
-                min: 1
-            }).val(1);
-            var confirmButton = $('<button>').addClass('confirmButton').text('CONFIRM').on('click', this.callback).on('click',           this.deleteModal);
-            var cancelButton = $('<button>').addClass('cancelButton').text('CANCEL').on('click', this.deleteModal);
-            modal.append(this.quantityInput, confirmButton, cancelButton);
-            $('body').append(modal);
-            modal.show();
+            this.inputModal();
         }
     }
 }
-
-    //after clicking 'sell steel'
-        //'how many?' with input field and CONFIRM button
-            //could change to confirmation of steel sold and $ gained
-            //could change to 'invalid amount' message
-
-    //after clicking 'sell titanium'
-        //'how many?' with input field and CONFIRM button
-            //could change to confirmation of titanium sold and $ gained
-            //could change to 'invalid amount' message
