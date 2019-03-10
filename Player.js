@@ -13,7 +13,6 @@ class Player {
         this.hand = [];
         this.actions = 2;
 
-        this.eventListeners = this.eventListeners.bind(this);
         this.playCard = this.playCard.bind(this);
         this.checkStandardProjects = this.checkStandardProjects.bind(this);
         this.checkResources = this.checkResources.bind(this);
@@ -27,9 +26,6 @@ class Player {
         this.sellTitanium = this.sellTitanium.bind(this);
         this.convertPlants = this.convertPlants.bind(this);
         this.convertHeat = this.convertHeat.bind(this);
-
-
-        this.eventListeners();
     }
 
     render() {

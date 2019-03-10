@@ -50,11 +50,13 @@ class Game {
     // ---- GAME SEQUENCE ------------------------------------------------------
 
     startGame() {
-        console.log('starting game')
+        console.log('starting game');
 
         $('#pass').on('click', this.pass);
 
         this.makePlayers();
+
+        this.addEventHandlers();
 
         this.dealCards(4);
         for (var index = this.players.length - 1; index >= 0; index--) {
@@ -68,17 +70,16 @@ class Game {
         var test = this;
         $("#playCard").off().on('click', function(e){
             // $("#playActionCardModal").show();
-            e.preventDefault();
             $("#playActionCardModal").parent().show();
-            test.updateHand();
+            test.currentPlayer.updateHand();
         });
         $("#standardProject").on('click', function(){
-            test.checkStandardProjects();
+            test.currentPlayer.checkStandardProjects();
             // $("#standardProjectsModal").show();
             $("#standardProjectsModal").parent().show();
         });
         $("#convertResources").on('click', function(){
-            test.checkResources();
+            test.currentPlayer.checkResources();
             // $("#convertResourcesModal").show();
             $("#convertResourcesModal").parent().show();
         });
@@ -91,26 +92,17 @@ class Game {
         });
 
         //standard project modal
-        $("#sellCards").on('click', this.standardProjectSellCards);
-        $("#powerPlant").on('click', this.standardProjectPowerPlant);
-        $("#increaseTemperature").on('click', this.standardProjectAsteroid);
-        $("#buildOcean").on('click', this.standardProjectAquifer);
-        $("#buildGreenery").on('click', this.standardProjectGreenery);
-        $("#buildCity").on('click', this.standardProjectCity);
+        $("#sellCards").on('click', test.currentPlayer.standardProjectSellCards);
+        $("#powerPlant").on('click', test.currentPlayer.standardProjectPowerPlant);
+        $("#increaseTemperature").on('click', test.currentPlayer.standardProjectAsteroid);
+        $("#buildOcean").on('click', test.currentPlayer.standardProjectAquifer);
+        $("#buildGreenery").on('click', test.currentPlayer.standardProjectGreenery);
+        $("#buildCity").on('click', test.currentPlayer.standardProjectCity);
         //convert resources modal
-        $("#sellSteel").on('click', this.sellSteel);
-        $("#sellTitanium").on('click', this.sellTitanium);
-        $("#convertPlants").on('click', this.convertPlants);
-        $("#convertHeat").on('click', this.convertHeat);
-    }
-
-
-    startRound() {
-        /* all players get two cards per turn */
-        this.activePlayer = this.players.slice();
-        for (var index in this.players) {
-            this.dealCards(this.players[index], 6);
-        }
+        $("#sellSteel").on('click', test.currentPlayer.sellSteel);
+        $("#sellTitanium").on('click', test.currentPlayer.sellTitanium);
+        $("#convertPlants").on('click', test.currentPlayer.convertPlants);
+        $("#convertHeat").on('click', test.currentPlayer.convertHeat);
     }
 
     makePlayers() {
@@ -137,6 +129,12 @@ class Game {
             this.dealCards(this.players[playerIndex], 2);
             this.players[playerIndex].actions = 2;
         }
+
+        this.currentPlayerIndex = 0;
+        this.currentPlayer = this.activePlayers[this.currentPlayerIndex]
+        this.highlightCurrentPlayer();
+
+        $('.playerInfo').removeClass('playerPassedHighlight');
     }
 
     highlightCurrentPlayer() {
@@ -145,7 +143,6 @@ class Game {
     }
 
     muteCurrentPlayer() {
-        $('.playerInfo').removeClass('playerPassedHighlight');
         $(this.currentPlayer.playerDomElement).addClass('playerPassedHighlight');
     }
 
@@ -188,7 +185,9 @@ class Game {
             this.currentPlayerIndex = 0;
         }
         this.currentPlayer = this.activePlayers[this.currentPlayerIndex];
-        this.highlightCurrentPlayer();
+        if (this.currentPlayer) {
+            this.highlightCurrentPlayer();
+        }
         this.endRoundCheck();
     }
 
@@ -223,7 +222,7 @@ class Game {
         var resources = ['money', 'steel', 'titanium', 'plants', 'energy', 'heat'];
 
         for (var playerIndex in this.players) {
-            var currentInventory = this.players[playerIndex].inventory;
+            currentInventory = this.players[playerIndex].inventory;
 
             for (var resourceIndex in resources) {
                 currentInventory.resourceTrackers[resources[resourceIndex]].changeAmount(
