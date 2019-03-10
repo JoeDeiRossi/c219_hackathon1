@@ -103,13 +103,13 @@ body {
 }
 
 .statusTurnNumber, .statusOxygen, .statusTemp, .statusOceanTiles {
-  height: 20%;
+  height: 15%;
 }
 
 .statusLabel{
   color: silver;
   text-decoration: underline;
-  margin: 10%;
+  margin: 10% 10% 0 10%;
 }
 
 .flex-container {
