@@ -187,6 +187,21 @@ body {
   cursor: pointer;
 }
 
+.infoModal {
+  background-color: chartreuse;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 5px solid silver;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.cancelButton,
+.confirmButton {
+  background-color: firebrick;
+}
+
 .actionCardContainer {
   border: 3px solid black;
   border-radius: 5px;
@@ -205,6 +220,11 @@ body {
   font-size: 0.7em;
 }
 
+
+
+.glow-active {
+  box-shadow: 0 0 10px 5px yellow;
+}
 
 
 @media only screen and (max-width: 980px) {

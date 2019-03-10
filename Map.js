@@ -73,6 +73,40 @@ class Map {
 
     }
 
+    findTileCategory(type){
+        //to find city and greenery = ocean: false
+        //ocean = ocean: true
+        //activate click upon match
+        if(type === 'ocean'){
+            for(var index = 0; index < this.mapTiles.length; index++){
+                if(this.mapTiles[index].canBeOcean === true && this.mapTiles[index].available === true){
+                    this.mapTiles[index].domElement.on('click', this.mapTiles[index].clickHandler);
+                    this.mapTiles[index].domElement.addClass('glow-active');
+                }
+            }
+        } else if(type === 'greenery'){
+            for(var index = 0; index < this.mapTiles.length; index++){
+                if(this.mapTiles[index].canBeOcean === false && this.mapTiles[index].rewards.hasOwnProperty('greenery') && this.mapTiles[index].available === true){
+                    this.mapTiles[index].domElement.on('click', this.mapTiles[index].clickHandler);
+                    this.mapTiles[index].domElement.addClass('glow-active');
+                }
+            }
+        } else if(type === 'city'){
+            for(var index = 0; index < this.mapTiles.length; index++){
+                if(this.mapTiles[index].canBeOcean === false && !this.mapTiles[index].rewards.hasOwnProperty('greenery') && this.mapTiles[index].available === true){
+                    this.mapTiles[index].domElement.on('click', this.mapTiles[index].clickHandler);
+                    this.mapTiles[index].domElement.addClass('glow-active');
+                }
+            }
+        }
+    }
+    removeClicks(){
+        for(var index = 0; index < this.mapTiles.length; index++){
+            this.mapTiles[index].domElement.find('.glow-active').off('click');
+            this.mapTiles[index].domElement.removeClass('glow-active');
+        }
+    }
+
     render() {
         /* outer flex container for the Map */
         this.domElement = $('<div>', {'class': 'flex-container'});
@@ -128,32 +162,33 @@ class MapTile {
     clickHandler() {
         /* handle click by calling the function we got as a param and pass in THIS MapTile */
     //   this.callback(this);
-        this.testForAvailability();
-        this.testForOcean();
-        this.removeRewardsFromMap();
         if(this.askIfPlaceTileCallback()) {
-          this.rewardCallback(this);
-      }
-    }
-    testForAvailability() {
-        if(this.available === true) {
-            console.log('your tile was placed');
-            this.domElement.css('background-color', 'grey');
-        } else {
-            alert('Please choose another tile.')
+            this.available = false;
+            this.updateTakenAndOcean();
+            this.removeRewardsFromMap();
+            this.rewardCallback(this);
         }
-        this.available = false;
     }
-
-
-    testForOcean() {
+    // testForAvailability() {
+        // if(this.available === true) {
+        //     console.log('your tile was placed');
+        //     this.domElement.css('background-color', 'grey');
+        // } else {
+        //     alert('Please choose another tile.')
+        // }
+        // this.available = false;
+    // }
+    updateTakenAndOcean() {
       if(this.canBeOcean === true && $('.statusOceanTiles .statusValue').text() > 0) {
         this.domElement.css('background-color', 'blue');
-        var newValue = parseInt($('.statusOceanTiles .statusValue').text() - 1);
-        $('.statusOceanTiles .statusValue').text(newValue)
+        var newValue = parseInt($('.statusOceanTiles .statusValue').text()) - 1;
+        $('.statusOceanTiles .statusValue').text(newValue);
         console.log('ocean was clicked');
+      } else if(this.canBeOcean === false && this.rewards.hasOwnProperty('greenery')) {
+          this.domElement.css('background-color', 'green');
+      } else if(this.canBeOcean === false) {
+          this.domElement.css('background-color', 'grey');
       }
-      this.canBeOcean = false;
     }
     showRewards() {
       if(this.rewards.greenery === 1) {
@@ -204,7 +239,7 @@ class MapTile {
         }
         this.showRewards()
         /* add a click handler to the div */
-        this.domElement.click(this.clickHandler);
+        //this.domElement.click(this.clickHandler);
         /* return the div */
         return this.domElement;
     }

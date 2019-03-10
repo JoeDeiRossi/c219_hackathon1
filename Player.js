@@ -19,15 +19,25 @@ class Player {
         this.checkResources = this.checkResources.bind(this);
         this.standardProjectSellCards = this.standardProjectSellCards.bind(this);
         this.standardProjectPowerPlant = this.standardProjectPowerPlant.bind(this);
+        this.standardProjectPowerPlantConfirm = this.standardProjectPowerPlantConfirm.bind(this);
         this.standardProjectAsteroid = this.standardProjectAsteroid.bind(this);
+        this.standardProjectAsteroidConfirm = this.standardProjectAsteroidConfirm.bind(this);
         this.standardProjectAquifer = this.standardProjectAquifer.bind(this);
+        this.standardProjectAquiferConfirm = this.standardProjectAquiferConfirm.bind(this);
         this.standardProjectGreenery = this.standardProjectGreenery.bind(this);
+        this.standardProjectGreeneryConfirm = this.standardProjectGreeneryConfirm.bind(this);
         this.standardProjectCity = this.standardProjectCity.bind(this);
+        this.standardProjectCityConfirm = this.standardProjectCityConfirm.bind(this);
         this.sellSteel = this.sellSteel.bind(this);
+        this.sellSteelConfirm = this.sellSteelConfirm.bind(this);
         this.sellTitanium = this.sellTitanium.bind(this);
+        this.sellTitaniumConfirm = this.sellTitaniumConfirm.bind(this);
         this.convertPlants = this.convertPlants.bind(this);
+        this.convertPlantsConfirm = this.convertPlantsConfirm.bind(this);
         this.convertHeat = this.convertHeat.bind(this);
+        this.convertHeatConfirm = this.convertHeatConfirm.bind(this);
 
+        this.inputModal = null;
 
         this.eventListeners();
     }
@@ -111,11 +121,10 @@ class Player {
                 this.inventory.resourceTrackers['steel'].changeAmount(change);
                 break;
             case 'card':
-                this.dealCardCallBack(change);
+                this.callback.drawCard(change);
                 break;
         }
-
-
+        this.inventory.changeTR(1);
     }
     playCard(cardObj) {
         /* takes in card object from hand? or index of card in hand array
@@ -173,7 +182,11 @@ class Player {
     }
 
     standardProjectPowerPlant() {
-        //runs when .powerPlantButton is clicked
+        var confirmModal = new messageModals('confirm', this.standardProjectPowerPlantConfirm);
+        confirmModal.buildModal();
+    }
+
+    standardProjectPowerPlantConfirm() {
         this.inventory.resourceTrackers.money.changeAmount(-11);
         this.inventory.resourceTrackers.energy.changeProduction(1);
         // $("#standardProjectsModal").hide();
@@ -182,6 +195,11 @@ class Player {
     }
 
     standardProjectAsteroid() {
+        var confirmModal = new messageModals('confirm', this.standardProjectAsteroidConfirm);
+        confirmModal.buildModal();
+    }
+
+    standardProjectAsteroidConfirm() {
         this.inventory.resourceTrackers.money.changeAmount(-14);
         this.callback.changeStatus('temperature', 1); //needs to increase temp by 1 step and increase TR
         this.inventory.changeTR(1);
@@ -191,28 +209,43 @@ class Player {
     }
 
     standardProjectAquifer() {
+        var confirmModal = new messageModals('confirm', this.standardProjectAquiferConfirm);
+        confirmModal.buildModal();
+    }
+
+    standardProjectAquiferConfirm() {
         this.inventory.resourceTrackers.money.changeAmount(-18);
         this.callback.addTile('ocean', 1); //needs to give player an ocean tile to place, which will also increase their TR
-        this.inventory.changeTR(1);
+
         // $("#standardProjectsModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
     }
 
     standardProjectGreenery() {
+        var confirmModal = new messageModals('confirm', this.standardProjectGreeneryConfirm);
+        confirmModal.buildModal();
+    }
+
+    standardProjectGreeneryConfirm() {
         this.inventory.resourceTrackers.money.changeAmount(-23);
         this.callback.addTile('greenery', 1); //needs to give player a greenery tile to place, which will increase oxygen and their TR
-        this.inventory.changeTR(1);
+
         // $("#standardProjectsModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
     }
 
     standardProjectCity() {
+        var confirmModal = new messageModals('confirm', this.standardProjectCityConfirm);
+        confirmModal.buildModal();
+    }
+
+    standardProjectCityConfirm() {
         this.inventory.resourceTrackers.money.changeAmount(-25);
         this.inventory.resourceTrackers.money.changeProduction(2);
         this.callback.addTile('city', 1); //needs to give player a city tile to place
-        this.inventory.changeTR(1);
+
         // $("#standardProjectsModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
@@ -240,29 +273,50 @@ class Player {
     }
 
     sellSteel() {
-        //runs when .sellSteelButton is clicked
-        this.inventory.resourceTrackers.steel.changeAmount(-1);
-        this.inventory.resourceTrackers.money.changeAmount(2);
-        // $("#convertResourcesModal").hide();
+
+        this.inputModal = new messageModals('quantity', this.sellSteelConfirm, this.inventory.resourceTrackers.steel.getAmount());
+        this.inputModal.buildModal();
+    }
+
+    sellSteelConfirm() {
+        var userInput = this.inputModal.quantityInput.val();
+        this.inventory.resourceTrackers.steel.changeAmount(-1 * userInput);
+        this.inventory.resourceTrackers.money.changeAmount(2 * userInput);
+        $("#convertResourcesModal").hide();
+
+
         $(".modal-shadow").hide();
+
         this.actions--;
     }
 
     sellTitanium() {
-        //runs when .sellTitaniumButton is clicked
-        this.inventory.resourceTrackers.titanium.changeAmount(-1);
-        this.inventory.resourceTrackers.money.changeAmount(3);
-        // $("#convertResourcesModal").hide();
+
+        this.inputModal = new messageModals('quantity', this.sellTitaniumConfirm, this.inventory.resourceTrackers.titanium.getAmount());
+        this.inputModal.buildModal();
+    }
+
+    sellTitaniumConfirm() {
+        var userInput = this.inputModal.quantityInput.val();
+        this.inventory.resourceTrackers.titanium.changeAmount(-1 * userInput);
+        this.inventory.resourceTrackers.money.changeAmount(3 * userInput);
+        $("#convertResourcesModal").hide();
+
+
         $(".modal-shadow").hide();
+
         this.actions--;
     }
 
     convertPlants() {
-        //runs when .convertPlantsButton is clicked
+        var confirmModal = new messageModals('confirm', this.convertPlantsConfirm);
+        confirmModal.buildModal();
+    }
+
+    convertPlantsConfirm() {
         this.inventory.resourceTrackers.plants.changeAmount(-8);
         this.callback.addTile('greenery', 1);
         this.callback.changeStatus('oxygen', 1);
-        this.inventory.changeTR(1);
         // $("#convertResourcesModal").hide();
         $(".modal-shadow").hide();
         this.actions--;
@@ -270,7 +324,11 @@ class Player {
     }
 
     convertHeat() {
-        //runs when .convertHeatButton is clicked
+        var confirmModal = new messageModals('confirm', this.convertHeatConfirm);
+        confirmModal.buildModal();
+    }
+
+    convertHeatConfirm() {
         this.inventory.resourceTrackers.heat.changeAmount(-8);
         this.callback.changeStatus('temperature', 1);
         this.inventory.changeTR(1);
