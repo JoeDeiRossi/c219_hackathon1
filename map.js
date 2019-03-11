@@ -131,7 +131,8 @@ class Map {
                     this.data[tileNumber].rewards,
                     this.data[tileNumber].canBeOcean,
                     this.rewardCallback,
-                    this.askIfPlaceTileCallback
+                    this.askIfPlaceTileCallback,
+                    this.changeWorldStats,
                     );
                 this.mapTiles.push(newMapTile);
                 /* calling the new MapTile's render returns a div element - append to current row */
@@ -189,7 +190,7 @@ class MapTile {
           this.domElement.css('background-color', 'grey');
       }
     }
-    
+
     increaseOxygen() {
       if(this.canBeOcean === false && this.rewards.hasOwnProperty('greenery')) {
           this.domElement.css('background-color', 'green');
