@@ -3,6 +3,7 @@ $(document).ready(testFunction);
 class Game {
     constructor(playerCount) {
 
+        this.playerDrawCardCallback = this.playerDrawCardCallback.bind(this);
         this.tilePlacementResultsCallback = this.tilePlacementResultsCallback.bind(this);
         this.askIfCanPlaceTile = this.askIfCanPlaceTile.bind(this);
         this.getCurrentPlayerStats = this.getCurrentPlayerStats.bind(this);
@@ -129,8 +130,8 @@ class Game {
         this.activePlayers = this.players.slice();
 
         // all players get two cards per turn and reset actions to 2
+        this.dealCards(2);
         for (var playerIndex in this.players) {
-            this.dealCards(this.players[playerIndex], 2);
             this.players[playerIndex].actions = 2;
         }
 
@@ -182,6 +183,39 @@ class Game {
         }
     }
 
+    // checks if game will end
+    endGameCheck() {
+        if(this.temperature.current === this.temperature.max && this.oxygen.current === this.oxygen.max && this.oceanTiles === 0) {
+            var maxTR = 0;
+            var winners = [];
+
+            for(var player in this.players) {
+                if (this.players[player].TR > maxTR) {
+                    winners = [];
+                    winners[0] = this.players[player].number;
+                    maxTR = this.players[player].TR;
+                } else if (this.players[player].TR === maxTR) {
+                    winners.push(this.players[player].number);
+                }
+            }
+
+            var message;
+
+            if (winners.length > 1) {
+                message = 'Player ' + winners[0] + ' wins!';
+            } else {
+                message = 'Player ' + winners[0];
+                for (var index = 1; index < winners.length; index++) {
+                    message += ' and ' + winners[index];
+                }
+                message += ' tied!';
+            }
+
+            var endGameModal = new messageModals('endgame', null, message);
+            endGameModal.render();
+        }
+    }
+
     changePlayers() {
         // change the current player to the next in players array
         this.currentPlayerIndex++;
@@ -191,7 +225,9 @@ class Game {
         this.currentPlayer = this.activePlayers[this.currentPlayerIndex];
         if (this.currentPlayer) {
             this.highlightCurrentPlayer();
+            this.currentPlayer.actions = 2;
         }
+        this.endGameCheck();
         this.endRoundCheck();
     }
 
@@ -216,6 +252,7 @@ class Game {
 
     // updates the status display on the board
     updateStatus() {
+        $(".statusTurnNumber > .statusValue").text(this.turnNumber);
         $(".statusOxygen > .statusValue").text(this.oxygen.current + '%');
         $(".statusTemp > .statusValue").text(this.temperature.current + 'C');
     }
@@ -271,6 +308,9 @@ class Game {
         this.canPlaceTile = false;
         this.map.removeClicks();
         mapTile.owner = this.currentPlayer;
+
+
+
         this.currentPlayer.process(mapTile.rewards);
         this.afterPlayerAction();
     }

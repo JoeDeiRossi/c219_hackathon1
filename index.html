@@ -64,18 +64,33 @@
                   <div class="standardProjectsModalContent">
                       <span class="close">&times;</span> <!--float: right, onclick = close parentDiv-->
                       <h3>Standard Projects</h3>
-                      <button id="sellCards">Sell Cards</button>
-                      <span><i class="fa fa-bitcoin"></i>: +1</span><br> <!--make it so that you can only sell one card, will move to used cards inventory? or be discarded-->
-                      <button id="powerPlant">Power Plant</button>
-                      <span><i class="fa fa-bitcoin"></i>: -11</span><br>
-                      <button id="increaseTemperature">Increase Temperature</button>
-                      <span><i class="fa fa-bitcoin"></i>: -14</span><br>
-                      <button id="buildOcean">Build Ocean</button>
-                      <span><i class="fa fa-bitcoin"></i>: -18</span><br>
-                      <button id="buildGreenery">Build Greenery</button>
-                      <span><i class="fa fa-bitcoin"></i>: -23</span><br>
-                      <button id="buildCity">Build City</button>
-                      <span><i class="fa fa-bitcoin"></i>: -25</span>
+                      <div class="modalButtonContainer">
+                          <div class="modalButtonInner">
+                              <button id="sellCards">Sell Cards</button>
+                              <span><i class="fa fa-bitcoin"></i>: +1</span><br>
+                          </div>
+                          <!--make it so that you can only sell one card, will move to used cards inventory? or be discarded-->
+                          <div class="modalButtonInner">
+                              <button id="powerPlant">Power Plant</button>
+                              <span><i class="fa fa-bitcoin"></i>: -11</span><br>
+                          </div>
+                          <div class="modalButtonInner">
+                              <button id="increaseTemperature">Increase Temperature</button>
+                              <span><i class="fa fa-bitcoin"></i>: -14</span><br>
+                          </div>
+                          <div class="modalButtonInner">
+                              <button id="buildOcean">Build Ocean</button>
+                              <span><i class="fa fa-bitcoin"></i>: -18</span><br>
+                          </div>
+                          <div class="modalButtonInner">
+                              <button id="buildGreenery">Build Greenery</button>
+                              <span><i class="fa fa-bitcoin"></i>: -23</span><br>
+                          </div>
+                          <div class="modalButtonInner">
+                              <button id="buildCity">Build City</button>
+                              <span><i class="fa fa-bitcoin"></i>: -25</span><br>
+                          </div>
+                      </div>
                   </div>
               </div>
             </div>
@@ -84,14 +99,24 @@
                   <div class="convertResourcesModalContent">
                       <span class="close">&times;</span> <!--float: right, onclick = close parentDiv-->
                       <h3>Convert Resources</h3>
-                      <button id="sellSteel">Sell Steel</button>
-                      <span><i class="fa fa-bitcoin"></i>: +2</span><br>
-                      <button id="sellTitanium">Sell Titanium</button>
-                      <span><i class="fa fa-bitcoin"></i>: +3</span><br>
-                      <button id="convertPlants">Convert Plants</button>
-                      <span>TR: +1, Greenery Tile: +1, Oxygen: +1</span><br>
-                      <button id="convertHeat">Convert Heat</button>
-                      <span>TR: +1, Temperature: +1</span>
+                      <div class="modalButtonContainer">
+                          <div class="modalButtonInner">
+                              <button id="sellSteel">Sell Steel</button>
+                              <span><i class="fa fa-bitcoin"></i>: +2 each</span><br>
+                          </div>
+                          <div class="modalButtonInner">
+                              <button id="sellTitanium">Sell Titanium</button>
+                              <span><i class="fa fa-bitcoin"></i>: +3 each</span><br>
+                          </div>
+                          <div class="modalButtonInner">
+                              <button id="convertPlants">Convert Plants</button>
+                              <span>Plants: -8<br>TR: +1<br>1 Greenery Tile<br>Oxygen: +1</span><br>
+                          </div>
+                          <div class="modalButtonInner">
+                              <button id="convertHeat">Convert Heat</button>
+                              <span>Heat -8<br>TR: +1<br>Temp. +1</span><br>
+                          </div>
+                      </div>
                   </div>
               </div>
             </div>

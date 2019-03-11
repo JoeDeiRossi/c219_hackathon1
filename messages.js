@@ -43,11 +43,19 @@ class messageModals {
         modal.show();
     }
 
+    endGameModal() {
+        var modal = $('<div>').addClass('infoModal').text(this.resourceBank);
+        $('body').append(modal);
+        modal.show();
+    }
+
     buildModal() {
         if (this.type === 'error') {
             this.errorModal();
         } else if (this.type === 'confirm') {
             this.confirmModal();
+        } else if (this.type === 'endgame') {
+            this.endGameModal();
         } else {
             this.inputModal();
         }
