@@ -62,10 +62,11 @@ var tileInfoArray = [
     {rewards: {titanium: 2}, canBeOcean: true}
   ];
 class Map {
-    constructor(rewardCallback, askIfPlaceTileCallback) {
+    constructor(rewardCallback, askIfPlaceTileCallback, changeWorldStats) {
         this.data = tileInfoArray;
         this.rewardCallback = rewardCallback;
         this.askIfPlaceTileCallback = askIfPlaceTileCallback;
+        this.changeWorldStats = changeWorldStats;
         /* Map object has an array of MapTile objects */
         this.mapTiles = [];
         this.mapRowLengths = [5, 6, 7, 8, 9, 8, 7, 6, 5];
@@ -145,12 +146,13 @@ class Map {
     }
 }
 class MapTile {
-    constructor(number, rewards, canBeOcean, rewardCallback, askIfPlaceTileCallback) {
+    constructor(number, rewards, canBeOcean, rewardCallback, askIfPlaceTileCallback, changeWorldStats) {
         /* store the dom element associated with this MapTile*/
         this.domElement = null;
         /* callback function that is passed down from Map (or Game, really) */
         this.rewardCallback = rewardCallback;
         this.askIfPlaceTileCallback = askIfPlaceTileCallback;
+        this.changeWorldStats = changeWorldStats;
         /* this MapTile's number */
         this.tileNumber = number;
         this.canBeOcean = canBeOcean;
@@ -172,22 +174,32 @@ class MapTile {
         if(this.askIfPlaceTileCallback()) {
             this.available = false;
             this.updateTakenAndOcean();
+            this.increaseOxygen();
             this.removeRewardsFromMap();
             this.rewardCallback(this);
         }
     }
 
+
     updateTakenAndOcean() {
       if(this.canBeOcean === true && $('.statusOceanTiles .statusValue').text() > 0) {
         this.domElement.css('background-color', 'blue');
-        var newValue = parseInt($('.statusOceanTiles .statusValue').text()) - 1;
-        $('.statusOceanTiles .statusValue').text(newValue);
-      } else if(this.canBeOcean === false && this.rewards.hasOwnProperty('greenery')) {
-          this.domElement.css('background-color', 'green');
+        this.changeWorldStats('oceanTiles', 1)
       } else if(this.canBeOcean === false) {
           this.domElement.css('background-color', 'grey');
       }
     }
+    
+    increaseOxygen() {
+      if(this.canBeOcean === false && this.rewards.hasOwnProperty('greenery')) {
+          this.domElement.css('background-color', 'green');
+          var greenValue = parseInt($('.statusOxygen .statusValue').text()) + 1;
+          if(greenValue <= 14) {
+            this.changeWorldStats('oxygen', 1)
+          }
+      }
+    }
+
     showRewards() {
       if(this.rewards.greenery === 1) {
         this.domElement.append('<i class="fa fa-leaf"></i>');
