@@ -272,7 +272,6 @@ class Player {
     }
 
     convertHeatConfirm() {
-        debugger;
         this.inventory.resourceTrackers.heat.changeAmount(-8);
         this.callback.changeStatus('temperature', 2);
         this.inventory.changeTR(1);

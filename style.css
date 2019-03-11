@@ -256,12 +256,13 @@ h1 {
 .close {
     float: right;
     font-size: 1.5em;
-    padding-right: 15px;
+    padding-right: 5px;
 }
 
 .close:hover {
     color: grey;
     cursor: pointer;
+    transform: scale(2);
 }
 
 .infoModal {
@@ -298,14 +299,28 @@ h1 {
     margin: auto;
 }
 
+.hand {
+    height: 80%;
+    width: 100%;
+}
+
 .actionCardContainer {
     border: 3px solid #87421F;
-    border-radius: 5px;
+    border-radius: 10px;
     box-sizing: border-box;
     display: inline-block;
-    height: 150px;
-    width: 150px;
+    height: 25vh;
+    width: 20vh;
     vertical-align: middle;
+    background-color: rgba(0,0,0,.1);
+    transform: scale(.95);
+}
+
+.actionCardContainer:hover {
+    border: 3px solid #ff5122;
+    transition-duration: .25s;
+    transform: scale(1);
+    transition-duration: .05s
 }
 
 .actionCardInner {
@@ -313,7 +328,14 @@ h1 {
     top: 50%;
     transform: translateY(-50%);
     padding: 5px;
-    font-size: 0.7em;
+    font-size: .9em;
+}
+
+.actionName {
+    font-style: italic;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    text-align: center
 }
 
 
