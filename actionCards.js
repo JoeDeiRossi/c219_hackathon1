@@ -160,7 +160,7 @@ class Card {
         }
     }
     handleClick() {
-        if(this.clickCallBack.checkSelling){
+        if(this.clickCallBack.checkSelling()){
             console.log('check selling in card', this.clickCallBack.checkSelling);
             this.clickCallBack.sellCard(this);
         } else {
