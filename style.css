@@ -9,12 +9,13 @@ body {
 }
 
 h1 {
-    font-size: 2.6rem;
+    font-size: 2rem;
     color: orangered;
     position: absolute;
     left: 1%;
     top: -1%;
-    width: 20%
+    width: 20%;
+    z-index: 1
 }
 
 .top {
@@ -120,14 +121,18 @@ h1 {
     left: 50%;
     top: 20%;
     transform: translateX(-50%);
+    border-radius: 5px;
+    padding: 5px
 }
 
-.numberPopupAnimate {
-    font-size: 2rem;
-    position: absolute;
-    left: 50%;
-    top: -50%;
-    transform: translateX(-50%);
+.popupGreen {
+    background-color: rgba(144,238,144, .8);
+    color: green;
+}
+
+.popupRed {
+    background-color: rgba(255,182,193, .8);
+    color: red;
 }
 
 .statusInner, .flex-container {
@@ -143,7 +148,7 @@ h1 {
     left: 15px;
     text-align: center;
     height: 70%;
-    color: #87421F;
+    color: orangered;
     top: 20%;
     background-color: rgba(25,25,25, 0.7)
 }
