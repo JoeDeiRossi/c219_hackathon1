@@ -234,10 +234,8 @@ class Player {
         var userInput = this.inputModal.inputDomElement.val();
         this.inventory.resourceTrackers.steel.changeAmount(-1 * userInput);
         this.inventory.resourceTrackers.money.changeAmount(2 * userInput);
-<<<<<<< HEAD
 
-=======
->>>>>>> 4d84e5f15de67a4e19c2e2d30f9782f632733843
+
         $(".modal-shadow").hide();
 
         this.actions--;
@@ -252,10 +250,8 @@ class Player {
         var userInput = this.inputModal.inputDomElement.val();
         this.inventory.resourceTrackers.titanium.changeAmount(-1 * userInput);
         this.inventory.resourceTrackers.money.changeAmount(3 * userInput);
-<<<<<<< HEAD
 
-=======
->>>>>>> 4d84e5f15de67a4e19c2e2d30f9782f632733843
+
         $(".modal-shadow").hide();
 
         this.actions--;
@@ -281,7 +277,6 @@ class Player {
     }
 
     convertHeatConfirm() {
-        debugger;
         this.inventory.resourceTrackers.heat.changeAmount(-8);
         this.callback.changeStatus('temperature', 2);
         this.inventory.changeTR(1);
