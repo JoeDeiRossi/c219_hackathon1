@@ -78,39 +78,58 @@ class Game {
     }
 
     addEventHandlers() {
-        var test = this;
+        var self = this;
         $("#playCard").on('click', function(){
-            test.currentPlayer.updateHand();
+            self.currentPlayer.updateHand();
             $("#playActionCardModal").parent().show();
         });
         $("#standardProject").on('click', function(){
-            test.currentPlayer.checkStandardProjects();
+            self.currentPlayer.checkStandardProjects();
             $("#standardProjectsModal").parent().show();
         });
         $("#convertResources").on('click', function(){
-            test.currentPlayer.checkResources();
+            self.currentPlayer.checkResources();
             $("#convertResourcesModal").parent().show();
         });
 
         $(".close").on('click', function(){
-            var modalParent = $(".close").parent();
-            var modalGrandparent = modalParent.parent();
             $(".modal-shadow").hide();
             this.isSelling = false;
         });
 
         //standard project modal
-        $("#sellCards").on('click', test.currentPlayer.standardProjectSellCards);
-        $("#powerPlant").on('click', test.currentPlayer.standardProjectPowerPlant);
-        $("#increaseTemperature").on('click', test.currentPlayer.standardProjectAsteroid);
-        $("#buildOcean").on('click', test.currentPlayer.standardProjectAquifer);
-        $("#buildGreenery").on('click', test.currentPlayer.standardProjectGreenery);
-        $("#buildCity").on('click', test.currentPlayer.standardProjectCity);
+        $("#sellCards").on('click', function(){
+            self.currentPlayer.standardProjectSellCards();
+        });
+        $("#powerPlant").on('click', function () {
+            self.currentPlayer.standardProjectPowerPlant();
+        });
+        $("#increaseTemperature").on('click', function () {
+            self.currentPlayer.standardProjectAsteroid();
+        });
+        $("#buildOcean").on('click', function () {
+            self.currentPlayer.standardProjectAquifer();
+        });
+        $("#buildGreenery").on('click', function () {
+            self.currentPlayer.standardProjectGreenery();
+        });
+        $("#buildCity").on('click', function () {
+            self.currentPlayer.standardProjectCity();
+        });
+
         //convert resources modal
-        $("#sellSteel").on('click', test.currentPlayer.sellSteel);
-        $("#sellTitanium").on('click', test.currentPlayer.sellTitanium);
-        $("#convertPlants").on('click', test.currentPlayer.convertPlants);
-        $("#convertHeat").on('click', test.currentPlayer.convertHeat);
+        $("#sellSteel").on('click', function () {
+            self.currentPlayer.sellSteel();
+        });
+        $("#sellTitanium").on('click', function () {
+            self.currentPlayer.sellTitanium();
+        });
+        $("#convertPlants").on('click', function () {
+            self.currentPlayer.convertPlants();
+        });
+        $("#convertHeat").on('click', function () {
+            self.currentPlayer.convertHeat();
+        });
     }
 
     makePlayers() {
@@ -190,23 +209,23 @@ class Game {
 
     // checks if game will end
     endGameCheck() {
-        if(this.temperature.current === this.temperature.max && this.oxygen.current === this.oxygen.max && this.oceanTiles === 0) {
+        if(this.temperature.current === this.temperature.max && this.oxygen.current === this.oxygen.max) {
             var maxTR = 0;
             var winners = [];
 
             for(var player in this.players) {
-                if (this.players[player].TR > maxTR) {
+                if (this.players[player].inventory.TR > maxTR) {
                     winners = [];
                     winners[0] = this.players[player].number;
-                    maxTR = this.players[player].TR;
-                } else if (this.players[player].TR === maxTR) {
+                    maxTR = this.players[player].inventory.TR;
+                } else if (this.players[player].inventory.TR === maxTR) {
                     winners.push(this.players[player].number);
                 }
             }
 
             var message;
 
-            if (winners.length > 1) {
+            if (winners.length === 1) {
                 message = 'Player ' + winners[0] + ' wins!';
             } else {
                 message = 'Player ' + winners[0];
@@ -217,7 +236,7 @@ class Game {
             }
 
             var endGameModal = new messageModals('endgame', null, message);
-            endGameModal.render();
+            endGameModal.buildModal();
         }
     }
 
@@ -231,6 +250,7 @@ class Game {
         if (this.currentPlayer) {
             this.highlightCurrentPlayer();
             this.currentPlayer.actions = 2;
+            this.currentPlayer.updateHand();
         }
         this.endGameCheck();
         this.endRoundCheck();
@@ -327,11 +347,7 @@ class Game {
         this.canPlaceTile = false;
         this.map.removeClicks();
         mapTile.owner = this.currentPlayer;
-
-
         this.currentPlayer.process(mapTile.rewards);
-
-        this.afterPlayerAction();
     }
 
     changeWorldStats(type, amount){
@@ -375,6 +391,5 @@ class Game {
 var test;
 
 function testFunction() {
-    console.log('making a game object');
     test = new Game(2);
 }

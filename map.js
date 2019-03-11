@@ -163,9 +163,9 @@ class MapTile {
         this.rewards = rewards;
         this.clickHandler = this.clickHandler.bind(this);
         /* array of MapTile objects that are neighbors */
-    //   this.neighbors = ['???????????'];
 
     }
+
     clickHandler() {
         /* handle click by calling the function we got as a param and pass in THIS MapTile */
     //   this.callback(this);
@@ -176,21 +176,12 @@ class MapTile {
             this.rewardCallback(this);
         }
     }
-    // testForAvailability() {
-        // if(this.available === true) {
-        //     console.log('your tile was placed');
-        //     this.domElement.css('background-color', 'grey');
-        // } else {
-        //     alert('Please choose another tile.')
-        // }
-        // this.available = false;
-    // }
+
     updateTakenAndOcean() {
       if(this.canBeOcean === true && $('.statusOceanTiles .statusValue').text() > 0) {
         this.domElement.css('background-color', 'blue');
         var newValue = parseInt($('.statusOceanTiles .statusValue').text()) - 1;
         $('.statusOceanTiles .statusValue').text(newValue);
-        console.log('ocean was clicked');
       } else if(this.canBeOcean === false && this.rewards.hasOwnProperty('greenery')) {
           this.domElement.css('background-color', 'green');
       } else if(this.canBeOcean === false) {
@@ -199,17 +190,14 @@ class MapTile {
     }
     showRewards() {
       if(this.rewards.greenery === 1) {
-        // this.domElement.text('p')
         this.domElement.append('<i class="fa fa-leaf"></i>');
       }
       if(this.rewards.greenery === 2) {
-        // this.domElement.text('pp')
         this.domElement.append('<i class="fa fa-leaf"></i>');
         this.domElement.append('<i class="fa fa-leaf"></i>');
 
       }
       if(this.rewards.steel === 1) {
-        // this.domElement.text('s')
         this.domElement.append('<i class="fa fa-cog"></i>');
       }
       if(this.rewards.steel === 2) {
@@ -225,7 +213,6 @@ class MapTile {
           this.domElement.append('<i class="fa fa-star"></i>');
       }
       if(this.rewards.card === 1) {
-        // this.domElement.text('c')
         this.domElement.append('<i class="fa fa-credit-card"></i>');
       }
       if(this.rewards.card === 2) {

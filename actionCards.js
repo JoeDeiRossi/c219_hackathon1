@@ -106,7 +106,6 @@ class Card {
             for (var index in this.actionInfo) {
                 switch (index) {
                     case 'bank': //pass bank objects to player's bank
-                        console.log('add to resources');
                         var bankArr = [];
                         for (var bank in this.actionInfo[index]) {
                             bankArr.push(bank);
@@ -117,7 +116,6 @@ class Card {
                         }
                         break;
                     case 'production': //pass production objects to player's production
-                        console.log('add to production');
                         var prodArr = [];
                         for (var production in this.actionInfo[index]) {
                             prodArr.push(production);
@@ -161,7 +159,6 @@ class Card {
     }
     handleClick() {
         if(this.clickCallBack.checkSelling()){
-            console.log('check selling in card', this.clickCallBack.checkSelling);
             this.clickCallBack.sellCard(this);
         } else {
             if(this.checkValidAction()){
@@ -206,14 +203,3 @@ class Card {
         return this.domElement;
     }
 }
-
-/*
-<div class="actionCard">
-    <div class="actionInner">
-        <div class="actionName">name: this.name</div>
-        <div class="actionCost">cost: this.cost</div>
-        <div class="action">action: text</div>
-    </div>
-</div>
-
- */

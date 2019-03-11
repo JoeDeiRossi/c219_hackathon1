@@ -9,10 +9,12 @@ body {
 }
 
 h1 {
-    font-size: 1.8rem;
+    font-size: 2.6rem;
     color: orangered;
     position: absolute;
     left: 1%;
+    top: -1%;
+    width: 20%
 }
 
 .top {
@@ -92,6 +94,7 @@ h1 {
 
 .trackerContainer {
     width: 15%;
+    position: relative;
 }
 
 .trackerAmount, .trackerProduction {
@@ -111,6 +114,22 @@ h1 {
     font-size: 1.2rem;
 }
 
+.numberPopup {
+    font-size: 2rem;
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    transform: translateX(-50%);
+}
+
+.numberPopupAnimate {
+    font-size: 2rem;
+    position: absolute;
+    left: 50%;
+    top: -50%;
+    transform: translateX(-50%);
+}
+
 .statusInner, .flex-container {
     display: inline-block;
     position: relative;
@@ -125,7 +144,7 @@ h1 {
     text-align: center;
     height: 70%;
     color: #87421F;
-    top: 15%;
+    top: 20%;
     background-color: rgba(25,25,25, 0.7)
 }
 
@@ -160,11 +179,15 @@ h1 {
 
 .tile {
     background-color: transparent;
-    height: 6vmin;
-    width: 6vmin;
+    height: 6.5vmin;
+    width: 6.5vmin;
+    font-size: 1.6rem;
+    text-align: center;
+    line-height: 6.5vmin;
     border: 1px solid silver;
     box-sizing: border-box;
     color: silver;
+    border-radius: 25px;
 }
 
 .tile-inactive {
@@ -256,12 +279,13 @@ h1 {
 .close {
     float: right;
     font-size: 1.5em;
-    padding-right: 15px;
+    padding-right: 5px;
 }
 
 .close:hover {
     color: grey;
     cursor: pointer;
+    transform: scale(2);
 }
 
 .infoModal {
@@ -298,14 +322,28 @@ h1 {
     margin: auto;
 }
 
+.hand {
+    height: 80%;
+    width: 100%;
+}
+
 .actionCardContainer {
     border: 3px solid #87421F;
-    border-radius: 5px;
+    border-radius: 10px;
     box-sizing: border-box;
     display: inline-block;
-    height: 150px;
-    width: 150px;
+    height: 25vh;
+    width: 20vh;
     vertical-align: middle;
+    background-color: rgba(0,0,0,.1);
+    transform: scale(.95);
+}
+
+.actionCardContainer:hover {
+    border: 3px solid #ff5122;
+    transition-duration: .25s;
+    transform: scale(1);
+    transition-duration: .05s
 }
 
 .actionCardInner {
@@ -313,7 +351,14 @@ h1 {
     top: 50%;
     transform: translateY(-50%);
     padding: 5px;
-    font-size: 0.7em;
+    font-size: .9em;
+}
+
+.actionName {
+    font-style: italic;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    text-align: center
 }
 
 
@@ -321,16 +366,11 @@ h1 {
 .glow-active {
     box-shadow: 0 0 10px 5px yellow;
 }
-<<<<<<< HEAD
 
 
-@media only screen and (max-width: 980px) {
-  .actionArea > button {
-    height: 100px;
-    width: 115px;
-    font-size: 1em;
-  }
 
+
+button:hover {
+    transform: scale(1.1);
+    transition-duration: .1s
 }
-=======
->>>>>>> 9d8b29ec7d1287d9f721c147a59357e00244b8b8
