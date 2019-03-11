@@ -161,7 +161,7 @@ class Player {
 
     standardProjectAsteroidConfirm() {
         this.inventory.resourceTrackers.money.changeAmount(-14);
-        this.callback.changeStatus('temperature', 1); //needs to increase temp by 1 step and increase TR
+        this.callback.changeStatus('temperature', 2); //needs to increase temp by 1 step and increase TR
         this.inventory.changeTR(1);
         this.updateTr();
         $(".modal-shadow").hide();
@@ -207,7 +207,6 @@ class Player {
 
     checkResources() {
         //runs when 'Conversions' button is clicked
-        //convert buttons are greyed out by default, aka .disabled=true
         if (this.inventory.resourceTrackers.steel.getAmount() < 1){
             document.getElementById('sellSteel').disabled = true;
             $(document.getElementById('sellSteel')).css('cursor', 'not-allowed')
@@ -232,7 +231,7 @@ class Player {
     }
 
     sellSteelConfirm() {
-        var userInput = this.inputModal.quantityInput.val();
+        var userInput = this.inputModal.inputDomElement.val();
         this.inventory.resourceTrackers.steel.changeAmount(-1 * userInput);
         this.inventory.resourceTrackers.money.changeAmount(2 * userInput);
         $(".modal-shadow").hide();
@@ -246,7 +245,7 @@ class Player {
     }
 
     sellTitaniumConfirm() {
-        var userInput = this.inputModal.quantityInput.val();
+        var userInput = this.inputModal.inputDomElement.val();
         this.inventory.resourceTrackers.titanium.changeAmount(-1 * userInput);
         this.inventory.resourceTrackers.money.changeAmount(3 * userInput);
         $(".modal-shadow").hide();
@@ -274,8 +273,9 @@ class Player {
     }
 
     convertHeatConfirm() {
+        debugger;
         this.inventory.resourceTrackers.heat.changeAmount(-8);
-        this.callback.changeStatus('temperature', 1);
+        this.callback.changeStatus('temperature', 2);
         this.inventory.changeTR(1);
         this.updateTr();
         $(".modal-shadow").hide();

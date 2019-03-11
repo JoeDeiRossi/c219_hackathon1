@@ -250,7 +250,7 @@ h1 {
 .infoModal {
     background: linear-gradient(to bottom right, silver, orangered);
     position: absolute;
-    top: 20%;
+    top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
     border: 5px solid #87421F;
@@ -258,18 +258,27 @@ h1 {
     padding: 20px;
 }
 
+.playerDistribution {
+    display: inline-block;
+    text-align: center;
+    margin: 0 30px;
+}
+
 .cancelButton {
     background-color: firebrick;
     font-weight: bold;
 }
 
-.confirmButton {
+.confirmButton,
+.distributionConfirmButton {
     background-color: yellowgreen;
     font-weight: bold;
 }
 
-.confirmButton {
-    background-color: yellowgreen;
+.distributionConfirmButton {
+    display: block;
+    width: 20%;
+    margin: auto;
 }
 
 .actionCardContainer {
