@@ -3,6 +3,7 @@ $(document).ready(testFunction);
 class Game {
     constructor(playerCount) {
 
+        this.playerDrawCardCallback = this.playerDrawCardCallback.bind(this);
         this.tilePlacementResultsCallback = this.tilePlacementResultsCallback.bind(this);
         this.askIfCanPlaceTile = this.askIfCanPlaceTile.bind(this);
         this.getCurrentPlayerStats = this.getCurrentPlayerStats.bind(this);
@@ -193,7 +194,7 @@ class Game {
                     winners = [];
                     winners[0] = this.players[player].number;
                     maxTR = this.players[player].TR;
-                } else if {this.players[player].TR === maxTR} {
+                } else if (this.players[player].TR === maxTR) {
                     winners.push(this.players[player].number);
                 }
             }

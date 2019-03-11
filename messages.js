@@ -57,8 +57,7 @@ class messageModals {
         } else if (this.type === 'endgame') {
             this.endGameModal();
         } else {
-                this.inputModal()
-            };
+            this.inputModal();
         }
     }
 }
