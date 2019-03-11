@@ -224,10 +224,10 @@ class Game {
     allocateResources() {
         var currentInventory;
         var resources = ['money', 'steel', 'titanium', 'plants', 'energy', 'heat'];
-
+        var distModal = new distributionModal(this.players);
+        distModal.buildModal();
         for (var playerIndex in this.players) {
             currentInventory = this.players[playerIndex].inventory;
-
             for (var resourceIndex in resources) {
                 currentInventory.resourceTrackers[resources[resourceIndex]].changeAmount(
                     currentInventory.resourceTrackers[resources[resourceIndex]].getProduction());
