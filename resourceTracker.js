@@ -22,16 +22,10 @@ class ResourceTracker {
         this.amount += change;
 
         if(change !== 0) {
-            var self = this;
             this.popup = new numberPopup(change);
             this.popupDom = this.popup.render();
             this.domElement.prepend(this.popupDom);
-            this.popupDom.animate({
-                top: '-50%'
-            }, 1000);
-            setTimeout(function () {
-                self.popupDom.remove();
-            }, 1000);
+            this.popup.rise();
         }
 
         this.updateValues();
