@@ -72,6 +72,7 @@ h1 {
 .playerPassedHighlight {
     border: 5px solid gray;
     color: gray;
+    transition-duration: 1s;
 }
 
 .playerInner,
@@ -125,10 +126,11 @@ h1 {
     height: 70%;
     color: #87421F;
     top: 15%;
+    background-color: rgba(25,25,25, 0.7)
 }
 
 .statusTurnNumber, .statusOxygen, .statusTemp, .statusOceanTiles {
-  height: 15%;
+    height: 15%;
 }
 
 .statusLabel{
@@ -138,7 +140,6 @@ h1 {
     height: 20%;
     border-radius: 5px;
     width: 80%;
-    background-color: rgba(25,25,25, 0.7)
 }
 
 .flex-container {
@@ -198,7 +199,7 @@ h1 {
     background: linear-gradient(to bottom right, silver, orangered);
     height: 20vmin;
     width: 20vmin;
-    font-size: 3.5vh;
+    font-size: 3.5vmin;
     border: none;
 }
 
@@ -226,10 +227,26 @@ h1 {
     font-family: 'IBM Plex Mono', monospace;
 }
 
+.modalButtonContainer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.modalButtonInner {
+    display: inline-block;
+    text-align: center;
+}
+
+.modalButtonInner > button {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    border-radius: 5px;
+    margin: 5px;
+}
+
 .modal button:hover, .modal .hand:hover {
     cursor: pointer;
 }
-
 
 .playActionCardModalContent, .standardProjectsModalContent, .convertResourcesModalContent {
     background: linear-gradient(to bottom right, silver, orangered);

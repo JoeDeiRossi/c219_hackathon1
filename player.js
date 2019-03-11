@@ -6,13 +6,14 @@ class Player {
         this.callback = {
             changeStatus: callbacks.changeStatus,
             addTile: callbacks.addTile,
-            drawCard: callbacks.drawCard
+            drawCard: callbacks.drawCard,
+            sellCard: callbacks.sellCard
         };
-        this.isSelling = false;
 
         this.hand = [];
         this.actions = 2;
 
+        this.process = this.process.bind(this);
         this.playCard = this.playCard.bind(this);
         this.checkStandardProjects = this.checkStandardProjects.bind(this);
         this.checkResources = this.checkResources.bind(this);
@@ -95,7 +96,6 @@ class Player {
             var indexOfObj = this.hand.indexOf(cardObj);
             this.hand.splice(indexOfObj, 1);
             console.log(this.hand);
-            // this.updateHand();
             $(".modal-shadow").hide();
     }
 
@@ -105,8 +105,6 @@ class Player {
         if (this.hand.length <= 0) {
             document.getElementById('sellCards').disabled = true;
             $(document.getElementById('sellCards')).css('cursor', 'not-allowed');
-        } else {
-            this.isSelling = true;
         }
         if (this.inventory.resourceTrackers.money.getAmount() < 11){
             document.getElementById('powerPlant').disabled = true;
@@ -137,9 +135,10 @@ class Player {
         //open hand modal
         //if player then clicks a card, remove it from their hand and increase their money by 1
         //once they close the modal, this.actions-- (but not if they didn't sell any cards)
-        $("#playActionCardModal").show();
+        this.updateHand();
         $(".modal-shadow").hide();
-        this.actions--;
+        $("#playActionCardModal").parent().show();
+        this.callback.sellCard();
     }
 
     standardProjectPowerPlant() {

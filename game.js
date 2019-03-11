@@ -3,6 +3,7 @@ $(document).ready(testFunction);
 class Game {
     constructor(playerCount) {
 
+        this.playerDrawCardCallback = this.playerDrawCardCallback.bind(this);
         this.tilePlacementResultsCallback = this.tilePlacementResultsCallback.bind(this);
         this.askIfCanPlaceTile = this.askIfCanPlaceTile.bind(this);
         this.getCurrentPlayerStats = this.getCurrentPlayerStats.bind(this);
@@ -10,7 +11,10 @@ class Game {
         this.changeCurrentPlayerStats = this.changeCurrentPlayerStats.bind(this);
         this.playActionCard = this.playActionCard.bind(this);
         this.addTile = this.addTile.bind(this);
+        this.checkSell = this.checkSell.bind(this);
+        this.sellActionCard = this.sellActionCard.bind(this);
         this.pass = this.pass.bind(this);
+        this.playerSellActionCard = this.playerSellActionCard.bind(this);
 
 
 
@@ -24,6 +28,8 @@ class Game {
             changePlayerStats: this.changeCurrentPlayerStats,
             playCard: this.playActionCard,
             addTile: this.addTile,
+            checkSellCard: this.checkSell,
+            sellCard: this.sellActionCard
         });
 
         this.players = [];
@@ -38,6 +44,7 @@ class Game {
         this.turnNumber = 1;
 
         this.canPlaceTile = false;
+        this.isSelling = false;
 
         this.currentPlayerIndex = 0;
         this.currentPlayer = null;
@@ -61,10 +68,10 @@ class Game {
         this.dealCards(4);
         for (var index = this.players.length - 1; index >= 0; index--) {
             this.players[index].inventory.resourceTrackers['money'].changeAmount(25);
-            this.players[index].inventory.resourceTrackers['steel'].changeAmount(10);
-            this.players[index].inventory.resourceTrackers['titanium'].changeAmount(10);
-            this.players[index].inventory.resourceTrackers['plants'].changeAmount(10);
-            this.players[index].inventory.resourceTrackers['heat'].changeAmount(10);
+            this.players[index].inventory.resourceTrackers['steel'].changeAmount(0);
+            this.players[index].inventory.resourceTrackers['titanium'].changeAmount(0);
+            this.players[index].inventory.resourceTrackers['plants'].changeAmount(0);
+            this.players[index].inventory.resourceTrackers['heat'].changeAmount(0);
         }
 
         this.startRound();
@@ -72,27 +79,24 @@ class Game {
 
     addEventHandlers() {
         var test = this;
-        $("#playCard").off().on('click', function(e){
-            // $("#playActionCardModal").show();
-            $("#playActionCardModal").parent().show();
+        $("#playCard").on('click', function(){
             test.currentPlayer.updateHand();
+            $("#playActionCardModal").parent().show();
         });
         $("#standardProject").on('click', function(){
             test.currentPlayer.checkStandardProjects();
-            // $("#standardProjectsModal").show();
             $("#standardProjectsModal").parent().show();
         });
         $("#convertResources").on('click', function(){
             test.currentPlayer.checkResources();
-            // $("#convertResourcesModal").show();
             $("#convertResourcesModal").parent().show();
         });
 
         $(".close").on('click', function(){
             var modalParent = $(".close").parent();
             var modalGrandparent = modalParent.parent();
-            // modalGrandparent.hide();
             $(".modal-shadow").hide();
+            this.isSelling = false;
         });
 
         //standard project modal
@@ -114,7 +118,9 @@ class Game {
             var newPlayer = new Player(index, {
                 changeStatus: this.changeWorldStats,
                 addTile: this.addTile,
-                drawCard: this.playerDrawCardCallback});
+                drawCard: this.playerDrawCardCallback,
+                sellCard: this.playerSellActionCard
+            });
             this.players.push(newPlayer);
 
             $('.playerInfoArea').append(newPlayer.render());
@@ -129,13 +135,13 @@ class Game {
         this.activePlayers = this.players.slice();
 
         // all players get two cards per turn and reset actions to 2
+        this.dealCards(2);
         for (var playerIndex in this.players) {
-            this.dealCards(this.players[playerIndex], 2);
             this.players[playerIndex].actions = 2;
         }
 
         this.currentPlayerIndex = 0;
-        this.currentPlayer = this.activePlayers[this.currentPlayerIndex]
+        this.currentPlayer = this.activePlayers[this.currentPlayerIndex];
         this.highlightCurrentPlayer();
 
         $('.playerInfo').removeClass('playerPassedHighlight');
@@ -182,6 +188,39 @@ class Game {
         }
     }
 
+    // checks if game will end
+    endGameCheck() {
+        if(this.temperature.current === this.temperature.max && this.oxygen.current === this.oxygen.max && this.oceanTiles === 0) {
+            var maxTR = 0;
+            var winners = [];
+
+            for(var player in this.players) {
+                if (this.players[player].TR > maxTR) {
+                    winners = [];
+                    winners[0] = this.players[player].number;
+                    maxTR = this.players[player].TR;
+                } else if (this.players[player].TR === maxTR) {
+                    winners.push(this.players[player].number);
+                }
+            }
+
+            var message;
+
+            if (winners.length > 1) {
+                message = 'Player ' + winners[0] + ' wins!';
+            } else {
+                message = 'Player ' + winners[0];
+                for (var index = 1; index < winners.length; index++) {
+                    message += ' and ' + winners[index];
+                }
+                message += ' tied!';
+            }
+
+            var endGameModal = new messageModals('endgame', null, message);
+            endGameModal.render();
+        }
+    }
+
     changePlayers() {
         // change the current player to the next in players array
         this.currentPlayerIndex++;
@@ -191,7 +230,9 @@ class Game {
         this.currentPlayer = this.activePlayers[this.currentPlayerIndex];
         if (this.currentPlayer) {
             this.highlightCurrentPlayer();
+            this.currentPlayer.actions = 2;
         }
+        this.endGameCheck();
         this.endRoundCheck();
     }
 
@@ -216,6 +257,7 @@ class Game {
 
     // updates the status display on the board
     updateStatus() {
+        $(".statusTurnNumber > .statusValue").text(this.turnNumber);
         $(".statusOxygen > .statusValue").text(this.oxygen.current + '%');
         $(".statusTemp > .statusValue").text(this.temperature.current + 'C');
     }
@@ -245,6 +287,20 @@ class Game {
         this.afterPlayerAction();
     }
 
+    playerSellActionCard(){
+        this.isSelling = true;
+    }
+
+    checkSell(){
+        return this.isSelling;
+    }
+
+    sellActionCard(cardObj){
+        this.isSelling = false;
+        this.changeCurrentPlayerStats('money', 1, 'bank');
+        this.playActionCard(cardObj);
+    }
+
     // called by Player when they play a card or tile that lets them draw cards
     playerDrawCardCallback(cardCount) {
         this.dealCards(this.currentPlayer, cardCount);
@@ -271,6 +327,7 @@ class Game {
         this.canPlaceTile = false;
         this.map.removeClicks();
         mapTile.owner = this.currentPlayer;
+
 
         this.currentPlayer.process(mapTile.rewards);
 

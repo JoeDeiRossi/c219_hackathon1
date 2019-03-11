@@ -58,19 +58,20 @@ class Deck {
 
 class Card {
     constructor(infoObject, clickCallBack) {
-        this.domElement = {
-            getPlayerStats: clickCallBack.getCurrentPlayerStats,
-            changeWorldStats: clickCallBack.changeWorldStats,
-            changePlayerStats: clickCallBack.changeCurrentPlayerStats,
-            playCard: clickCallBack.playCard,
-            addTile: clickCallBack.addTile,
-        };
+        this.domElement = null;
         this.name = infoObject['name'];
         this.cost = infoObject['cost'];
         this.actionInfo = infoObject['action'];
         this.owner = null;
-        this.clickCallBack = clickCallBack; //an object of functions
-
+        this.clickCallBack = {
+            getPlayerStats: clickCallBack.getPlayerStats,
+            changeWorldStats: clickCallBack.changeWorldStats,
+            changePlayerStats: clickCallBack.changePlayerStats,
+            playCard: clickCallBack.playCard,
+            addTile: clickCallBack.addTile,
+            checkSelling: clickCallBack.checkSellCard,
+            sellCard: clickCallBack.sellCard
+        }; //an object of functions
 
         this.handleClick = this.handleClick.bind(this);
         this.playAction = this.playAction.bind(this);
@@ -82,13 +83,13 @@ class Card {
         if (this.clickCallBack.getPlayerStats('money', 'bank') >= this.cost) {
             for (var index in this.actionInfo) {
                 if(index === 'production') {
-                    var productionAmountArray = [];
+                    var prodArr = [];
                     for (var production in this.actionInfo[index]) {
-                        productionAmountArray.push(production);
-                        productionAmountArray.push(this.actionInfo[index][production]);
+                        prodArr.push(production);
+                        prodArr.push(this.actionInfo[index][production]);
                     }
-                    for (var productionChangeIndex = 0; productionChangeIndex < productionAmountArray.length; productionChangeIndex += 2) {
-                        if (this.clickCallBack.getPlayerStats(productionAmountArray[productionChangeIndex], 'production') + productionAmountArray[productionChangeIndex + 1] < 0) {
+                    for (var deltaProdIndex = 0; deltaProdIndex < prodArr.length; deltaProdIndex += 2) {
+                        if (this.clickCallBack.getPlayerStats(prodArr[deltaProdIndex], 'production') + prodArr[deltaProdIndex + 1] < 0) {
                             return false;
                         }
                     }
@@ -106,34 +107,34 @@ class Card {
                 switch (index) {
                     case 'bank': //pass bank objects to player's bank
                         console.log('add to resources');
-                        var bankAmountArray = [];
+                        var bankArr = [];
                         for (var bank in this.actionInfo[index]) {
-                            bankAmountArray.push(bank);
-                            bankAmountArray.push(this.actionInfo[index][bank]);
+                            bankArr.push(bank);
+                            bankArr.push(this.actionInfo[index][bank]);
                         }
-                        for (var bankChangeIndex = 0; bankChangeIndex < bankAmountArray.length; bankChangeIndex += 2) { //submit array to PLAYER's inventory BANK //look even for resource name, odd for amount //example array [energy, 3, heat, 2]
-                             this.clickCallBack.changePlayerStats(bankAmountArray[bankChangeIndex], bankAmountArray[bankChangeIndex + 1], 'bank');
+                        for (var deltaBankIndex = 0; deltaBankIndex < bankArr.length; deltaBankIndex += 2) { //submit array to PLAYER's inventory BANK //look even for resource name, odd for amount //example array [energy, 3, heat, 2]
+                             this.clickCallBack.changePlayerStats(bankArr[deltaBankIndex], bankArr[deltaBankIndex + 1], 'bank');
                         }
                         break;
                     case 'production': //pass production objects to player's production
                         console.log('add to production');
-                        var productionAmountArray = [];
+                        var prodArr = [];
                         for (var production in this.actionInfo[index]) {
-                            productionAmountArray.push(production);
-                            productionAmountArray.push(this.actionInfo[index][production]);
+                            prodArr.push(production);
+                            prodArr.push(this.actionInfo[index][production]);
                         }
-                        for (var productionChangeIndex = 0; productionChangeIndex < productionAmountArray.length; productionChangeIndex += 2) {//submit array to PLAYER's inventory PRODUCTION //look even for resource name, odd for amount //example array [energy, 3, heat, 2]
-                            this.clickCallBack.changePlayerStats(productionAmountArray[productionChangeIndex], productionAmountArray[productionChangeIndex + 1], 'production');
+                        for (var deltaProdIndex = 0; deltaProdIndex < prodArr.length; deltaProdIndex += 2) {//submit array to PLAYER's inventory PRODUCTION //look even for resource name, odd for amount //example array [energy, 3, heat, 2]
+                            this.clickCallBack.changePlayerStats(prodArr[deltaProdIndex], prodArr[deltaProdIndex + 1], 'production');
                         }
                         break;
                     case 'status': //pass status objects to status
-                        var statusAmountArray = [];
+                        var statusArr = [];
                         for (var status in this.actionInfo[index]) {
-                            statusAmountArray.push(status);
-                            statusAmountArray.push(this.actionInfo[index][status]);
+                            statusArr.push(status);
+                            statusArr.push(this.actionInfo[index][status]);
                         }
-                        for (var statusChangeIndex = 0; statusChangeIndex < statusAmountArray.length; statusChangeIndex += 2) {//submit array to BOARD's STATUS to make changes //look even for status name, odd for amount //example array [temperature, 2, oxygen, 1]
-                            this.clickCallBack.changeWorldStats(statusAmountArray[statusChangeIndex], statusAmountArray[statusChangeIndex + 1]);
+                        for (var deltaStatusIndex = 0; deltaStatusIndex < statusArr.length; deltaStatusIndex += 2) {//submit array to BOARD's STATUS to make changes //look even for status name, odd for amount //example array [temperature, 2, oxygen, 1]
+                            this.clickCallBack.changeWorldStats(statusArr[deltaStatusIndex], statusArr[deltaStatusIndex + 1]);
                         }
                         break;
                     case 'tr': //pass tr number to player's tr
@@ -141,13 +142,13 @@ class Card {
                         this.clickCallBack.changePlayerStats('tr', trAmount);
                         break;
                     case 'tile': //activate tile to click on, tiles should receive [ocean, city, steel, titanium, any]
-                        var tileTypeAmountArray = [];
+                        var tileArr = [];
                         for (var tileType in this.actionInfo[index]) {
-                            tileTypeAmountArray.push(tileType);
-                            tileTypeAmountArray.push(this.actionInfo[index][tileType]);
+                            tileArr.push(tileType);
+                            tileArr.push(this.actionInfo[index][tileType]);
                         }
-                        for (var tileChangeIndex = 0; tileChangeIndex < tileTypeAmountArray.length; tileChangeIndex += 2) {//submit array to mapTiles //look even for tileType, odd for amount //example array [any, 1]; feeds [tileType, numberOfTiles]
-                            this.clickCallBack.addTile(tileTypeAmountArray[tileChangeIndex], tileTypeAmountArray[tileChangeIndex + 1]);
+                        for (var deltaTileIndex = 0; deltaTileIndex < tileArr.length; deltaTileIndex += 2) {//submit array to mapTiles //look even for tileType, odd for amount //example array [any, 1]; feeds [tileType, numberOfTiles]
+                            this.clickCallBack.addTile(tileArr[deltaTileIndex], tileArr[deltaTileIndex + 1]);
                         }
                         break;
                     case 'drawActionCard': //dealCards to player
@@ -159,12 +160,17 @@ class Card {
         }
     }
     handleClick() {
-        if(this.checkValidAction()){
-            this.playAction();
-            this.clickCallBack.playCard(this);
+        if(this.clickCallBack.checkSelling()){
+            console.log('check selling in card', this.clickCallBack.checkSelling);
+            this.clickCallBack.sellCard(this);
         } else {
-            var modal = new messageModals('error');
-            modal.buildModal();
+            if(this.checkValidAction()){
+                this.playAction();
+                this.clickCallBack.playCard(this);
+            } else {
+                var modal = new messageModals('error');
+                modal.buildModal();
+            }
         }
     }
     render() {
