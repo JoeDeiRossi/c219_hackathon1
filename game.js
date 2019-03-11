@@ -259,12 +259,18 @@ class Game {
 
     // for each Player, add resources equal to their production
     allocateResources() {
-        var currentInventory;
+        var currentInventory, storedEnergy;
         var resources = ['money', 'steel', 'titanium', 'plants', 'energy', 'heat'];
         var distModal = new distributionModal(this.players);
         distModal.buildModal();
         for (var playerIndex in this.players) {
             currentInventory = this.players[playerIndex].inventory;
+
+            //convert energy to heat - this is the easy way but it won't show the change on the modal
+            storedEnergy = currentInventory.resourceTrackers['energy'].getAmount();
+            currentInventory.resourceTrackers['heat'].changeAmount(storedEnergy);
+            currentInventory.resourceTrackers['energy'].changeAmount(-1 * storedEnergy);
+
             for (var resourceIndex in resources) {
                 currentInventory.resourceTrackers[resources[resourceIndex]].changeAmount(
                     currentInventory.resourceTrackers[resources[resourceIndex]].getProduction());
