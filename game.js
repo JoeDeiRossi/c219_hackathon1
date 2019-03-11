@@ -10,6 +10,8 @@ class Game {
         this.changeCurrentPlayerStats = this.changeCurrentPlayerStats.bind(this);
         this.playActionCard = this.playActionCard.bind(this);
         this.addTile = this.addTile.bind(this);
+        this.checkSell = this.checkSell.bind(this);
+        this.sellActionCard = this.sellActionCard.bind(this);
         this.pass = this.pass.bind(this);
 
 
@@ -24,6 +26,8 @@ class Game {
             changePlayerStats: this.changeCurrentPlayerStats,
             playCard: this.playActionCard,
             addTile: this.addTile,
+            checkSellCard: this.checkSell,
+            sellCard: this.sellActionCard
         });
 
         this.players = [];
@@ -38,6 +42,7 @@ class Game {
         this.turnNumber = 1;
 
         this.canPlaceTile = false;
+        this.isSelling = false;
 
         this.currentPlayerIndex = 0;
         this.currentPlayer = null;
@@ -61,10 +66,10 @@ class Game {
         this.dealCards(4);
         for (var index = this.players.length - 1; index >= 0; index--) {
             this.players[index].inventory.resourceTrackers['money'].changeAmount(25);
-            this.players[index].inventory.resourceTrackers['steel'].changeAmount(10);
-            this.players[index].inventory.resourceTrackers['titanium'].changeAmount(10);
-            this.players[index].inventory.resourceTrackers['plants'].changeAmount(10);
-            this.players[index].inventory.resourceTrackers['heat'].changeAmount(10);
+            this.players[index].inventory.resourceTrackers['steel'].changeAmount(0);
+            this.players[index].inventory.resourceTrackers['titanium'].changeAmount(0);
+            this.players[index].inventory.resourceTrackers['plants'].changeAmount(0);
+            this.players[index].inventory.resourceTrackers['heat'].changeAmount(0);
         }
 
         this.startRound();
@@ -72,10 +77,9 @@ class Game {
 
     addEventHandlers() {
         var test = this;
-        $("#playCard").off().on('click', function(e){
-            // $("#playActionCardModal").show();
-            $("#playActionCardModal").parent().show();
+        $("#playCard").on('click', function(){
             test.currentPlayer.updateHand();
+            $("#playActionCardModal").parent().show();
         });
         $("#standardProject").on('click', function(){
             test.currentPlayer.checkStandardProjects();
@@ -84,7 +88,7 @@ class Game {
         });
         $("#convertResources").on('click', function(){
             test.currentPlayer.checkResources();
-            // $("#convertResourcesModal").show();
+            test.currentPlayer.updateHand();
             $("#convertResourcesModal").parent().show();
         });
 
@@ -93,6 +97,7 @@ class Game {
             var modalGrandparent = modalParent.parent();
             // modalGrandparent.hide();
             $(".modal-shadow").hide();
+            this.isSelling = false;
         });
 
         //standard project modal
@@ -114,7 +119,9 @@ class Game {
             var newPlayer = new Player(index, {
                 changeStatus: this.changeWorldStats,
                 addTile: this.addTile,
-                drawCard: this.playerDrawCardCallback});
+                drawCard: this.playerDrawCardCallback,
+                sellCard: this.playerSellActionCard
+            });
             this.players.push(newPlayer);
 
             $('.playerInfoArea').append(newPlayer.render());
@@ -135,7 +142,7 @@ class Game {
         }
 
         this.currentPlayerIndex = 0;
-        this.currentPlayer = this.activePlayers[this.currentPlayerIndex]
+        this.currentPlayer = this.activePlayers[this.currentPlayerIndex];
         this.highlightCurrentPlayer();
 
         $('.playerInfo').removeClass('playerPassedHighlight');
@@ -243,6 +250,20 @@ class Game {
     playActionCard(card) {
         this.currentPlayer.playCard(card);
         this.afterPlayerAction();
+    }
+
+    playerSellActionCard(){
+        this.isSelling = true;
+    }
+
+    checkSell(){
+        return this.isSelling;
+    }
+
+    sellActionCard(cardObj){
+        this.isSelling = false;
+        this.changeCurrentPlayerStats('money', 1, 'bank');
+        this.playActionCard(cardObj);
     }
 
     // called by Player when they play a card or tile that lets them draw cards
