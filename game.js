@@ -271,6 +271,9 @@ class Game {
         this.canPlaceTile = false;
         this.map.removeClicks();
         mapTile.owner = this.currentPlayer;
+
+
+
         this.currentPlayer.process(mapTile.rewards);
         this.afterPlayerAction();
     }

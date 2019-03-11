@@ -13,6 +13,7 @@ class Player {
         this.hand = [];
         this.actions = 2;
 
+        this.process = this.process.bind(this);
         this.playCard = this.playCard.bind(this);
         this.checkStandardProjects = this.checkStandardProjects.bind(this);
         this.checkResources = this.checkResources.bind(this);
