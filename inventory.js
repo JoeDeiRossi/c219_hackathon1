@@ -21,7 +21,7 @@ class Inventory {
         return this.domElement;
     }
 
-    changeTR(amountToChange){ //can you have negative TR?, made a check just in case
+    changeTR(amountToChange){
         if(this.TR >= 0){
             this.TR += amountToChange;
         } else {

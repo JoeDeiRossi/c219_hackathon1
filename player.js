@@ -47,7 +47,6 @@ class Player {
               $('<div>', {'class': 'playerNum'}).text('Player ' + (this.number + 1)),
               $('<div>', {'class': 'playerTR'}).text('TR: ' + this.inventory.TR)
             ),
-            // $('<div>', {'class': 'playerInner'}).text('Player ' + (this.number + 1) + '\nTR: ' + this.inventory.TR),
             this.inventory.render()
         );
         return this.playerDomElement;
@@ -70,7 +69,6 @@ class Player {
     process(rewards) {
         var type = Object.keys(rewards)[0];
         var change = Object.values(rewards)[0];
-        console.log(type, change);
 
         switch (type) {
             case 'greenery':
@@ -95,13 +93,11 @@ class Player {
            then execute the card's functions */
             var indexOfObj = this.hand.indexOf(cardObj);
             this.hand.splice(indexOfObj, 1);
-            console.log(this.hand);
             $(".modal-shadow").hide();
     }
 
     checkStandardProjects() {
         //runs when 'Standard Projects' button is clicked
-        //project buttons are greyed out by default, aka .disabled=true
         if (this.hand.length <= 0) {
             document.getElementById('sellCards').disabled = true;
             $(document.getElementById('sellCards')).css('cursor', 'not-allowed');
@@ -160,7 +156,7 @@ class Player {
 
     standardProjectAsteroidConfirm() {
         this.inventory.resourceTrackers.money.changeAmount(-14);
-        this.callback.changeStatus('temperature', 2); //needs to increase temp by 1 step and increase TR
+        this.callback.changeStatus('temperature', 2);
         this.inventory.changeTR(1);
         this.updateTr();
         $(".modal-shadow").hide();
@@ -174,7 +170,7 @@ class Player {
 
     standardProjectAquiferConfirm() {
         this.inventory.resourceTrackers.money.changeAmount(-18);
-        this.callback.addTile('ocean', 1); //needs to give player an ocean tile to place, which will also increase their TR
+        this.callback.addTile('ocean', 1);
         $(".modal-shadow").hide();
         this.actions--;
     }
@@ -186,7 +182,7 @@ class Player {
 
     standardProjectGreeneryConfirm() {
         this.inventory.resourceTrackers.money.changeAmount(-23);
-        this.callback.addTile('greenery', 1); //needs to give player a greenery tile to place, which will increase oxygen and their TR
+        this.callback.addTile('greenery', 1);
         $(".modal-shadow").hide();
         this.actions--;
     }
@@ -199,7 +195,7 @@ class Player {
     standardProjectCityConfirm() {
         this.inventory.resourceTrackers.money.changeAmount(-25);
         this.inventory.resourceTrackers.money.changeProduction(2);
-        this.callback.addTile('city', 1); //needs to give player a city tile to place
+        this.callback.addTile('city', 1);
         $(".modal-shadow").hide();
         this.actions--;
     }
@@ -263,7 +259,6 @@ class Player {
         this.callback.changeStatus('oxygen', 1);
         $(".modal-shadow").hide();
         this.actions--;
-        //needs to give player a greenery tile to place, which will increase oxygen and their TR
     }
 
     convertHeat() {
@@ -278,6 +273,5 @@ class Player {
         this.updateTr();
         $(".modal-shadow").hide();
         this.actions--;
-        //also needs to increase temp by one step, and therefore increase TR by 1
     }
 }
