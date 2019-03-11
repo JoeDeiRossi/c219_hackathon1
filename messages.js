@@ -52,17 +52,42 @@ class messageModals {
             this.inputModal();
         }
     }
-
-    //allocateResources (in game.js) should create new modal displaying what changes are occurring
-        //for each player
-            //energy converts to heat
-            //money gained (from TR and production)
-            //resources gained (from production)
-            //# of cards received? Can't display everyone's cards all at once
 }
 
 class distributionModal {
     constructor(playersArray) {
         this.players = playersArray;
+        this.icons = {
+            'money': '<i class="fa fa-bitcoin"></i>',
+            'steel': '<i class="fa fa-cog"></i>',
+            'titanium': '<i class="fa fa-star"></i>',
+            'plants': '<i class="fa fa-leaf"></i>',
+            'energy': '<i class="fa fa-bolt"></i>',
+            'heat': '<i class="fa fa-free-code-camp"></i>'
+        };
+        this.buildModal = this.buildModal.bind(this);
+    }
+
+    deleteModal() {
+        var modal = $(this).parent();
+        modal.remove();
+    }
+
+    buildModal() {
+        var modal = $('<div>').addClass('infoModal');
+        for (var playerIndex = 1; playerIndex <= this.players.length; playerIndex++) {
+            var playerDiv = $('<div>').addClass('playerDistribution').text('Player ' + playerIndex);
+            var icon;
+            for (icon in this.icons) {
+                var resourceDiv = $('<div>').text(icon + ':');
+                playerDiv.append(resourceDiv);
+                var amountDiv = $('<div>').text('+' + this.players[playerIndex-1].inventory.resourceTrackers[icon].production);
+                playerDiv.append(amountDiv);
+            }
+            modal.append(playerDiv);
+        }
+        var confirmButton = $('<button>').addClass('distributionConfirmButton').text('Next Round').on('click', this.deleteModal);
+        modal.append(confirmButton);
+        $('body').append(modal);
     }
 }
