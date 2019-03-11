@@ -9,7 +9,7 @@ body {
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: 2.6rem;
     color: orangered;
     position: absolute;
     left: 1%;
@@ -144,7 +144,7 @@ h1 {
     text-align: center;
     height: 70%;
     color: #87421F;
-    top: 15%;
+    top: 20%;
     background-color: rgba(25,25,25, 0.7)
 }
 

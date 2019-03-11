@@ -18,4 +18,14 @@ class numberPopup {
         this.domElement = $('<div>', {'class': 'numberPopup'}).text(this.number).css('color', this.color);
         return this.domElement;
     }
+
+    rise() {
+        var self = this.domElement;
+        this.domElement.animate({
+            top: '-50%'
+        }, 1000);
+        setTimeout(function () {
+            self.remove();
+        }, 1000);
+    }
 }
