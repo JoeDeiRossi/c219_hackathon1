@@ -14,6 +14,7 @@ class Game {
         this.checkSell = this.checkSell.bind(this);
         this.sellActionCard = this.sellActionCard.bind(this);
         this.pass = this.pass.bind(this);
+        this.playerSellActionCard = this.playerSellActionCard.bind(this);
 
 
 
@@ -88,7 +89,6 @@ class Game {
         });
         $("#convertResources").on('click', function(){
             test.currentPlayer.checkResources();
-            test.currentPlayer.updateHand();
             $("#convertResourcesModal").parent().show();
         });
 

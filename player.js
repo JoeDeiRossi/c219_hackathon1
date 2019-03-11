@@ -96,7 +96,6 @@ class Player {
             var indexOfObj = this.hand.indexOf(cardObj);
             this.hand.splice(indexOfObj, 1);
             console.log(this.hand);
-            //this.updateHand();
             $(".modal-shadow").hide();
     }
 
@@ -136,6 +135,7 @@ class Player {
         //open hand modal
         //if player then clicks a card, remove it from their hand and increase their money by 1
         //once they close the modal, this.actions-- (but not if they didn't sell any cards)
+        this.updateHand();
         $(".modal-shadow").hide();
         $("#playActionCardModal").parent().show();
         this.callback.sellCard();
