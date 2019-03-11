@@ -35,7 +35,7 @@ class Player {
         this.convertPlantsConfirm = this.convertPlantsConfirm.bind(this);
         this.convertHeat = this.convertHeat.bind(this);
         this.convertHeatConfirm = this.convertHeatConfirm.bind(this);
-      
+
         this.inputModal = null;
 
     }
@@ -55,7 +55,7 @@ class Player {
     updateTr(){
         $(this.playerDomElement).find('.playerTR').text('TR: ' + this.inventory.TR);
     }
-  
+
     updateHand() {
         /* clear hand */
         $('.hand').empty();
@@ -245,8 +245,6 @@ class Player {
         var userInput = this.inputModal.quantityInput.val();
         this.inventory.resourceTrackers.steel.changeAmount(-1 * userInput);
         this.inventory.resourceTrackers.money.changeAmount(2 * userInput);
-        $("#convertResourcesModal").hide();
-
 
         $(".modal-shadow").hide();
 
@@ -263,8 +261,6 @@ class Player {
         var userInput = this.inputModal.quantityInput.val();
         this.inventory.resourceTrackers.titanium.changeAmount(-1 * userInput);
         this.inventory.resourceTrackers.money.changeAmount(3 * userInput);
-        $("#convertResourcesModal").hide();
-
 
         $(".modal-shadow").hide();
 
