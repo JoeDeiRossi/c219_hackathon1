@@ -231,6 +231,7 @@ class Game {
         if (this.currentPlayer) {
             this.highlightCurrentPlayer();
             this.currentPlayer.actions = 2;
+            this.currentPlayer.updateHand();
         }
         this.endGameCheck();
         this.endRoundCheck();
@@ -327,11 +328,7 @@ class Game {
         this.canPlaceTile = false;
         this.map.removeClicks();
         mapTile.owner = this.currentPlayer;
-
-
-
         this.currentPlayer.process(mapTile.rewards);
-        this.afterPlayerAction();
     }
 
     changeWorldStats(type, amount){
