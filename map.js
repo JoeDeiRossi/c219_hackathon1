@@ -183,9 +183,12 @@ class MapTile {
 
 
     updateTakenAndOcean() {
-      if(this.canBeOcean === true && $('.statusOceanTiles .statusValue').text() > 0) {
+      if(this.canBeOcean === true) {
         this.domElement.css('background-color', 'blue');
-        this.changeWorldStats('oceanTiles', 1)
+        var blueValue = parseInt($('.statusOceanTiles .statusValue').text()) - 1;
+        if(blueValue > 0) {
+          this.changeWorldStats('oceanTiles', -1)
+        }
       } else if(this.canBeOcean === false) {
           this.domElement.css('background-color', 'grey');
       }
