@@ -9,10 +9,12 @@ body {
 }
 
 h1 {
-    font-size: 1.8rem;
+    font-size: 2rem;
     color: orangered;
     position: absolute;
     left: 1%;
+    top: -1%;
+    width: 20%
 }
 
 .top {
@@ -92,6 +94,7 @@ h1 {
 
 .trackerContainer {
     width: 15%;
+    position: relative;
 }
 
 .trackerAmount, .trackerProduction {
@@ -109,6 +112,22 @@ h1 {
 
 .trackerAmount > .trackerValue {
     font-size: 1.2rem;
+}
+
+.numberPopup {
+    font-size: 2rem;
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    transform: translateX(-50%);
+}
+
+.numberPopupAnimate {
+    font-size: 2rem;
+    position: absolute;
+    left: 50%;
+    top: -50%;
+    transform: translateX(-50%);
 }
 
 .statusInner, .flex-container {
@@ -160,11 +179,15 @@ h1 {
 
 .tile {
     background-color: transparent;
-    height: 6vmin;
-    width: 6vmin;
+    height: 6.5vmin;
+    width: 6.5vmin;
+    font-size: 1.6rem;
+    text-align: center;
+    line-height: 6.5vmin;
     border: 1px solid silver;
     box-sizing: border-box;
     color: silver;
+    border-radius: 25px;
 }
 
 .tile-inactive {

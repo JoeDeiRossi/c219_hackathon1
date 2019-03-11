@@ -7,6 +7,9 @@ class ResourceTracker {
         this.production = 1;            // current production level
         this.type = type;               // type of resource - money, steel, titanium, plants, energy, or heat
 
+        this.popup = null;
+        this.popupDom = null;
+
         /* money is the only resource whose production can go into the negatives */
         this.canBeNegative = false;
         if (type === 'money') {
@@ -17,6 +20,20 @@ class ResourceTracker {
     /* change amount - use for both positive and negative changes */
     changeAmount(change) {
         this.amount += change;
+
+        if(change !== 0) {
+            var self = this;
+            this.popup = new numberPopup(change);
+            this.popupDom = this.popup.render();
+            this.domElement.prepend(this.popupDom);
+            this.popupDom.animate({
+                top: '-50%'
+            }, 1000);
+            setTimeout(function () {
+                self.popupDom.remove();
+            }, 1000);
+        }
+
         this.updateValues();
         return this.amount;
     }
@@ -28,9 +45,7 @@ class ResourceTracker {
         /* if resource can be negative */
         if(this.canBeNegative && this.production < -5) {
             this.production = -5;
-        }
-
-        if(!this.canBeNegative && this.production < 0){
+        } else if(!this.canBeNegative && this.production < 0){
             this.production = 0;
         }
 
