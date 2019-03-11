@@ -18,7 +18,7 @@ class Game {
 
 
 
-        this.map = new Map(this.tilePlacementResultsCallback, this.askIfCanPlaceTile);
+        this.map = new Map(this.tilePlacementResultsCallback, this.askIfCanPlaceTile, this.changeWorldStats);
         $('.board').append(this.map.render());
 
         // action cards new callbacks
@@ -280,6 +280,7 @@ class Game {
         $(".statusTurnNumber > .statusValue").text(this.turnNumber);
         $(".statusOxygen > .statusValue").text(this.oxygen.current + '%');
         $(".statusTemp > .statusValue").text(this.temperature.current + 'C');
+        $(".statusOceanTiles > .statusValue").text(this.oceanTiles);
     }
 
     // for each Player, add resources equal to their production
@@ -298,7 +299,7 @@ class Game {
     }
 
 
-    
+
     // ---- CALLBACK FUNCTIONS -------------------------------------------------
 
     // called when Card is clicked, and played - handled by Player
@@ -350,12 +351,15 @@ class Game {
         this.currentPlayer.process(mapTile.rewards);
     }
 
+
     changeWorldStats(type, amount){
-        if(this[type].current === this[type].max){
-        } else {
+      if(type === 'oceanTiles' && this.oceanTiles > 0) {
+        this[type] -= amount;
+      } else if(this[type].current === this[type].max){
+      } else {
             this[type].current += amount;
         }
-        this.updateStatus();
+      this.updateStatus();
     }
 
     // called by Player when they play a card or convert resouces and get to change temp or O2 levels

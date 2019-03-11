@@ -367,9 +367,13 @@ h1 {
 }
 
 
+
 .glow-active {
     box-shadow: 0 0 10px 5px yellow;
 }
+
+
+
 
 button:hover {
     transform: scale(1.1);
