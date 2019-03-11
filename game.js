@@ -278,9 +278,9 @@ class Game {
     // updates the status display on the board
     updateStatus() {
         $(".statusTurnNumber > .statusValue").text(this.turnNumber);
-        $(".statusOxygen > .statusValue").text(this.oxygen.current + '%');
-        $(".statusTemp > .statusValue").text(this.temperature.current + 'C');
-        $(".statusOceanTiles > .statusValue").text(this.oceanTiles);
+        $(".statusOxygen > .statusValue").text(this.oxygen.current + '% / 14%');
+        $(".statusTemp > .statusValue").text(this.temperature.current + 'C / 8C');
+        $(".statusOceanTiles > .statusValue").text(this.oceanTiles + ' / 9');
     }
 
     // for each Player, add resources equal to their production
@@ -354,7 +354,7 @@ class Game {
 
     changeWorldStats(type, amount){
       if(type === 'oceanTiles' && this.oceanTiles > 0) {
-        this[type] -= amount;
+        this[type] += amount;
       } else if(this[type].current === this[type].max){
       } else {
             this[type].current += amount;
